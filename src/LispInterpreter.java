@@ -28,9 +28,11 @@ public class LispInterpreter {
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
         while (!input.isEmpty()) {
-            SExpression root = lisp.read(input);
+            lisp.read(input);
+            input = in.nextLine();
             // int result = lisp.eval(root);
             // lisp.print(result);
         }
+        in.close();
     }
 }
