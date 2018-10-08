@@ -18,6 +18,19 @@ public class NonAtom implements SExpression {
         return right;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        boolean isEqual;
+        if (o == null) {
+            isEqual = false;
+        } else if (o instanceof NonAtom) {
+            isEqual = this.left.equals(this.right);
+        } else {
+            isEqual = false;
+        }
+        return isEqual;
+    }
+
     public String toString() {
         return "(" + left.toString() + " . " + right.toString() + ")";
     }
