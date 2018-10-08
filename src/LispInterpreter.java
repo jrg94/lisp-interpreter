@@ -9,17 +9,30 @@ public class LispInterpreter {
         return lispTokens;
     }
 
-    public SExpression parse(String[] lispTokens, int index) {
-        if (lispTokens.length <= index) {
-            System.out.println("Unexpected EOF");
-        }
-        if (lispTokens[index].equals("(")) {
-
-        } else if (lispTokens[index].equals(")")) {
-            System.out.println("Unexpected )");
+    public SExpression parse(String[] lispTokens, int index) throws LispSyntaxException {
+        SExpression curr;
+        if (index >= lispTokens.length) {
+            throw new LispSyntaxException("Unexpected EOF");
         } else {
-            return createAtom(lispTokens[index]);
+            String token = lispTokens[index];
+            if (token.equals("(")) {
+                curr = new NonAtom();
+                while (true) {
+                    index += 1;
+                    if (index < lispTokens.length && lispTokens[index].equals(")")) {
+                        return curr;
+                    } else {
+                        parse(lispTokens, index);
+                    }
+                }
+            } else if (token.equals(")")) {
+                throw new LispSyntaxException("Unexpected )");
+            } else {
+                curr = createAtom(token);
+            }
         }
+
+        return curr;
     }
 
     /**
@@ -39,10 +52,10 @@ public class LispInterpreter {
         return atom;
     }
 
-    public SExpression read(String lispProgram) {
+    public SExpression read(String lispProgram) throws LispSyntaxException {
         String[] lispTokens = tokenize(lispProgram);
         System.out.println(Arrays.toString(lispTokens));
-        return null;
+        return parse(lispTokens, 0);
     }
 
     public int eval(SExpression root) {
@@ -63,7 +76,11 @@ public class LispInterpreter {
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
         while (!input.isEmpty()) {
-            lisp.read(input);
+            try {
+                lisp.read(input);
+            } catch (LispSyntaxException e) {
+                System.out.println(e);
+            }
             input = in.nextLine();
             // int result = lisp.eval(root);
             // lisp.print(result);
