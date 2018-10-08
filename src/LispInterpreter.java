@@ -45,21 +45,7 @@ public class LispInterpreter {
                 SExpression sub = parse(lispTokens);
                 exps.add(sub);
             }
-            if (exps.isEmpty()) {
-                curr = NIL;
-            } else {
-                curr = new NonAtom();
-                NonAtom temp = (NonAtom) curr;
-                for (int i = 0; i < exps.size(); i++) {
-                    temp.setLeft(exps.get(i));
-                    if (i < exps.size() - 1) {
-                        temp.setRight(new NonAtom());
-                        temp = (NonAtom) temp.getRight();
-                    } else {
-                        temp.setRight(NIL);
-                    }
-                }
-            }
+            curr = parseListNotation(exps);
             lispTokens.pop();
         } else if (token.equals(")")) {
             throw new LispSyntaxException("Unexpected token: " + token);
@@ -67,6 +53,31 @@ public class LispInterpreter {
             curr = createAtom(token);
         }
 
+        return curr;
+    }
+
+    /**
+     * A list notation parsing function.
+     * 
+     * @param exps a list of expressions for a given SExpression
+     */
+    private SExpression parseListNotation(ArrayList<SExpression> exps) {
+        SExpression curr;
+        if (exps.isEmpty()) {
+            curr = NIL;
+        } else {
+            curr = new NonAtom();
+            NonAtom temp = (NonAtom) curr;
+            for (int i = 0; i < exps.size(); i++) {
+                temp.setLeft(exps.get(i));
+                if (i < exps.size() - 1) {
+                    temp.setRight(new NonAtom());
+                    temp = (NonAtom) temp.getRight();
+                } else {
+                    temp.setRight(NIL);
+                }
+            }
+        }
         return curr;
     }
 
