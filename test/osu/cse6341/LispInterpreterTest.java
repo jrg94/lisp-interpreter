@@ -42,4 +42,10 @@ public class LispInterpreterTest {
         assertEquals("(42 . (12 . NIL))", getDotNotation(twoItemList));
     }
 
+    @Test(expected = LispSyntaxException.class)
+    public void testTooManyClosingBraces() throws LispSyntaxException {
+        String tooManyClosingBraces = "(2))";
+        getDotNotation(tooManyClosingBraces);
+    }
+
 }
