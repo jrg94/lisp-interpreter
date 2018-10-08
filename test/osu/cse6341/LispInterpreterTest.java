@@ -48,4 +48,9 @@ public class LispInterpreterTest {
         getDotNotation(tooManyClosingBraces);
     }
 
+    @Test(expected = LispSyntaxException.class)
+    public void testUnexpectedEOF() throws LispSyntaxException {
+        String unexpectedEOF = "(2 4 5";
+        getDotNotation(unexpectedEOF);
+    }
 }
