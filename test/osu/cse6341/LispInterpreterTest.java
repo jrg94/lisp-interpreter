@@ -59,4 +59,10 @@ public class LispInterpreterTest {
         String tooManyDots = "(2 . . 3)";
         getDotNotation(tooManyDots);
     }
+
+    @Test(expected = LispSyntaxException.class)
+    public void testMalformedSymbolicAtom() throws LispSyntaxException {
+        String malformedSymbol = "(1d 4)";
+        getDotNotation(malformedSymbol);
+    }
 }

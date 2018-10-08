@@ -157,15 +157,21 @@ public class LispInterpreter {
      * @param token a token
      * @return an existing symbolic atom from the symbol table; a new symbolic
      *         atom otherwise
+     * @throws LispSyntaxException
      */
-    private SymbolicAtom searchSymbols(String token) {
+    private SymbolicAtom searchSymbols(String token) throws LispSyntaxException {
         for (SymbolicAtom symbol : symbols) {
             if (symbol.getValue().equals(token)) {
                 return symbol;
             }
         }
         SymbolicAtom symbol = new SymbolicAtom(token);
-        symbols.add(symbol);
+        if (Character.isLetter(token.charAt(0))) {
+            symbols.add(symbol);
+        } else {
+            String err = String.format("Token (%s) does not start with a letter", token);
+            throw new LispSyntaxException(err);
+        }
         return symbol;
     }
 

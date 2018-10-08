@@ -1,4 +1,5 @@
 package osu.cse6341;
+
 public class SymbolicAtom implements SExpression {
     private String name;
 
