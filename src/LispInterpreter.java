@@ -12,6 +12,10 @@ public class LispInterpreter {
     public ArrayList<SymbolicAtom> dList;
     public ArrayList<SymbolicAtom> symbols;
 
+    /**
+     * The lisp interpreter constructor. It initializes the symbol table and the
+     * dList.
+     */
     public LispInterpreter() {
         dList = new ArrayList<SymbolicAtom>();
         dList.add(new SymbolicAtom("cons"));
@@ -161,6 +165,13 @@ public class LispInterpreter {
         return symbol;
     }
 
+    /**
+     * The read stage of the REPL.
+     * 
+     * @param lispProgram a lisp program as a string
+     * @return a lisp program as an AST
+     * @throws LispSyntaxException when there are syntax errors
+     */
     public SExpression read(String lispProgram) throws LispSyntaxException {
         Stack<String> lispTokens = tokenize(lispProgram);
         SExpression root = parse(lispTokens);
@@ -170,14 +181,20 @@ public class LispInterpreter {
         return root;
     }
 
-    public int eval(SExpression root) {
-        return 0;
-    }
-
+    /**
+     * Outputs the AST in dot notation.
+     * 
+     * @param result the AST
+     */
     public void print(SExpression result) {
         System.out.println(result);
     }
 
+    /**
+     * Runs the Lisp REPL.
+     * 
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         LispInterpreter lisp = new LispInterpreter();
         System.out.println("Welcome to the CSE6341 Lisp Interpreter by Jeremy Grifski!");
