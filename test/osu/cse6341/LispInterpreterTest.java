@@ -9,6 +9,10 @@ public class LispInterpreterTest {
 
     private LispInterpreter interpreter;
 
+    private String getDotNotation(String underTest) throws LispSyntaxException {
+        return interpreter.read(underTest).toString();
+    }
+
     @Before
     public void setUp() {
         interpreter = new LispInterpreter();
@@ -17,13 +21,19 @@ public class LispInterpreterTest {
     @Test
     public void testReadEmptyList() throws LispSyntaxException {
         String emptyList = "()";
-        assertEquals("NIL", interpreter.read(emptyList).toString());
+        assertEquals("NIL", getDotNotation(emptyList));
     }
 
     @Test
     public void testReadIntegerAtom() throws LispSyntaxException {
         String integer = "42";
-        assertEquals("42", interpreter.read(integer).toString());
+        assertEquals("42", getDotNotation(integer));
+    }
+
+    @Test
+    public void testReadSingleItemList() throws LispSyntaxException {
+        String singleItemList = "(42)";
+        assertEquals("(42 . NIL)", getDotNotation(singleItemList));
     }
 
 }
