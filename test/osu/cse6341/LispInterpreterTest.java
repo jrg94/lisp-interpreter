@@ -53,4 +53,10 @@ public class LispInterpreterTest {
         String unexpectedEOF = "(2 4 5";
         getDotNotation(unexpectedEOF);
     }
+
+    @Test(expected = LispSyntaxException.class)
+    public void testTooManyDots() throws LispSyntaxException {
+        String tooManyDots = "(2 . . 3)";
+        getDotNotation(tooManyDots);
+    }
 }

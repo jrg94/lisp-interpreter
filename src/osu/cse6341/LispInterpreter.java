@@ -1,4 +1,5 @@
 package osu.cse6341;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -60,9 +61,11 @@ public class LispInterpreter {
             ArrayList<SExpression> exps = new ArrayList<SExpression>();
             boolean isDotNotation = false;
             while (!lispTokens.peek().equals(")")) {
-                if (lispTokens.peek().equals(".")) {
+                if (lispTokens.peek().equals(".") && !isDotNotation) {
                     lispTokens.pop();
                     isDotNotation = true;
+                } else if (lispTokens.peek().equals(".") && isDotNotation) {
+                    throw new LispSyntaxException("Too many dots");
                 } else {
                     SExpression sub = parse(lispTokens);
                     exps.add(sub);
