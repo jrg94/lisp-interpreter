@@ -36,4 +36,10 @@ public class LispInterpreterTest {
         assertEquals("(42 . NIL)", getDotNotation(singleItemList));
     }
 
+    @Test
+    public void testReadTwoItemList() throws LispSyntaxException {
+        String twoItemList = "(42 12)";
+        assertEquals("(42 . (12 . NIL))", getDotNotation(twoItemList));
+    }
+
 }
