@@ -193,19 +193,28 @@ public class LispInterpreter {
     public void repl() {
         System.out.println("Welcome to the CSE6341 Lisp Interpreter by Jeremy Grifski!");
         Scanner in = new Scanner(System.in);
-        System.out.print("lisp-interpreter> ");
-        String input = in.nextLine();
-        while (!input.isEmpty()) {
+        String input = promptUser(in);
+        while (!input.equals("$$")) {
+            String currExpression = "";
+            while (!input.equals("$")) {
+                currExpression += input;
+                input = promptUser(in);
+            }
             try {
-                SExpression root = this.read(input);
+                SExpression root = this.read(currExpression);
                 this.print(root);
             } catch (LispSyntaxException e) {
                 System.out.println(e);
             }
-            System.out.print("lisp-interpreter> ");
-            input = in.nextLine();
+            input = promptUser(in);
         }
         in.close();
+    }
+
+    private String promptUser(Scanner in) {
+        System.out.print("lisp-interpreter> ");
+        String input = in.nextLine();
+        return input;
     }
 
     /**
