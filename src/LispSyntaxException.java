@@ -1,5 +1,7 @@
 public class LispSyntaxException extends Exception {
 
+    private static final long serialVersionUID = -4819106933558488363L;
+
     public LispSyntaxException() {
         super();
     }

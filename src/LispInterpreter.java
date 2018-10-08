@@ -6,6 +6,8 @@ import java.util.Stack;
 
 public class LispInterpreter {
 
+    public static final SymbolicAtom NIL = new SymbolicAtom("NIL");
+
     /**
      * Converts a lisp program to a stack of tokens.
      * 
@@ -23,6 +25,13 @@ public class LispInterpreter {
         return lispTokens;
     }
 
+    /**
+     * Parses the set of tokens and produces the AST.
+     * 
+     * @param lispTokens a stack of lisp tokens
+     * @return an AST
+     * @throws LispSyntaxException when parsing fails
+     */
     public SExpression parse(Stack<String> lispTokens) throws LispSyntaxException {
         SExpression curr;
         if (lispTokens.peek().equals("\0")) {
@@ -31,9 +40,25 @@ public class LispInterpreter {
 
         String token = lispTokens.pop();
         if (token.equals("(")) {
-            curr = new NonAtom();
+            ArrayList<SExpression> exps = new ArrayList<SExpression>();
             while (!lispTokens.peek().equals(")")) {
-                parse(lispTokens);
+                SExpression sub = parse(lispTokens);
+                exps.add(sub);
+            }
+            if (exps.isEmpty()) {
+                curr = NIL;
+            } else {
+                curr = new NonAtom();
+                NonAtom temp = (NonAtom) curr;
+                for (int i = 0; i < exps.size(); i++) {
+                    temp.setLeft(exps.get(i));
+                    if (i < exps.size() - 1) {
+                        temp.setRight(new NonAtom());
+                        temp = (NonAtom) temp.getRight();
+                    } else {
+                        temp.setRight(NIL);
+                    }
+                }
             }
             lispTokens.pop();
         } else if (token.equals(")")) {
@@ -75,28 +100,26 @@ public class LispInterpreter {
         return 0;
     }
 
-    public void print(int result) {
+    public void print(SExpression result) {
         System.out.println(result);
     }
 
     public static void main(String[] args) {
-        // TODO: get Lisp code from user
-        // TODO: tokenize Lisp code
         // TODO: generate abstract syntax tree from code
         // TODO: evaluate AST
         // TODO: report errors
         LispInterpreter lisp = new LispInterpreter();
+        System.out.println("Welcome to the CSE6341 Lisp Interpreter by Jeremy Grifski!");
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
         while (!input.isEmpty()) {
             try {
-                lisp.read(input);
+                SExpression root = lisp.read(input);
+                lisp.print(root);
             } catch (LispSyntaxException e) {
                 System.out.println(e);
             }
             input = in.nextLine();
-            // int result = lisp.eval(root);
-            // lisp.print(result);
         }
         in.close();
     }

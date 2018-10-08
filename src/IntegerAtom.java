@@ -8,4 +8,8 @@ public class IntegerAtom implements SExpression {
     public int getValue() {
         return value;
     }
+
+    public String toString() {
+        return Integer.toString(value);
+    }
 }

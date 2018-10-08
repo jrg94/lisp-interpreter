@@ -8,4 +8,8 @@ public class SymbolicAtom implements SExpression {
     public String getValue() {
         return name;
     }
+
+    public String toString() {
+        return name;
+    }
 }
