@@ -20,4 +20,10 @@ public class LispInterpreterTest {
         assertEquals("NIL", interpreter.read(emptyList).toString());
     }
 
+    @Test
+    public void testReadIntegerAtom() throws LispSyntaxException {
+        String integer = "42";
+        assertEquals("42", interpreter.read(integer).toString());
+    }
+
 }
