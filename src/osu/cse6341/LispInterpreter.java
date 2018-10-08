@@ -1,3 +1,4 @@
+package osu.cse6341;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -190,7 +191,24 @@ public class LispInterpreter {
         System.out.println(result);
     }
 
-    public void repl() {
+    /**
+     * The read, evaluate, print function.
+     * 
+     * @param currExpression
+     */
+    private void rep(String currExpression) {
+        try {
+            SExpression root = this.read(currExpression);
+            this.print(root);
+        } catch (LispSyntaxException e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * The repl execution engine.
+     */
+    private void run() {
         System.out.println("Welcome to the CSE6341 Lisp Interpreter by Jeremy Grifski!");
         Scanner in = new Scanner(System.in);
         String input = promptUser(in);
@@ -200,17 +218,20 @@ public class LispInterpreter {
                 currExpression += input;
                 input = promptUser(in);
             }
-            try {
-                SExpression root = this.read(currExpression);
-                this.print(root);
-            } catch (LispSyntaxException e) {
-                System.out.println(e);
-            }
+            rep(currExpression);
             input = promptUser(in);
         }
         in.close();
+        System.out.println("Goodbye!");
     }
 
+    /**
+     * A helper function used to issue the input string and grab the next line
+     * of text.
+     * 
+     * @param in a scanner for reading standard input
+     * @return the text received from the user
+     */
     private String promptUser(Scanner in) {
         System.out.print("lisp-interpreter> ");
         String input = in.nextLine();
@@ -224,6 +245,6 @@ public class LispInterpreter {
      */
     public static void main(String[] args) {
         LispInterpreter lisp = new LispInterpreter();
-        lisp.repl();
+        lisp.run();
     }
 }

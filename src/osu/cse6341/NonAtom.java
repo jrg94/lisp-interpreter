@@ -1,3 +1,4 @@
+package osu.cse6341;
 public class NonAtom implements SExpression {
     private SExpression left;
     private SExpression right;
