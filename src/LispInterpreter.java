@@ -190,6 +190,24 @@ public class LispInterpreter {
         System.out.println(result);
     }
 
+    public void repl() {
+        System.out.println("Welcome to the CSE6341 Lisp Interpreter by Jeremy Grifski!");
+        Scanner in = new Scanner(System.in);
+        System.out.print("lisp-interpreter> ");
+        String input = in.nextLine();
+        while (!input.isEmpty()) {
+            try {
+                SExpression root = this.read(input);
+                this.print(root);
+            } catch (LispSyntaxException e) {
+                System.out.println(e);
+            }
+            System.out.print("lisp-interpreter> ");
+            input = in.nextLine();
+        }
+        in.close();
+    }
+
     /**
      * Runs the Lisp REPL.
      * 
@@ -197,18 +215,6 @@ public class LispInterpreter {
      */
     public static void main(String[] args) {
         LispInterpreter lisp = new LispInterpreter();
-        System.out.println("Welcome to the CSE6341 Lisp Interpreter by Jeremy Grifski!");
-        Scanner in = new Scanner(System.in);
-        String input = in.nextLine();
-        while (!input.isEmpty()) {
-            try {
-                SExpression root = lisp.read(input);
-                lisp.print(root);
-            } catch (LispSyntaxException e) {
-                System.out.println(e);
-            }
-            input = in.nextLine();
-        }
-        in.close();
+        lisp.repl();
     }
 }
