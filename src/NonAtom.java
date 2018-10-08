@@ -24,7 +24,8 @@ public class NonAtom implements SExpression {
         if (o == null) {
             isEqual = false;
         } else if (o instanceof NonAtom) {
-            isEqual = this.left.equals(this.right);
+            NonAtom atom = (NonAtom) o;
+            isEqual = this.left.equals(atom.getLeft()) && this.right.equals(atom.getRight());
         } else {
             isEqual = false;
         }
