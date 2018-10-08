@@ -41,11 +41,21 @@ public class LispInterpreter {
         String token = lispTokens.pop();
         if (token.equals("(")) {
             ArrayList<SExpression> exps = new ArrayList<SExpression>();
+            boolean isDotNotation = false;
             while (!lispTokens.peek().equals(")")) {
-                SExpression sub = parse(lispTokens);
-                exps.add(sub);
+                if (lispTokens.peek().equals(".")) {
+                    lispTokens.pop();
+                    isDotNotation = true;
+                } else {
+                    SExpression sub = parse(lispTokens);
+                    exps.add(sub);
+                }
             }
-            curr = parseListNotation(exps);
+            if (isDotNotation) {
+                curr = parseDotNotation(exps);
+            } else {
+                curr = parseListNotation(exps);
+            }
             lispTokens.pop();
         } else if (token.equals(")")) {
             throw new LispSyntaxException("Unexpected token: " + token);
@@ -53,6 +63,18 @@ public class LispInterpreter {
             curr = createAtom(token);
         }
 
+        return curr;
+    }
+
+    private SExpression parseDotNotation(ArrayList<SExpression> exps) throws LispSyntaxException {
+        NonAtom curr;
+        if (exps.size() != 2) {
+            throw new LispSyntaxException("Inappropriate number of expressions with dot notation: " + exps.toString());
+        } else {
+            curr = new NonAtom();
+            curr.setLeft(exps.get(0));
+            curr.setRight(exps.get(1));
+        }
         return curr;
     }
 
