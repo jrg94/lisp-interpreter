@@ -1,35 +1,45 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class LispInterpreter {
 
-    public String[] tokenize(String lispProgram) {
+    /**
+     * Converts a lisp program to a stack of tokens.
+     * 
+     * @param lispProgram a lisp program
+     * @return a stack of lisp program tokens
+     */
+    public Stack<String> tokenize(String lispProgram) {
         String lispPlusWhitespace = lispProgram.replaceAll("\\(", " ( ").replaceAll("\\)", " ) ").trim();
-        String[] lispTokens = lispPlusWhitespace.split("\\s+");
+        String[] lispTokensArray = lispPlusWhitespace.split("\\s+");
+        ArrayList<String> lispTokensArrayList = new ArrayList<String>(Arrays.asList(lispTokensArray));
+        lispTokensArrayList.add("\0");
+        Collections.reverse(lispTokensArrayList);
+        Stack<String> lispTokens = new Stack<String>();
+        lispTokens.addAll(lispTokensArrayList);
         return lispTokens;
     }
 
-    public SExpression parse(String[] lispTokens, int index) throws LispSyntaxException {
+    public SExpression parse(Stack<String> lispTokens) throws LispSyntaxException {
         SExpression curr;
-        if (index >= lispTokens.length) {
+        if (lispTokens.peek().equals("\0")) {
             throw new LispSyntaxException("Unexpected EOF");
-        } else {
-            String token = lispTokens[index];
-            if (token.equals("(")) {
-                curr = new NonAtom();
-                while (true) {
-                    index += 1;
-                    if (index < lispTokens.length && lispTokens[index].equals(")")) {
-                        return curr;
-                    } else {
-                        parse(lispTokens, index);
-                    }
-                }
-            } else if (token.equals(")")) {
-                throw new LispSyntaxException("Unexpected )");
-            } else {
-                curr = createAtom(token);
+        }
+
+        String token = lispTokens.pop();
+        if (token.equals("(")) {
+            curr = new NonAtom();
+            while (!lispTokens.peek().equals(")")) {
+                parse(lispTokens);
             }
+            lispTokens.pop();
+        } else if (token.equals(")")) {
+            throw new LispSyntaxException("Unexpected token: " + token);
+        } else {
+            curr = createAtom(token);
         }
 
         return curr;
@@ -53,9 +63,12 @@ public class LispInterpreter {
     }
 
     public SExpression read(String lispProgram) throws LispSyntaxException {
-        String[] lispTokens = tokenize(lispProgram);
-        System.out.println(Arrays.toString(lispTokens));
-        return parse(lispTokens, 0);
+        Stack<String> lispTokens = tokenize(lispProgram);
+        SExpression root = parse(lispTokens);
+        if (!lispTokens.peek().equals("\0")) {
+            throw new LispSyntaxException("Unexpected token: " + lispTokens.peek());
+        }
+        return root;
     }
 
     public int eval(SExpression root) {
