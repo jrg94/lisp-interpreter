@@ -218,7 +218,6 @@ public class LispInterpreter {
      * The repl execution engine.
      */
     private void run() {
-        System.out.println("Welcome to the CSE6341 Lisp Interpreter by Jeremy Grifski!");
         Scanner in = new Scanner(System.in);
         String input = promptUser(in);
         while (!input.equals("$$")) {
@@ -253,6 +252,10 @@ public class LispInterpreter {
      * @param args command line arguments
      */
     public static void main(String[] args) {
+        System.out.println("Welcome to the CSE6341 Lisp Interpreter by Jeremy Grifski!");
+        System.out.println("You've just launched the Lisp REPL.");
+        System.out.println("To evaluate an s-expression, place a $ on a single line.");
+        System.out.println("To exit the REPL, place $$ on a single line.");
         LispInterpreter lisp = new LispInterpreter();
         lisp.run();
     }
