@@ -83,4 +83,11 @@ public class LispInterpreterTest {
         String positiveInteger = "+26";
         assertEquals("26", getDotNotation(positiveInteger));
     }
+
+    @Test
+    public void testNestedList() throws LispSyntaxException {
+        String nestedList = "(1 (4 6))";
+        String expectedDotNotation = "(1 . ((4 . (6 . NIL)) . NIL))";
+        assertEquals(expectedDotNotation, getDotNotation(nestedList));
+    }
 }
