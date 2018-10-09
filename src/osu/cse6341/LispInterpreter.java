@@ -32,7 +32,7 @@ public class LispInterpreter {
      * @param lispProgram a lisp program
      * @return a stack of lisp program tokens
      */
-    public Stack<String> tokenize(String lispProgram) {
+    private Stack<String> tokenize(String lispProgram) {
         String lispPlusWhitespace = lispProgram.replaceAll("\\(", " ( ").replaceAll("\\)", " ) ").trim();
         String[] lispTokensArray = lispPlusWhitespace.split("\\s+");
         ArrayList<String> lispTokensArrayList = new ArrayList<String>(Arrays.asList(lispTokensArray));
@@ -50,7 +50,7 @@ public class LispInterpreter {
      * @return an AST
      * @throws LispSyntaxException when parsing fails
      */
-    public SExpression parse(Stack<String> lispTokens) throws LispSyntaxException {
+    private SExpression parse(Stack<String> lispTokens) throws LispSyntaxException {
         SExpression curr;
         if (lispTokens.peek().equals("\0")) {
             throw new LispSyntaxException("Unexpected EOF");
@@ -138,7 +138,7 @@ public class LispInterpreter {
      * @return the token as an s expression
      * @throws LispSyntaxException
      */
-    public SExpression createAtom(String token) throws LispSyntaxException {
+    private SExpression createAtom(String token) throws LispSyntaxException {
         SExpression atom;
         try {
             int num = Integer.parseInt(token);
@@ -147,6 +147,21 @@ public class LispInterpreter {
             atom = searchSymbols(token);
         }
         return atom;
+    }
+
+    /**
+     * Tests that a string is alphanumeric.
+     * 
+     * @param underTest the string under test
+     * @return true if the string only contains alphanumeric digits
+     */
+    private boolean isAlphanumeric(String underTest) {
+        for (char c : underTest.toCharArray()) {
+            if (!Character.isLetterOrDigit(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -167,7 +182,12 @@ public class LispInterpreter {
         }
         SymbolicAtom symbol = new SymbolicAtom(token);
         if (Character.isLetter(token.charAt(0))) {
-            symbols.add(symbol);
+            if (isAlphanumeric(token)) {
+                symbols.add(symbol);
+            } else {
+                String err = String.format("Token (%s) is not alphanumeric", token);
+                throw new LispSyntaxException(err);
+            }
         } else {
             String err = String.format("Token (%s) does not start with a letter", token);
             throw new LispSyntaxException(err);
