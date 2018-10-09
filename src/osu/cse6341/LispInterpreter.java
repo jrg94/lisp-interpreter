@@ -149,6 +149,12 @@ public class LispInterpreter {
         return atom;
     }
 
+    /**
+     * Tests that a string is alphanumeric.
+     * 
+     * @param underTest the string under test
+     * @return true if the string only contains alphanumeric digits
+     */
     private boolean isAlphanumeric(String underTest) {
         for (char c : underTest.toCharArray()) {
             if (!Character.isLetterOrDigit(c)) {
