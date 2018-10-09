@@ -61,8 +61,26 @@ public class LispInterpreterTest {
     }
 
     @Test(expected = LispSyntaxException.class)
-    public void testMalformedSymbolicAtom() throws LispSyntaxException {
-        String malformedSymbol = "(1d 4)";
+    public void testDigitStartingSymbolicAtom() throws LispSyntaxException {
+        String malformedSymbol = "1CDR";
         getDotNotation(malformedSymbol);
+    }
+
+    @Test(expected = LispSyntaxException.class)
+    public void testSymbolContainingSymbolicAtom() throws LispSyntaxException {
+        String malformedSymbol = "CA#R";
+        getDotNotation(malformedSymbol);
+    }
+
+    @Test
+    public void testNegativeIntegerAtom() throws LispSyntaxException {
+        String negativeInteger = "-14";
+        assertEquals("-14", getDotNotation(negativeInteger));
+    }
+
+    @Test
+    public void testPositiveIntegerAtom() throws LispSyntaxException {
+        String positiveInteger = "+26";
+        assertEquals("26", getDotNotation(positiveInteger));
     }
 }
