@@ -32,7 +32,7 @@ public class LispInterpreter {
      * @param lispProgram a lisp program
      * @return a stack of lisp program tokens
      */
-    public Stack<String> tokenize(String lispProgram) {
+    private Stack<String> tokenize(String lispProgram) {
         String lispPlusWhitespace = lispProgram.replaceAll("\\(", " ( ").replaceAll("\\)", " ) ").trim();
         String[] lispTokensArray = lispPlusWhitespace.split("\\s+");
         ArrayList<String> lispTokensArrayList = new ArrayList<String>(Arrays.asList(lispTokensArray));
@@ -50,7 +50,7 @@ public class LispInterpreter {
      * @return an AST
      * @throws LispSyntaxException when parsing fails
      */
-    public SExpression parse(Stack<String> lispTokens) throws LispSyntaxException {
+    private SExpression parse(Stack<String> lispTokens) throws LispSyntaxException {
         SExpression curr;
         if (lispTokens.peek().equals("\0")) {
             throw new LispSyntaxException("Unexpected EOF");
@@ -138,7 +138,7 @@ public class LispInterpreter {
      * @return the token as an s expression
      * @throws LispSyntaxException
      */
-    public SExpression createAtom(String token) throws LispSyntaxException {
+    private SExpression createAtom(String token) throws LispSyntaxException {
         SExpression atom;
         try {
             int num = Integer.parseInt(token);
