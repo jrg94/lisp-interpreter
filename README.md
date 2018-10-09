@@ -40,12 +40,12 @@ Following this message, you should see a `lisp-interpreter>`.
 This indicates where you can begin typing. Feel free to input your
 text here. 
 
-When you're finished writing your s-expression, enter a line of a
-single dollar sign ($). This will cause the REPL to "evaluate"
+When you're finished writing your s-expression, enter a dollar sign ($) 
+on a single line. This will cause the REPL to "evaluate"
 the s-expression you've entered. If successful, you'll see
 your s-expression printed in dot notation.
 
-When you're done, enter a line of pair of dollar signs ($$). This
+When you're done, enter a pair of dollar signs ($$) on a single line. This
 terminates the program. If successful, you should see `Goodbye!`.
 
 Alternatively, you can safely automate the interpreter by piping
