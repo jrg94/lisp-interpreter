@@ -149,6 +149,15 @@ public class LispInterpreter {
         return atom;
     }
 
+    private boolean isAlphanumeric(String underTest) {
+        for (char c : underTest.toCharArray()) {
+            if (!Character.isLetterOrDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * A helper method for searching the symbol table. If a symbol is found,
      * that symbol is returned. Otherwise, a new symbol is created, added to the
@@ -167,7 +176,12 @@ public class LispInterpreter {
         }
         SymbolicAtom symbol = new SymbolicAtom(token);
         if (Character.isLetter(token.charAt(0))) {
-            symbols.add(symbol);
+            if (isAlphanumeric(token)) {
+                symbols.add(symbol);
+            } else {
+                String err = String.format("Token (%s) is not alphanumeric", token);
+                throw new LispSyntaxException(err);
+            }
         } else {
             String err = String.format("Token (%s) does not start with a letter", token);
             throw new LispSyntaxException(err);
