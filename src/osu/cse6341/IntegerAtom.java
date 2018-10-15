@@ -1,15 +1,37 @@
 package osu.cse6341;
+
+/**
+ * The Integer Atom class which is a type of s-expression.
+ * 
+ * @author Jeremy Grifski
+ */
 public class IntegerAtom implements SExpression {
+
     private int value;
 
+    /**
+     * The base constructor.
+     * 
+     * @param value an integer
+     */
     public IntegerAtom(int value) {
         this.value = value;
     }
 
+    /**
+     * Gets the integer value of this s-expression.
+     * 
+     * @return the integer value
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * The standard override of the equals method.
+     * 
+     * @return true if the two integers are equal
+     */
     @Override
     public boolean equals(Object o) {
         boolean isEqual;
@@ -24,6 +46,11 @@ public class IntegerAtom implements SExpression {
         return isEqual;
     }
 
+    /**
+     * The standard override of the toString method.
+     * 
+     * @return the integer as a string
+     */
     public String toString() {
         return Integer.toString(value);
     }

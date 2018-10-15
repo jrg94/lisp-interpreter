@@ -6,6 +6,11 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.util.Stack;
 
+/**
+ * The lisp interpreter class which handles the REPL.
+ * 
+ * @author Jeremy Grifski
+ */
 public class LispInterpreter {
 
     public static final SymbolicAtom NIL = new SymbolicAtom("NIL");

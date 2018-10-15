@@ -14,7 +14,7 @@ ant -f build.xml
 The build file was generated automatically by eclipse, and it
 was not thoroughly tested.
 
-Alternatively, you can skip to the next step by leveraging
+Alternatively, you can **skip** to the next step by leveraging
 the `lisp-interpreter.jar` file which is available alongside
 the source code.
 

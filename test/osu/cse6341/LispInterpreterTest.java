@@ -90,4 +90,59 @@ public class LispInterpreterTest {
         String expectedDotNotation = "(1 . ((4 . (6 . NIL)) . NIL))";
         assertEquals(expectedDotNotation, getDotNotation(nestedList));
     }
+
+    @Test
+    public void testMixedDotAndList() throws LispSyntaxException {
+        String mixedNestAndList = "( 2 . (3 4))";
+        String expectedDotNotation = "(2 . (3 . (4 . NIL)))";
+        assertEquals(expectedDotNotation, getDotNotation(mixedNestAndList));
+    }
+
+    @Test(expected = LispSyntaxException.class)
+    public void testUnexpectedDot() throws LispSyntaxException {
+        String unexpectedDot = "( 2 . (3 4) . 5)";
+        getDotNotation(unexpectedDot);
+    }
+
+    @Test
+    public void testMixedDotAndList2() throws LispSyntaxException {
+        String complexMixedNestAndList = "( 2 . ((3 4) . 5))";
+        String expectedDotNotation = "(2 . ((3 . (4 . NIL)) . 5))";
+        assertEquals(expectedDotNotation, getDotNotation(complexMixedNestAndList));
+    }
+
+    @Test(expected = LispSyntaxException.class)
+    public void testUnexpectedSymbol() throws LispSyntaxException {
+        String unexpectedSymbol = "( 2 . (3 4) $ 5)";
+        getDotNotation(unexpectedSymbol);
+    }
+
+    @Test
+    public void testMixedDotAndList3() throws LispSyntaxException {
+        String mixedDotAndList = "( 2 (3 . 4) (5 . 6))";
+        String expectedDotNotation = "(2 . ((3 . 4) . ((5 . 6) . NIL)))";
+        assertEquals(expectedDotNotation, getDotNotation(mixedDotAndList));
+    }
+
+    @Test
+    public void testMixedWithSymbols() throws LispSyntaxException {
+        String mixedWithSymbols = "(CAR (QUOTE (A . B)))";
+        String expectedDotNotation = "(CAR . ((QUOTE . ((A . B) . NIL)) . NIL))";
+        assertEquals(expectedDotNotation, getDotNotation(mixedWithSymbols));
+    }
+
+    @Test
+    public void testMultilineExpression() throws LispSyntaxException {
+        String multilineExpression = "(DEFUN NOTSOSILLY (A B) \r\n" + "               (COND\r\n"
+                + "               ((EQ A 0) (PLUS B 1))\r\n"
+                + "               ((EQ B 0) (NOTSOSILLY (MINUS2 A 1) 1))\r\n"
+                + "               (T (NOTSOSILLY (MINUS2 A 1) (NOTSOSILLY A (MINUS2 B 1))))\r\n" + "             ))";
+        String expectedDotNotation = "(DEFUN . (NOTSOSILLY . ((A . (B . NIL)) " + ". ((COND . (((EQ . (A . (0 . NIL))) "
+                + ". ((PLUS . (B . (1 . NIL))) . NIL)) . (((EQ . (B . (0 . NIL))) "
+                + ". ((NOTSOSILLY . ((MINUS2 . (A . (1 . NIL))) . (1 . NIL))) . NIL)) "
+                + ". ((T . ((NOTSOSILLY . ((MINUS2 . (A . (1 . NIL))) "
+                + ". ((NOTSOSILLY . (A . ((MINUS2 . (B . (1 . NIL))) . NIL))) "
+                + ". NIL))) . NIL)) . NIL)))) . NIL))))";
+        assertEquals(expectedDotNotation, getDotNotation(multilineExpression));
+    }
 }
