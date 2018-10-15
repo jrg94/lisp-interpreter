@@ -105,9 +105,22 @@ public class LispInterpreterTest {
     }
 
     @Test
-    public void testComplexMixedDotAndList() throws LispSyntaxException {
+    public void testMixedDotAndList2() throws LispSyntaxException {
         String complexMixedNestAndList = "( 2 . ((3 4) . 5))";
         String expectedDotNotation = "(2 . ((3 . (4 . NIL)) . 5))";
         assertEquals(expectedDotNotation, getDotNotation(complexMixedNestAndList));
+    }
+
+    @Test(expected = LispSyntaxException.class)
+    public void testUnexpectedSymbol() throws LispSyntaxException {
+        String unexpectedSymbol = "( 2 . (3 4) $ 5)";
+        getDotNotation(unexpectedSymbol);
+    }
+
+    @Test
+    public void testMixedDotAndList3() throws LispSyntaxException {
+        String mixedDotAndList = "( 2 (3 . 4) (5 . 6))";
+        String expectedDotNotation = "(2 . ((3 . 4) . ((5 . 6) . NIL)))";
+        assertEquals(expectedDotNotation, getDotNotation(mixedDotAndList));
     }
 }
