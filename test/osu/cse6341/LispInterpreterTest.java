@@ -123,4 +123,11 @@ public class LispInterpreterTest {
         String expectedDotNotation = "(2 . ((3 . 4) . ((5 . 6) . NIL)))";
         assertEquals(expectedDotNotation, getDotNotation(mixedDotAndList));
     }
+
+    @Test
+    public void testMixedWithSymbols() throws LispSyntaxException {
+        String mixedWithSymbols = "(CAR (QUOTE (A . B)))";
+        String expectedDotNotation = "(CAR . ((QUOTE . ((A . B) . NIL)) . NIL))";
+        assertEquals(expectedDotNotation, getDotNotation(mixedWithSymbols));
+    }
 }
