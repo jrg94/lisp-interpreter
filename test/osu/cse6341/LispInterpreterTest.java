@@ -90,4 +90,17 @@ public class LispInterpreterTest {
         String expectedDotNotation = "(1 . ((4 . (6 . NIL)) . NIL))";
         assertEquals(expectedDotNotation, getDotNotation(nestedList));
     }
+
+    @Test
+    public void testMixedDotAndList() throws LispSyntaxException {
+        String mixedNestAndList = "( 2 . (3 4))";
+        String expectedDotNotation = "(2 . (3 . (4 . NIL)))";
+        assertEquals(expectedDotNotation, getDotNotation(mixedNestAndList));
+    }
+
+    @Test(expected = LispSyntaxException.class)
+    public void testUnexpectedDot() throws LispSyntaxException {
+        String unexpectedDot = "( 2 . (3 4) . 5)";
+        getDotNotation(unexpectedDot);
+    }
 }
