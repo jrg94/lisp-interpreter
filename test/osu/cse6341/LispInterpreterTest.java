@@ -130,4 +130,19 @@ public class LispInterpreterTest {
         String expectedDotNotation = "(CAR . ((QUOTE . ((A . B) . NIL)) . NIL))";
         assertEquals(expectedDotNotation, getDotNotation(mixedWithSymbols));
     }
+
+    @Test
+    public void testMultilineExpression() throws LispSyntaxException {
+        String multilineExpression = "(DEFUN NOTSOSILLY (A B) \r\n" + "               (COND\r\n"
+                + "               ((EQ A 0) (PLUS B 1))\r\n"
+                + "               ((EQ B 0) (NOTSOSILLY (MINUS2 A 1) 1))\r\n"
+                + "               (T (NOTSOSILLY (MINUS2 A 1) (NOTSOSILLY A (MINUS2 B 1))))\r\n" + "             ))";
+        String expectedDotNotation = "(DEFUN . (NOTSOSILLY . ((A . (B . NIL)) " + ". ((COND . (((EQ . (A . (0 . NIL))) "
+                + ". ((PLUS . (B . (1 . NIL))) . NIL)) . (((EQ . (B . (0 . NIL))) "
+                + ". ((NOTSOSILLY . ((MINUS2 . (A . (1 . NIL))) . (1 . NIL))) . NIL)) "
+                + ". ((T . ((NOTSOSILLY . ((MINUS2 . (A . (1 . NIL))) "
+                + ". ((NOTSOSILLY . (A . ((MINUS2 . (B . (1 . NIL))) . NIL))) "
+                + ". NIL))) . NIL)) . NIL)))) . NIL))))";
+        assertEquals(expectedDotNotation, getDotNotation(multilineExpression));
+    }
 }
