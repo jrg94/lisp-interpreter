@@ -3,9 +3,22 @@
 Welcome to the Lisp Interpreter README. In this document,
 we'll cover exactly how to build and execute the Lisp REPL.
 
+## Quick and Dirty
+
+In order to build and run the Lisp REPL, you can attempt the following:
+
+```
+./run.sh
+```
+
+This file contains all the necessary code to pull the jar file
+from GitHub and run it.
+
 ## Build
 
-In order to build the Lisp REPL, you can attempt the following:
+If you'd like, you can try to build the source code yourself
+using the containing ant file. However, I was unable to
+get this running on stdlinux.
 
 ```
 ant -f build.xml
