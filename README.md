@@ -7,8 +7,8 @@ we'll cover exactly how to build and execute the Lisp REPL.
 
 In order to build and run the Lisp REPL, you can attempt the following:
 
-```
-./run.sh
+```console
+$ ./run.sh
 ```
 
 This file contains all the necessary code to pull the jar file
@@ -20,8 +20,8 @@ If you'd like, you can try to build the source code yourself
 using the containing ant file. However, I was unable to
 get this running on stdlinux.
 
-```
-ant -f build.xml
+```console
+$ ant -f build.xml
 ```
 
 The build file was generated automatically by eclipse, and it
@@ -36,13 +36,13 @@ the source code.
 In order to run the Lisp REPL, you'll want to execute the
 `lisp-interpreter.jar` file as follows:
 
-```
-java -jar lisp-interpreter.jar
+```console
+$ java -jar lisp-interpreter.jar
 ```
 
 Once executed, the REPL should launch with a message that reads:
 
-```
+```console
 Welcome to the CSE6341 Lisp Interpreter by Jeremy Grifski!
 You've just launched the Lisp REPL.
 To evaluate an s-expression, place a $ on a single line.
@@ -75,8 +75,8 @@ $$
 Assuming this file is named `lisp.txt`, you can redirect it to
 the jar file as follows:
 
-```
-java -jar lisp-interpreter.jar < lisp.txt
+```console
+$ java -jar lisp-interpreter.jar < lisp.txt
 ```
 
 If you run into an problems, let me know!
