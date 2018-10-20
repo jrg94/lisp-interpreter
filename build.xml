@@ -9,13 +9,10 @@
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-    <path id="JUnit 4.libraryclasspath">
-        <pathelement location="C:/Users/Jerem/.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
-        <pathelement location="C:/Users/Jerem/.p2/pool/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
-    </path>
     <path id="lisp-interpreter.classpath">
         <pathelement location="bin"/>
-        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/junit-4.12.jar"/>
+        <pathelement location="lib/hamcrest-core-1.3.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -45,16 +42,6 @@
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target name="LispInterpreter (1)">
-        <java classname="osu.cse6341.LispInterpreter" failonerror="true" fork="yes">
-            <classpath refid="lisp-interpreter.classpath"/>
-        </java>
-    </target>
-    <target name="LispInterpreter">
-        <java classname="LispInterpreter" failonerror="true" fork="yes">
-            <classpath refid="lisp-interpreter.classpath"/>
-        </java>
-    </target>
     <target name="LispInterpreterTest">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
@@ -63,6 +50,11 @@
             <jvmarg line="-ea"/>
             <classpath refid="lisp-interpreter.classpath"/>
         </junit>
+    </target>
+    <target name="LispInterpreter">
+        <java classname="osu.cse6341.LispInterpreter" failonerror="true" fork="yes">
+            <classpath refid="lisp-interpreter.classpath"/>
+        </java>
     </target>
     <target name="junitreport">
         <junitreport todir="${junit.output.dir}">
