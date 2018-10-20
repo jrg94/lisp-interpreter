@@ -6,6 +6,7 @@ jdk:
 
 script:
   - ant build
+  - ant LispInterpreterTest
 
 notifications:
   email: false
