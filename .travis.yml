@@ -5,7 +5,7 @@ jdk:
   - openjdk7
 
 script:
-  - ant LispInterpreterTest
+  - ant build
 
 notifications:
   email: false
