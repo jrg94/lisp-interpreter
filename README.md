@@ -58,7 +58,7 @@ the jar file as follows:
 $ ./run.sh < lisp.txt
 ```
 
-Be careful not to include your test file in the directory because it
+Be careful not to include your test file in the directory because will
 be deleted after testing. The `run.sh` file leverages git to clean
 the repo of all files not currently tracked. As a result, new files
 will be deleted. 
