@@ -50,11 +50,22 @@ public class NonAtom implements SExpression {
 
     @Override
     public SExpression eval(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
-        if (this.getLeft() instanceof SymbolicAtom || this.getLeft() instanceof IntegerAtom) {
-            // TODO:
+        SExpression ret = null;
+        if (this.getLeft() instanceof SymbolicAtom) {
+            SymbolicAtom exp = (SymbolicAtom) this.getLeft();
+            if (exp.equals(SExpression.QUOTE)) {
+                ret = exp.getRight().getLeft();
+            }
+            // TODO: call evcon
+            else if (exp.equals(SExpression.DEFUN)) {
+
+            } else {
+                // TODO: apply
+            }
         } else {
           throw new LispEvaluationException("Error in NonAtom Eval!");
         }
+        return ret;
     }
 
     /**
