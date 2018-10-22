@@ -60,6 +60,17 @@ public class NonAtom implements SExpression {
         throw new LispEvaluationException("Expected NonAtom but found: " + exp.toString());
       }
     }
+    
+    /**
+     * A helper method for converting SExpressions to SymbolicAtoms.
+     */
+    private static SymbolicAtom convertToSymbolicAtom(SExpression exp) throws LispEvaluationException {
+      if (exp instanceof SymbolicAtom) {
+        return (SymbolicAtom) exp;
+      } else {
+        throw new LispEvaluationException("Expected SymbolicAtom but found: " + exp.toString());
+      }
+    }
 
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
