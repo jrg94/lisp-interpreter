@@ -49,6 +49,17 @@ public class NonAtom implements SExpression {
     public SExpression getRight() {
         return right;
     }
+    
+    /**
+     * A helper method for converting SExpressions to NonAtoms.
+     */
+    private static NonAtom convertToNonAtom(SExpression exp) throws LispEvaluationException {
+      if (exp instanceof NonAtom) {
+        return (NonAtom) exp;
+      } else {
+        throw new LispEvaluationException("Expected NonAtom but found: " + exp.toString());
+      }
+    }
 
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
@@ -67,7 +78,7 @@ public class NonAtom implements SExpression {
             } else if (car.equals(SExpression.DEFUN)) {
                 throw new LispEvaluationException("Illegal dList update");
             } else {
-                // TODO: call apply
+                //this.apply(aList, dList);
             }
         } else {
           throw new LispEvaluationException("Error in NonAtom Eval!");
@@ -75,10 +86,10 @@ public class NonAtom implements SExpression {
         return ret;
     }
 
-    public SExpression apply(SymbolicAtom func, NonAtom x, Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
+    private SExpression apply(SymbolicAtom func, NonAtom x, Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
         if (func.equals(SExpression.CAR)) {
-          // CAAR(x)
+          this.caar();
         } else if (func.equals(SExpression.CDR)) {
           // CDAR(x)
         } else if (func.equals(SExpression.CONS)) {
@@ -93,6 +104,17 @@ public class NonAtom implements SExpression {
           // eval[ cdr[getval[f, dList]], addpairs[car[getval[f, dList]], x, aList], dList]
         }
         return ret;
+    }
+    
+    private SExpression caar() throws LispEvaluationException {
+      SExpression ret = null;
+      if (this.getLeft() instanceof NonAtom) {
+        NonAtom left = (NonAtom) this.getLeft();
+        ret = left.getLeft();
+      } else {
+        throw new LispEvaluationException("Unable to call CAAR on atom");
+      }
+      return ret;
     }
 
     public SExpression evlist(SExpression list, Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
