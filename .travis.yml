@@ -4,8 +4,7 @@ jdk:
   - oraclejdk8
 
 script:
-  - ant build
-  - ant LispInterpreterTest
+  - echo "moving to maven - pls standby"
 
 notifications:
   email: false
