@@ -48,6 +48,15 @@ public class NonAtom implements SExpression {
         return right;
     }
 
+    @Override
+    public SExpression eval(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
+        if (this.getLeft() instanceof SymbolicAtom || this.getLeft() instanceof IntegerAtom) {
+            // TODO:
+        } else {
+          throw new LispEvaluationException("Error in NonAtom Eval!");
+        }
+    }
+
     /**
      * The standard override of the equals method.
      *
