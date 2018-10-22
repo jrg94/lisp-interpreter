@@ -1,5 +1,6 @@
 package osu.cse6341;
 
+import com.sun.java_cup.internal.runtime.Symbol;
 import java.util.ArrayList;
 
 /**
@@ -82,8 +83,22 @@ public class NonAtom implements SExpression {
           // NULL(CAR(X))
         } else if (func.equals(SExpression.EQ)) {
           // EQ(CAR(X), CADR(X))
+        } else {
+          // eval[ cdr[getval[f, dList]], addpairs[car[getval[f, dList]], x, aList], dList]
         }
         return ret;
+    }
+
+    public SExpression evlist(SExpression list, Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
+        SExpression ret = null;
+        if (list instanceof SymbolicAtom) {
+            Symbolic nil = (SymbolicAtom) list;
+            if (nil.equals(SExpression.NIL)) {
+              ret = SExpression.NIL;
+            } else {
+              throw new LispEvaluationException("Expected Empty List but found " + nil.toString());
+            }
+        }
     }
 
     /**
