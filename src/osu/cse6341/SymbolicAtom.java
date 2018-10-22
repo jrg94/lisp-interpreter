@@ -31,6 +31,10 @@ public class SymbolicAtom implements SExpression {
       if (this.equals(T)) {
         return T;
       }
+      // TODO: if aList contains this, return it's associated value
+      else {
+        throw new LispEvaluationException("Unbound atom " + this.toString());
+      }
     }
 
     /**
