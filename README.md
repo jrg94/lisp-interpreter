@@ -15,6 +15,8 @@ This file contains all the necessary code to build the java files,
 run the interpreter, and clean up the java files following execution.
 Feel free to take a look at the file to see how it works.
 
+## REPL
+
 Once executed, the REPL should launch with a message that reads:
 
 ```console
@@ -35,6 +37,8 @@ your s-expression printed in dot notation.
 
 When you're done, enter a pair of dollar signs ($$) on a single line. This
 terminates the program. If successful, you should see `Goodbye!`.
+
+## File Redirection
 
 Alternatively, you can safely automate the interpreter by piping
 several s-expressions from a file such as the following:
