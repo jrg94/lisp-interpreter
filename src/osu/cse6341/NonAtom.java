@@ -55,12 +55,12 @@ public class NonAtom implements SExpression {
             SymbolicAtom exp = (SymbolicAtom) this.getLeft();
             if (exp.equals(SExpression.QUOTE)) {
                 ret = exp.getRight().getLeft();
-            }
-            // TODO: call evcon
-            else if (exp.equals(SExpression.DEFUN)) {
-
+            } else if (exp.equals(SExpression.COND)) {
+                // TODO: call evcon
+            } else if (exp.equals(SExpression.DEFUN)) {
+                throw new LispEvaluationException("Illegal dList update");
             } else {
-                // TODO: apply
+                // TODO: call apply
             }
         } else {
           throw new LispEvaluationException("Error in NonAtom Eval!");
