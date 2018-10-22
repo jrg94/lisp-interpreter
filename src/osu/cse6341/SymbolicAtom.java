@@ -30,7 +30,7 @@ public class SymbolicAtom implements SExpression {
     }
 
     @Override
-    public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
+    public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
       if (this.equals(T)) {
         return T;
       }

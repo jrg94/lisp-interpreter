@@ -23,6 +23,6 @@ public interface SExpression {
   public static final SymbolicAtom EQ = new SymbolicAtom("EQ");
 
   // TODO: Add evaluate function
-  public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList);
+  public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException;
 
 }

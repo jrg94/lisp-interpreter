@@ -51,7 +51,7 @@ public class NonAtom implements SExpression {
     }
 
     @Override
-    public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
+    public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
         if (this.getLeft() instanceof SymbolicAtom) {
             SymbolicAtom car = (SymbolicAtom) this.getLeft();
@@ -95,7 +95,7 @@ public class NonAtom implements SExpression {
         return ret;
     }
 
-    public SExpression evlist(SExpression list, Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
+    public SExpression evlist(SExpression list, Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
         if (list instanceof SymbolicAtom) {
             SymbolicAtom nil = (SymbolicAtom) list;
@@ -107,6 +107,7 @@ public class NonAtom implements SExpression {
         } else {
             // cons[ eval[car[list], aList, dList], evlis[cdr[list], aList, dList] ]
         }
+        return ret;
     }
 
     /**
