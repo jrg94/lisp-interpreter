@@ -2,6 +2,7 @@
 
 javac src/osu/cse6341/*.java
 java -cp src/ osu.cse6341.LispInterpreter
+git clean -fdx
 
 # Uncomment if you'd prefer to use the jar
 # 
