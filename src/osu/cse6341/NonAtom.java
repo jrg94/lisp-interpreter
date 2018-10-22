@@ -70,7 +70,9 @@ public class NonAtom implements SExpression {
 
     public SExpression apply(SymbolicAtom func, NonAtom x, Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
         if (func.equals(SExpression.CAR)) {
-          
+          // CAAR(x)
+        } else if (func.equals(SExpression.CDR)) {
+          // CDAR(x)
         }
     }
 

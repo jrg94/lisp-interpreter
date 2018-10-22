@@ -13,6 +13,7 @@ public interface SExpression {
   public static final SymbolicAtom DEFUN = new SymbolicAtom("DEFUN");
   public static final SymbolicAtom COND = new SymbolicAtom("COND");
   public static final SymbolicAtom CAR = new SymbolicAtom("CAR");
+  public static final SymbolicAtom CDR = new SymbolicAtom("CDR");
 
   // TODO: Add evaluate function
   public SExpression eval(Stack<NonAtom> aList, ArrayList<NonAtom> dList);
