@@ -78,7 +78,9 @@ public class NonAtom implements SExpression {
           // CONS(CAR(x), CDR(x))
         } else if (func.equals(SExpression.ATOM)) {
           // ATOM(CAR(X))
-        }
+        } else if (func.equals(SExpression.NULL)) {
+          // NULL(CAR(X))
+        } 
         return ret;
     }
 
