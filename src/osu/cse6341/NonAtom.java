@@ -86,30 +86,30 @@ public class NonAtom implements SExpression {
   @Override
   public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
     SExpression ret = null;
-    
     SymbolicAtom car = this.convertToSymbolicAtom(this.getLeft());
     if (car.equals(SExpression.QUOTE)) {
-      if (this.getRight() instanceof NonAtom) {
-        NonAtom cdr = (NonAtom) this.getRight();
+      try {
+        NonAtom cdr = this.convertToNonAtom(this.getRight());
         ret = cdr.getLeft();
-      } else {
-        throw new LispEvaluationException("CDR of QUOTE expression is not a NonAtom: " + this.getRight().toString());
+      } catch (LispEvaluationException e) {
+        throw new LispEvaluationException("CDR of QUOTE expression is not a NonAtom: " + this.getRight().toString(), e);
       }
     } else if (car.equals(SExpression.COND)) {
       // TODO: call evcon
     } else if (car.equals(SExpression.DEFUN)) {
       throw new LispEvaluationException("Illegal dList update");
     } else {
-      //this.apply(aList, dList);
+      ret = this.apply(aList, dList);
     }
-    
     return ret;
   }
   
-  private SExpression apply(SymbolicAtom func, NonAtom x, Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
+  private SExpression apply(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
     SExpression ret = null;
+    SymbolicAtom func = this.convertToSymbolicAtom(this.getLeft());
+    NonAtom args = this.convertToNonAtom(this.getRight());
     if (func.equals(SExpression.CAR)) {
-      this.caar();
+      ret = args.caar();
     } else if (func.equals(SExpression.CDR)) {
       // CDAR(x)
     } else if (func.equals(SExpression.CONS)) {
@@ -128,12 +128,8 @@ public class NonAtom implements SExpression {
   
   private SExpression caar() throws LispEvaluationException {
     SExpression ret = null;
-    if (this.getLeft() instanceof NonAtom) {
-      NonAtom left = (NonAtom) this.getLeft();
-      ret = left.getLeft();
-    } else {
-      throw new LispEvaluationException("Unable to call CAAR on atom");
-    }
+    NonAtom left = this.convertToNonAtom(this.getLeft());
+    ret = left.getLeft();
     return ret;
   }
   
