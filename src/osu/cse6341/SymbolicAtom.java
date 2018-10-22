@@ -1,5 +1,8 @@
 package osu.cse6341;
 
+import java.util.Stack;
+import java.util.ArrayList;
+
 /**
  * The Symbolic Atom class which is a type of s-expression.
  *
@@ -27,7 +30,7 @@ public class SymbolicAtom implements SExpression {
     }
 
     @Override
-    public SExpression eval(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
+    public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
       if (this.equals(T)) {
         return T;
       }

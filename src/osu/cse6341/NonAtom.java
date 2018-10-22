@@ -2,6 +2,7 @@ package osu.cse6341;
 
 import com.sun.java_cup.internal.runtime.Symbol;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * The NonAtom class which is a type of s-expression.
@@ -50,15 +51,20 @@ public class NonAtom implements SExpression {
     }
 
     @Override
-    public SExpression eval(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
+    public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
         SExpression ret = null;
         if (this.getLeft() instanceof SymbolicAtom) {
-            SymbolicAtom exp = (SymbolicAtom) this.getLeft();
-            if (exp.equals(SExpression.QUOTE)) {
-                ret = exp.getRight().getLeft();
-            } else if (exp.equals(SExpression.COND)) {
+            SymbolicAtom car = (SymbolicAtom) this.getLeft();
+            if (car.equals(SExpression.QUOTE)) {
+              if (this.getRight() instanceof NonAtom) {
+                NonAtom cdr = (NonAtom) this.getRight();
+                ret = cdr.getLeft();
+              } else {
+                throw new LispEvaluationException("CDR of QUOTE expression is not a NonAtom: " + this.getRight().toString());
+              }
+            } else if (car.equals(SExpression.COND)) {
                 // TODO: call evcon
-            } else if (exp.equals(SExpression.DEFUN)) {
+            } else if (car.equals(SExpression.DEFUN)) {
                 throw new LispEvaluationException("Illegal dList update");
             } else {
                 // TODO: call apply
@@ -92,7 +98,7 @@ public class NonAtom implements SExpression {
     public SExpression evlist(SExpression list, Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
         SExpression ret = null;
         if (list instanceof SymbolicAtom) {
-            Symbolic nil = (SymbolicAtom) list;
+            SymbolicAtom nil = (SymbolicAtom) list;
             if (nil.equals(SExpression.NIL)) {
               ret = SExpression.NIL;
             } else {

@@ -1,5 +1,8 @@
 package osu.cse6341;
 
+import java.util.Stack;
+import java.util.ArrayList;
+
 /**
  * The Integer Atom class which is a type of s-expression.
  *
@@ -28,7 +31,7 @@ public class IntegerAtom implements SExpression {
     }
 
     @Override
-    public SExpression eval(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
+    public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
       return this;
     }
 

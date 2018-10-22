@@ -1,5 +1,8 @@
 package osu.cse6341;
 
+import java.util.Stack;
+import java.util.ArrayList;
+
 /**
  * The S-Expresion Interface.
  *
@@ -20,6 +23,6 @@ public interface SExpression {
   public static final SymbolicAtom EQ = new SymbolicAtom("EQ");
 
   // TODO: Add evaluate function
-  public SExpression eval(Stack<NonAtom> aList, ArrayList<NonAtom> dList);
+  public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList);
 
 }
