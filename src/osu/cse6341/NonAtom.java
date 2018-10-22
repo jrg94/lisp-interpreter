@@ -98,6 +98,8 @@ public class NonAtom implements SExpression {
             } else {
               throw new LispEvaluationException("Expected Empty List but found " + nil.toString());
             }
+        } else {
+            // cons[ eval[car[list], aList, dList], evlis[cdr[list], aList, dList] ]
         }
     }
 
