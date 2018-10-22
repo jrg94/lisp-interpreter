@@ -13,9 +13,6 @@ import java.util.Stack;
  */
 public class LispInterpreter {
 
-    public static final SymbolicAtom NIL = new SymbolicAtom("NIL");
-    public static final SymbolicAtom T = new SymbolicAtom("T");
-
     public Stack<NonAtom> aList;
     public ArrayList<NonAtom> dList;
     public ArrayList<SymbolicAtom> symbols;
@@ -118,7 +115,7 @@ public class LispInterpreter {
     private SExpression parseListNotation(ArrayList<SExpression> exps) {
         SExpression curr;
         if (exps.isEmpty()) {
-            curr = NIL;
+            curr = SExpression.NIL;
         } else {
             curr = new NonAtom();
             NonAtom temp = (NonAtom) curr;
@@ -128,7 +125,7 @@ public class LispInterpreter {
                     temp.setRight(new NonAtom());
                     temp = (NonAtom) temp.getRight();
                 } else {
-                    temp.setRight(NIL);
+                    temp.setRight(SExpression.NIL);
                 }
             }
         }

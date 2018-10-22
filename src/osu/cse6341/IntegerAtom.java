@@ -2,7 +2,7 @@ package osu.cse6341;
 
 /**
  * The Integer Atom class which is a type of s-expression.
- * 
+ *
  * @author Jeremy Grifski
  */
 public class IntegerAtom implements SExpression {
@@ -11,7 +11,7 @@ public class IntegerAtom implements SExpression {
 
     /**
      * The base constructor.
-     * 
+     *
      * @param value an integer
      */
     public IntegerAtom(int value) {
@@ -20,16 +20,21 @@ public class IntegerAtom implements SExpression {
 
     /**
      * Gets the integer value of this s-expression.
-     * 
+     *
      * @return the integer value
      */
     public int getValue() {
         return value;
     }
 
+    @Override
+    public SExpression eval(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
+      return this;
+    }
+
     /**
      * The standard override of the equals method.
-     * 
+     *
      * @return true if the two integers are equal
      */
     @Override
@@ -48,7 +53,7 @@ public class IntegerAtom implements SExpression {
 
     /**
      * The standard override of the toString method.
-     * 
+     *
      * @return the integer as a string
      */
     public String toString() {

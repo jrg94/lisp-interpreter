@@ -2,7 +2,7 @@ package osu.cse6341;
 
 /**
  * The Symbolic Atom class which is a type of s-expression.
- * 
+ *
  * @author Jeremy Grifski
  */
 public class SymbolicAtom implements SExpression {
@@ -10,7 +10,7 @@ public class SymbolicAtom implements SExpression {
 
     /**
      * The Symbolic Atom constructor which takes a name as input.
-     * 
+     *
      * @param name the name of the symbol
      */
     public SymbolicAtom(String name) {
@@ -19,16 +19,23 @@ public class SymbolicAtom implements SExpression {
 
     /**
      * A get value function which retrieves the name of the name of the symbol.
-     * 
+     *
      * @return the name of the symbol
      */
     public String getValue() {
         return name;
     }
 
+    @Override
+    public SExpression eval(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
+      if (this.equals(T)) {
+        return T;
+      }
+    }
+
     /**
      * The standard override of the toString method.
-     * 
+     *
      * @return the name of the symbol
      */
     @Override
@@ -38,7 +45,7 @@ public class SymbolicAtom implements SExpression {
 
     /**
      * The standard override of the equals method.
-     * 
+     *
      * @return true if the two symbols are equal
      */
     @Override
