@@ -8,7 +8,7 @@ import java.util.Stack;
 
 /**
  * The lisp interpreter class which handles the REPL.
- * 
+ *
  * @author Jeremy Grifski
  */
 public class LispInterpreter {
@@ -16,7 +16,8 @@ public class LispInterpreter {
     public static final SymbolicAtom NIL = new SymbolicAtom("NIL");
     public static final SymbolicAtom T = new SymbolicAtom("T");
 
-    public ArrayList<SymbolicAtom> dList;
+    public Stack<NonAtom> aList;
+    public ArrayList<NonAtom> dList;
     public ArrayList<SymbolicAtom> symbols;
 
     /**
@@ -24,16 +25,14 @@ public class LispInterpreter {
      * dList.
      */
     public LispInterpreter() {
-        dList = new ArrayList<SymbolicAtom>();
-        dList.add(new SymbolicAtom("cons"));
-        dList.add(new SymbolicAtom("car"));
-        dList.add(new SymbolicAtom("cdr"));
+        aList = new Stack<NonAtom>();
+        dList = new ArrayList<NonAtom>();
         symbols = new ArrayList<SymbolicAtom>();
     }
 
     /**
      * Converts a lisp program to a stack of tokens.
-     * 
+     *
      * @param lispProgram a lisp program
      * @return a stack of lisp program tokens
      */
@@ -50,7 +49,7 @@ public class LispInterpreter {
 
     /**
      * Parses the set of tokens and produces the AST.
-     * 
+     *
      * @param lispTokens a stack of lisp tokens
      * @return an AST
      * @throws LispSyntaxException when parsing fails
@@ -93,7 +92,7 @@ public class LispInterpreter {
 
     /**
      * A dot notation parsing function.
-     * 
+     *
      * @param exps a list of expressions for a given SExpression
      * @return an SExpression from the list of SExpressions
      * @throws LispSyntaxException when the list of expressions is not 2
@@ -112,7 +111,7 @@ public class LispInterpreter {
 
     /**
      * A list notation parsing function.
-     * 
+     *
      * @param exps a list of expressions for a given SExpression
      * @return an SExpression from the list of SExpressions
      */
@@ -138,7 +137,7 @@ public class LispInterpreter {
 
     /**
      * Generates an S expression from a token known to be an atom.
-     * 
+     *
      * @param token a token
      * @return the token as an s expression
      * @throws LispSyntaxException
@@ -156,7 +155,7 @@ public class LispInterpreter {
 
     /**
      * Tests that a string is alphanumeric.
-     * 
+     *
      * @param underTest the string under test
      * @return true if the string only contains alphanumeric digits
      */
@@ -173,7 +172,7 @@ public class LispInterpreter {
      * A helper method for searching the symbol table. If a symbol is found,
      * that symbol is returned. Otherwise, a new symbol is created, added to the
      * symbol table, and returned.
-     * 
+     *
      * @param token a token
      * @return an existing symbolic atom from the symbol table; a new symbolic
      *         atom otherwise
@@ -202,7 +201,7 @@ public class LispInterpreter {
 
     /**
      * The read stage of the REPL.
-     * 
+     *
      * @param lispProgram a lisp program as a string
      * @return a lisp program as an AST
      * @throws LispSyntaxException when there are syntax errors
@@ -217,8 +216,15 @@ public class LispInterpreter {
     }
 
     /**
+     * Evaluates the abstract syntax tree.
+     */
+    public SExpression eval(SExpression ast) {
+      return ast.evaluate(this.aList, this.dList);
+    }
+
+    /**
      * Outputs the AST in dot notation.
-     * 
+     *
      * @param result the AST
      */
     public void print(SExpression result) {
@@ -227,7 +233,7 @@ public class LispInterpreter {
 
     /**
      * The read, evaluate, print function.
-     * 
+     *
      * @param currExpression
      */
     private void rep(String currExpression) {
@@ -261,7 +267,7 @@ public class LispInterpreter {
     /**
      * A helper function used to issue the input string and grab the next line
      * of text.
-     * 
+     *
      * @param in a scanner for reading standard input
      * @return the text received from the user
      */
@@ -273,7 +279,7 @@ public class LispInterpreter {
 
     /**
      * Runs the Lisp REPL.
-     * 
+     *
      * @param args command line arguments
      */
     public static void main(String[] args) {
