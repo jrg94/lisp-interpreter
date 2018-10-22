@@ -17,6 +17,7 @@ public interface SExpression {
   public static final SymbolicAtom CONS = new SymbolicAtom("CONS");
   public static final SymbolicAtom ATOM = new SymbolicAtom("ATOM");
   public static final SymbolicAtom NULL = new SymbolicAtom("NULL");
+  public static final SymbolicAtom EQ = new SymbolicAtom("EQ");
 
   // TODO: Add evaluate function
   public SExpression eval(Stack<NonAtom> aList, ArrayList<NonAtom> dList);

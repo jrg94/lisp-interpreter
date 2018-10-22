@@ -80,7 +80,9 @@ public class NonAtom implements SExpression {
           // ATOM(CAR(X))
         } else if (func.equals(SExpression.NULL)) {
           // NULL(CAR(X))
-        } 
+        } else if (func.equals(SExpression.EQ)) {
+          // EQ(CAR(X), CADR(X))
+        }
         return ret;
     }
 
