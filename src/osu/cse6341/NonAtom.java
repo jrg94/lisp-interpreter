@@ -68,6 +68,12 @@ public class NonAtom implements SExpression {
         return ret;
     }
 
+    public SExpression apply(SymbolicAtom func, NonAtom x, Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
+        if (func.equals(SExpression.CAR)) {
+          
+        }
+    }
+
     /**
      * The standard override of the equals method.
      *
