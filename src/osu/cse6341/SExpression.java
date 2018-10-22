@@ -14,6 +14,7 @@ public interface SExpression {
   public static final SymbolicAtom COND = new SymbolicAtom("COND");
   public static final SymbolicAtom CAR = new SymbolicAtom("CAR");
   public static final SymbolicAtom CDR = new SymbolicAtom("CDR");
+  public static final SymbolicAtom CONS = new SymbolicAtom("CONS");
 
   // TODO: Add evaluate function
   public SExpression eval(Stack<NonAtom> aList, ArrayList<NonAtom> dList);

@@ -73,6 +73,8 @@ public class NonAtom implements SExpression {
           // CAAR(x)
         } else if (func.equals(SExpression.CDR)) {
           // CDAR(x)
+        } else if (func.equals(SExpression.CONS)) {
+          // CONS(CAR(x), CDR(x))
         }
     }
 
