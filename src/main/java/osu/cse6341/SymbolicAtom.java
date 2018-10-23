@@ -1,7 +1,7 @@
 package osu.cse6341;
 
-import java.util.Stack;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * The Symbolic Atom class which is a type of s-expression.
@@ -31,13 +31,13 @@ public class SymbolicAtom implements SExpression {
 
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
-      if (this.equals(T)) {
-        return T;
-      }
-      // TODO: if aList contains this, return it's associated value
-      else {
-        throw new LispEvaluationException("Unbound atom " + this.toString());
-      }
+        if (this.equals(T)) {
+            return T;
+        }
+        // TODO: if aList contains this, return it's associated value
+        else {
+            throw new LispEvaluationException("Unbound atom " + this.toString());
+        }
     }
 
     /**
@@ -71,5 +71,14 @@ public class SymbolicAtom implements SExpression {
             isEqual = false;
         }
         return isEqual;
+    }
+
+    @Override
+    public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
+        if (this.equals(SExpression.NIL)) {
+            return SExpression.NIL;
+        } else {
+            throw new LispEvaluationException("Expected Empty List but found " + this.toString());
+        }
     }
 }

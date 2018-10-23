@@ -85,7 +85,7 @@ public class NonAtom implements SExpression {
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
-        SymbolicAtom car = NonAtom.convertToSymbolicAtom(this.getLeft());
+        SExpression car = this.getLeft();
         if (car.equals(SExpression.QUOTE)) {
             try {
                 NonAtom cdr = NonAtom.convertToNonAtom(this.getRight());
@@ -106,14 +106,14 @@ public class NonAtom implements SExpression {
 
     private SExpression apply(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
-        SymbolicAtom func = NonAtom.convertToSymbolicAtom(this.getLeft());
-        NonAtom args = NonAtom.convertToNonAtom(this.getRight());
+        SExpression func = this.getLeft();
+        SExpression args = this.getRight().evaluateList(aList, dList);
         if (func.equals(SExpression.CAR)) {
-            ret = args.caar();
+            ret = NonAtom.convertToNonAtom(args).caar();
         } else if (func.equals(SExpression.CDR)) {
-            ret = args.cdar();
+            ret = NonAtom.convertToNonAtom(args).cdar();
         } else if (func.equals(SExpression.CONS)) {
-            ret = args.cons();
+            ret = NonAtom.cons(NonAtom.convertToNonAtom(args).getLeft(), NonAtom.convertToNonAtom(args).getRight());
         } else if (func.equals(SExpression.ATOM)) {
             // ATOM(CAR(X))
         } else if (func.equals(SExpression.NULL)) {
@@ -121,16 +121,24 @@ public class NonAtom implements SExpression {
         } else if (func.equals(SExpression.EQ)) {
             // EQ(CAR(X), CADR(X))
         } else {
+            throw new LispEvaluationException("Not implemented");
             // eval[ cdr[getval[f, dList]], addpairs[car[getval[f, dList]], x,
             // aList], dList]
         }
         return ret;
     }
 
-    private SExpression cons() {
+    /**
+     * A static method which creates a new NonAtom from two SExpressions.
+     * 
+     * @param left the s-expression to be used on the left
+     * @param right the s-expression to be used on the right
+     * @return the root of the new binary tree
+     */
+    private static NonAtom cons(SExpression left, SExpression right) {
         NonAtom root = new NonAtom();
-        root.setLeft(this.getLeft());
-        root.setRight(this.getRight());
+        root.setLeft(left);
+        root.setRight(right);
         return root;
     }
 
@@ -148,21 +156,14 @@ public class NonAtom implements SExpression {
         return ret;
     }
 
-    public SExpression evlist(SExpression list, Stack<NonAtom> aList, ArrayList<NonAtom> dList)
-            throws LispEvaluationException {
-        SExpression ret = null;
-        if (list instanceof SymbolicAtom) {
-            SymbolicAtom nil = (SymbolicAtom) list;
-            if (nil.equals(SExpression.NIL)) {
-                ret = SExpression.NIL;
-            } else {
-                throw new LispEvaluationException("Expected Empty List but found " + nil.toString());
-            }
-        } else {
-            // cons[ eval[car[list], aList, dList], evlis[cdr[list], aList,
-            // dList] ]
-        }
-        return ret;
+    /**
+     * Evaluates a list of arguments and returns them as an evaluated list.
+     */
+    @Override
+    public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
+        SExpression left = this.getLeft().evaluate(aList, dList);
+        SExpression right = this.getRight().evaluateList(aList, dList);
+        return NonAtom.cons(left, right);
     }
 
     /**

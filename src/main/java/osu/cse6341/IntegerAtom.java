@@ -1,7 +1,7 @@
 package osu.cse6341;
 
-import java.util.Stack;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * The Integer Atom class which is a type of s-expression.
@@ -32,7 +32,11 @@ public class IntegerAtom implements SExpression {
 
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
-      return this;
+        return this;
+    }
+
+    public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
+        throw new LispEvaluationException(this.toString() + " is not a list");
     }
 
     /**

@@ -24,15 +24,24 @@ public class LispEvaluationTest {
 
     @Test
     public void testCAR() throws LispEvaluationException {
-        String test = "(CAR (2 . 3))";
+        String test = "(CAR (QUOTE (2 . 3)))";
         IntegerAtom expectedResult = new IntegerAtom(2);
         assertEquals(expectedResult, getEvaluation(test));
     }
 
     @Test
     public void testCDR() throws LispEvaluationException {
-        String test = "(CDR (2 . 3))";
+        String test = "(CDR (QUOTE (2 . 3)))";
         IntegerAtom expectedResult = new IntegerAtom(3);
+        assertEquals(expectedResult, getEvaluation(test));
+    }
+
+    @Test
+    public void testCONS() throws LispEvaluationException {
+        String test = "(CONS 2 3)";
+        NonAtom expectedResult = new NonAtom();
+        expectedResult.setLeft(new IntegerAtom(2));
+        expectedResult.setRight(new IntegerAtom(3));
         assertEquals(expectedResult, getEvaluation(test));
     }
 }
