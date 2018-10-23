@@ -4,7 +4,7 @@ jdk:
   - oraclejdk8
 
 script:
-  - echo "moving to maven - pls standby"
+  - mvn clean install
 
 notifications:
   email: false
