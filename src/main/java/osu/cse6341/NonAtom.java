@@ -113,14 +113,13 @@ public class NonAtom implements SExpression {
         } else if (func.equals(SExpression.CDR)) {
             ret = args.cdar();
         } else if (func.equals(SExpression.CONS)) {
-            ret = NonAtom.cons(args.getLeft(), args.getRight());
+            ret = NonAtom.cons(args.getLeft(), args.cadr());
         } else if (func.equals(SExpression.ATOM)) {
             ret = args.getLeft().isAtom();
         } else if (func.equals(SExpression.NULL)) {
             ret = args.getLeft().isNull();
         } else if (func.equals(SExpression.EQ)) {
             return NonAtom.isEqual(args.getLeft(), args.cadr());
-            // EQ(CAR(X), CADR(X))
         } else {
             throw new LispEvaluationException("Not implemented");
             // eval[ cdr[getval[f, dList]], addpairs[car[getval[f, dList]], x,
@@ -135,8 +134,9 @@ public class NonAtom implements SExpression {
      * @param left the s-expression to be used on the left
      * @param right the s-expression to be used on the right
      * @return the root of the new binary tree
+     * @throws LispEvaluationException
      */
-    private static NonAtom cons(SExpression left, SExpression right) {
+    private static NonAtom cons(SExpression left, SExpression right) throws LispEvaluationException {
         NonAtom root = new NonAtom();
         root.setLeft(left);
         root.setRight(right);
