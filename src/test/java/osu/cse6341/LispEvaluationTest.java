@@ -29,4 +29,10 @@ public class LispEvaluationTest {
         assertEquals(expectedResult, getEvaluation(test));
     }
 
+    @Test
+    public void testCDR() throws LispEvaluationException {
+        String test = "(CDR (2 . 3))";
+        IntegerAtom expectedResult = new IntegerAtom(3);
+        assertEquals(expectedResult, getEvaluation(test));
+    }
 }

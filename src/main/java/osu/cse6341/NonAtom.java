@@ -136,8 +136,8 @@ public class NonAtom implements SExpression {
 
     private SExpression cdar() throws LispEvaluationException {
         SExpression ret = null;
-        NonAtom right = NonAtom.convertToNonAtom(this.getRight());
-        ret = right.getLeft();
+        NonAtom right = NonAtom.convertToNonAtom(this.getLeft());
+        ret = right.getRight();
         return ret;
     }
 
