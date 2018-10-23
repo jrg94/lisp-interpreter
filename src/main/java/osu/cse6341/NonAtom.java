@@ -184,12 +184,14 @@ public class NonAtom implements SExpression {
 
     @Override
     public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
+        SExpression ret = null;
         SExpression test = this.caar().evaluate(aList, dList);
         if (test.equals(SExpression.T)) {
             // TODO: eval(cadar(be), aList, dList)
         } else {
-            this.getRight().evaluateConditions(aList, dList);
+            ret = this.getRight().evaluateConditions(aList, dList);
         }
+        return ret;
     }
 
     /**
