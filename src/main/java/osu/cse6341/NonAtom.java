@@ -164,6 +164,13 @@ public class NonAtom implements SExpression {
         return ret;
     }
 
+    private SExpression cadar() throws LispEvaluationException {
+      SExpression ret = null;
+      NonAtom right = NonAtom.convertToNonAtom(this.cdar());
+      ret = right.getLeft();
+      return ret;
+    }
+
     /**
      * Returns the NIL SExpression.
      */
@@ -187,7 +194,7 @@ public class NonAtom implements SExpression {
         SExpression ret = null;
         SExpression test = this.caar().evaluate(aList, dList);
         if (test.equals(SExpression.T)) {
-            // TODO: eval(cadar(be), aList, dList)
+            this.cadar().evaluate(aList, dList);
         } else {
             ret = this.getRight().evaluateConditions(aList, dList);
         }
