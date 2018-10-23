@@ -67,4 +67,11 @@ public class LispEvaluationTest {
         SymbolicAtom expectedResult = SExpression.T;
         assertEquals(expectedResult, getEvaluation(test));
     }
+
+    @Test
+    public void testFalseEQ() throws LispEvaluationException {
+        String test = "(EQ 2 4)";
+        SymbolicAtom expectedResult = SExpression.NIL;
+        assertEquals(expectedResult, getEvaluation(test));
+    }
 }

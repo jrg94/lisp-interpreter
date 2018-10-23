@@ -119,7 +119,7 @@ public class NonAtom implements SExpression {
         } else if (func.equals(SExpression.NULL)) {
             ret = args.getLeft().isNull();
         } else if (func.equals(SExpression.EQ)) {
-            throw new LispEvaluationException("Not implemented");
+            return NonAtom.isEqual(args.getLeft(), args.cadr());
             // EQ(CAR(X), CADR(X))
         } else {
             throw new LispEvaluationException("Not implemented");
@@ -152,8 +152,15 @@ public class NonAtom implements SExpression {
 
     private SExpression cdar() throws LispEvaluationException {
         SExpression ret = null;
-        NonAtom right = NonAtom.convertToNonAtom(this.getLeft());
-        ret = right.getRight();
+        NonAtom left = NonAtom.convertToNonAtom(this.getLeft());
+        ret = left.getRight();
+        return ret;
+    }
+
+    private SExpression cadr() throws LispEvaluationException {
+        SExpression ret = null;
+        NonAtom right = NonAtom.convertToNonAtom(this.getRight());
+        ret = right.getLeft();
         return ret;
     }
 
@@ -206,5 +213,13 @@ public class NonAtom implements SExpression {
     @Override
     public SymbolicAtom isNull() {
         return SExpression.NIL;
+    }
+
+    public static SymbolicAtom isEqual(SExpression a, SExpression b) {
+        if (a == b) {
+            return SExpression.T;
+        } else {
+            return SExpression.NIL;
+        }
     }
 }
