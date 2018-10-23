@@ -9,17 +9,24 @@ public class LispEvaluationTest {
 
     private LispInterpreter interpreter;
 
-    @Before
-    public void setUp() {
-        interpreter = new LispInterpreter();
-    }
-
+    /**
+     * A helper method for evaluating lisp code.
+     * 
+     * @param code a complete s-expression
+     * @return the SExpression result
+     * @throws LispEvaluationException if there is a syntax error
+     */
     private SExpression getEvaluation(String code) throws LispEvaluationException {
         try {
             return interpreter.read(code).evaluate(null, null);
         } catch (LispSyntaxException e) {
             throw new LispEvaluationException("Syntax error - unable to test", e);
         }
+    }
+
+    @Before
+    public void setUp() {
+        interpreter = new LispInterpreter();
     }
 
     @Test
