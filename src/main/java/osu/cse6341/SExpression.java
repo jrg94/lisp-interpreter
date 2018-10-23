@@ -26,4 +26,8 @@ public interface SExpression {
 
     public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException;
 
+    public SymbolicAtom isAtom();
+
+    public SymbolicAtom isNull();
+
 }

@@ -23,6 +23,15 @@ public class LispEvaluationTest {
     }
 
     @Test
+    public void testQUOTE() throws LispEvaluationException {
+        String test = "(QUOTE (2 . 3))";
+        NonAtom expectedResult = new NonAtom();
+        expectedResult.setLeft(new IntegerAtom(2));
+        expectedResult.setRight(new IntegerAtom(3));
+        assertEquals(expectedResult, getEvaluation(test));
+    }
+
+    @Test
     public void testCAR() throws LispEvaluationException {
         String test = "(CAR (QUOTE (2 . 3)))";
         IntegerAtom expectedResult = new IntegerAtom(2);
@@ -42,6 +51,13 @@ public class LispEvaluationTest {
         NonAtom expectedResult = new NonAtom();
         expectedResult.setLeft(new IntegerAtom(2));
         expectedResult.setRight(new IntegerAtom(3));
+        assertEquals(expectedResult, getEvaluation(test));
+    }
+
+    @Test
+    public void testNULL() throws LispEvaluationException {
+        String test = "(NULL 4)";
+        SymbolicAtom expectedResult = SExpression.NIL;
         assertEquals(expectedResult, getEvaluation(test));
     }
 }

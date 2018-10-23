@@ -66,4 +66,14 @@ public class IntegerAtom implements SExpression {
     public String toString() {
         return Integer.toString(value);
     }
+
+    @Override
+    public SymbolicAtom isAtom() {
+        return SExpression.T;
+    }
+
+    @Override
+    public SymbolicAtom isNull() {
+        return SExpression.NIL;
+    }
 }

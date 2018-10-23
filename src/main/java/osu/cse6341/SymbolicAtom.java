@@ -81,4 +81,18 @@ public class SymbolicAtom implements SExpression {
             throw new LispEvaluationException("Expected Empty List but found " + this.toString());
         }
     }
+
+    @Override
+    public SymbolicAtom isAtom() {
+        return SExpression.T;
+    }
+
+    @Override
+    public SymbolicAtom isNull() {
+        if (this.equals(SExpression.NIL)) {
+            return SExpression.T;
+        } else {
+            return SExpression.NIL;
+        }
+    }
 }

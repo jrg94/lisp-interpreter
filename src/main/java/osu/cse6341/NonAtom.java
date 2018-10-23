@@ -107,18 +107,19 @@ public class NonAtom implements SExpression {
     private SExpression apply(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
         SExpression func = this.getLeft();
-        SExpression args = this.getRight().evaluateList(aList, dList);
+        NonAtom args = NonAtom.convertToNonAtom(this.getRight().evaluateList(aList, dList));
         if (func.equals(SExpression.CAR)) {
-            ret = NonAtom.convertToNonAtom(args).caar();
+            ret = args.caar();
         } else if (func.equals(SExpression.CDR)) {
-            ret = NonAtom.convertToNonAtom(args).cdar();
+            ret = args.cdar();
         } else if (func.equals(SExpression.CONS)) {
-            ret = NonAtom.cons(NonAtom.convertToNonAtom(args).getLeft(), NonAtom.convertToNonAtom(args).getRight());
+            ret = NonAtom.cons(args.getLeft(), args.getRight());
         } else if (func.equals(SExpression.ATOM)) {
-            // ATOM(CAR(X))
+            ret = args.getLeft().isAtom();
         } else if (func.equals(SExpression.NULL)) {
-            // NULL(CAR(X))
+            ret = args.getLeft().isNull();
         } else if (func.equals(SExpression.EQ)) {
+            throw new LispEvaluationException("Not implemented");
             // EQ(CAR(X), CADR(X))
         } else {
             throw new LispEvaluationException("Not implemented");
@@ -157,6 +158,14 @@ public class NonAtom implements SExpression {
     }
 
     /**
+     * Returns the NIL SExpression.
+     */
+    @Override
+    public SymbolicAtom isAtom() {
+        return SExpression.NIL;
+    }
+
+    /**
      * Evaluates a list of arguments and returns them as an evaluated list.
      */
     @Override
@@ -192,5 +201,10 @@ public class NonAtom implements SExpression {
      */
     public String toString() {
         return "(" + left.toString() + " . " + right.toString() + ")";
+    }
+
+    @Override
+    public SymbolicAtom isNull() {
+        return SExpression.NIL;
     }
 }
