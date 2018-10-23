@@ -3,7 +3,7 @@
 Welcome to the Lisp Interpreter README. In this document,
 we'll cover exactly how to build and execute the Lisp REPL.
 
-## Quick and Dirty
+## Build and Run
 
 In order to build and run the Lisp REPL, you can attempt the following:
 
@@ -11,34 +11,11 @@ In order to build and run the Lisp REPL, you can attempt the following:
 $ ./run.sh
 ```
 
-This file contains all the necessary code to pull the jar file
-from GitHub and run it.
+This file contains all the necessary code to build the java files,
+run the interpreter, and clean up the java files following execution.
+Feel free to take a look at the file to see how it works.
 
-## Build
-
-If you'd like, you can try to build the source code yourself
-using the containing ant file. However, I was unable to
-get this running on stdlinux.
-
-```console
-$ ant -f build.xml
-```
-
-The build file was generated automatically by eclipse, and it
-was not thoroughly tested.
-
-Alternatively, you can **skip** to the next step by leveraging
-the `lisp-interpreter.jar` file which is available alongside
-the source code.
-
-## Execute
-
-In order to run the Lisp REPL, you'll want to execute the
-`lisp-interpreter.jar` file as follows:
-
-```console
-$ java -jar lisp-interpreter.jar
-```
+## REPL
 
 Once executed, the REPL should launch with a message that reads:
 
@@ -61,6 +38,8 @@ your s-expression printed in dot notation.
 When you're done, enter a pair of dollar signs ($$) on a single line. This
 terminates the program. If successful, you should see `Goodbye!`.
 
+## File Redirection
+
 Alternatively, you can safely automate the interpreter by piping
 several s-expressions from a file such as the following:
 
@@ -76,7 +55,12 @@ Assuming this file is named `lisp.txt`, you can redirect it to
 the jar file as follows:
 
 ```console
-$ java -jar lisp-interpreter.jar < lisp.txt
+$ ./run.sh < lisp.txt
 ```
+
+Be careful not to include your test file in the directory because will
+be deleted after testing. The `run.sh` file leverages git to clean
+the repo of all files not currently tracked. As a result, new files
+will be deleted. 
 
 If you run into an problems, let me know!

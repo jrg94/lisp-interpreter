@@ -4,8 +4,7 @@ jdk:
   - oraclejdk8
 
 script:
-  - ant build
-  - ant LispInterpreterTest
+  - mvn clean install
 
 notifications:
   email: false
