@@ -31,11 +31,12 @@ public class SymbolicAtom implements SExpression {
 
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
-        if (this.equals(T)) {
-            return T;
-        }
-        // TODO: if aList contains this, return it's associated value
-        else {
+        if (this.equals(SExpression.T)) {
+            return SExpression.T;
+        } else if (this.equals(SExpression.NIL)) {
+            return SExpression.NIL;
+            // TODO: if aList contains this, return it's associated value
+        } else {
             throw new LispEvaluationException("Unbound atom " + this.toString());
         }
     }

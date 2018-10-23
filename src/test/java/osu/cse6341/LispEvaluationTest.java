@@ -55,9 +55,16 @@ public class LispEvaluationTest {
     }
 
     @Test
-    public void testNULL() throws LispEvaluationException {
+    public void testFalseNULL() throws LispEvaluationException {
         String test = "(NULL 4)";
         SymbolicAtom expectedResult = SExpression.NIL;
+        assertEquals(expectedResult, getEvaluation(test));
+    }
+
+    @Test
+    public void testTrueNULL() throws LispEvaluationException {
+        String test = "(NULL NIL)";
+        SymbolicAtom expectedResult = SExpression.T;
         assertEquals(expectedResult, getEvaluation(test));
     }
 }
