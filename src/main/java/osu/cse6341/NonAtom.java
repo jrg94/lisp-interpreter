@@ -113,7 +113,7 @@ public class NonAtom implements SExpression {
         } else if (func.equals(SExpression.CDR)) {
             ret = args.cdar();
         } else if (func.equals(SExpression.CONS)) {
-            // CONS(CAR(x), CDR(x))
+            ret = args.cons();
         } else if (func.equals(SExpression.ATOM)) {
             // ATOM(CAR(X))
         } else if (func.equals(SExpression.NULL)) {
@@ -125,6 +125,13 @@ public class NonAtom implements SExpression {
             // aList], dList]
         }
         return ret;
+    }
+
+    private SExpression cons() {
+        NonAtom root = new NonAtom();
+        root.setLeft(this.getLeft());
+        root.setRight(this.getRight());
+        return root;
     }
 
     private SExpression caar() throws LispEvaluationException {
