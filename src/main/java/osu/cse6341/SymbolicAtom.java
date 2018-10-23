@@ -96,4 +96,9 @@ public class SymbolicAtom implements SExpression {
             return SExpression.NIL;
         }
     }
+
+    @Override
+    public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
+      throw new LispEvaluationException("Invalid condition: " + this.toString());
+    }
 }

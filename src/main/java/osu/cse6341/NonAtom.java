@@ -130,7 +130,7 @@ public class NonAtom implements SExpression {
 
     /**
      * A static method which creates a new NonAtom from two SExpressions.
-     * 
+     *
      * @param left the s-expression to be used on the left
      * @param right the s-expression to be used on the right
      * @return the root of the new binary tree
@@ -180,6 +180,16 @@ public class NonAtom implements SExpression {
         SExpression left = this.getLeft().evaluate(aList, dList);
         SExpression right = this.getRight().evaluateList(aList, dList);
         return NonAtom.cons(left, right);
+    }
+
+    @Override
+    public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
+        SExpression test = this.caar().evaluate(aList, dList);
+        if (test.equals(SExpression.T)) {
+            // TODO: eval(cadar(be), aList, dList)
+        } else {
+            this.getRight().evaluateConditions(aList, dList);
+        }
     }
 
     /**
