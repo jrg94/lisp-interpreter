@@ -194,7 +194,7 @@ public class NonAtom implements SExpression {
         SExpression ret = null;
         SExpression test = this.caar().evaluate(aList, dList);
         if (test.equals(SExpression.T)) {
-            this.cadar().evaluate(aList, dList);
+            ret = this.cadar().evaluate(aList, dList);
         } else {
             ret = this.getRight().evaluateConditions(aList, dList);
         }

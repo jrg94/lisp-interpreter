@@ -11,7 +11,7 @@ public class LispEvaluationTest {
 
     /**
      * A helper method for evaluating lisp code.
-     * 
+     *
      * @param code a complete s-expression
      * @return the SExpression result
      * @throws LispEvaluationException if there is a syntax error
@@ -78,6 +78,13 @@ public class LispEvaluationTest {
     @Test
     public void testFalseEQ() throws LispEvaluationException {
         String test = "(EQ 2 4)";
+        SymbolicAtom expectedResult = SExpression.NIL;
+        assertEquals(expectedResult, getEvaluation(test));
+    }
+
+    @Test
+    public void testCOND() throws LispEvaluationException {
+        String test = "(COND (NIL T) (T NIL))";
         SymbolicAtom expectedResult = SExpression.NIL;
         assertEquals(expectedResult, getEvaluation(test));
     }
