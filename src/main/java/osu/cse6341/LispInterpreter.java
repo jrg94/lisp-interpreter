@@ -216,7 +216,7 @@ public class LispInterpreter {
      * Evaluates the abstract syntax tree.
      */
     public SExpression evaluate(SExpression ast) throws LispEvaluationException {
-      return ast.evaluate(this.aList, this.dList);
+        return ast.evaluate(this.aList, this.dList);
     }
 
     /**
@@ -242,7 +242,7 @@ public class LispInterpreter {
         } catch (LispSyntaxException e) {
             System.err.println(e);
         } catch (LispEvaluationException e) {
-          System.err.println(e);
+            System.err.println(e);
         }
     }
 
