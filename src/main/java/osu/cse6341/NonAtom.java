@@ -115,7 +115,7 @@ public class NonAtom implements SExpression {
             NonAtom pList = NonAtom.convertToNonAtom(decl.getLeft());
             SExpression body = decl.getRight();
             addPairs(pList, args, aList);
-            body.evaluate(aList, dList);
+            ret = body.evaluate(aList, dList);
         }
         return ret;
     }

@@ -31,14 +31,17 @@ public class SymbolicAtom implements SExpression {
 
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
+        SExpression ret = null;
         if (this.equals(SExpression.T)) {
-            return SExpression.T;
+            ret = SExpression.T;
         } else if (this.equals(SExpression.NIL)) {
-            return SExpression.NIL;
-            // TODO: if aList contains this, return it's associated value
+            ret = SExpression.NIL;
+        } else if ((ret = this.find(aList)) != null) {
+            // Do nothing
         } else {
             throw new LispEvaluationException("Unbound atom " + this.toString());
         }
+        return ret;
     }
 
     /**
@@ -49,6 +52,15 @@ public class SymbolicAtom implements SExpression {
     @Override
     public String toString() {
         return name;
+    }
+
+    public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException {
+        for (NonAtom binding : aList) {
+            if (binding.getLeft().equals(this)) {
+                return binding.getLeft();
+            }
+        }
+        return null;
     }
 
     public SExpression find(ArrayList<NonAtom> dList) throws LispEvaluationException {
