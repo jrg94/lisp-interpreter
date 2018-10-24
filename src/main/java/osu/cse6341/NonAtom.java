@@ -84,13 +84,7 @@ public class NonAtom implements SExpression {
         SExpression ret = null;
         SExpression car = this.getLeft();
         if (car.equals(SExpression.QUOTE)) {
-            try {
-                NonAtom cdr = NonAtom.convertToNonAtom(this.getRight());
-                ret = cdr.getLeft();
-            } catch (LispEvaluationException e) {
-                throw new LispEvaluationException(
-                        "CDR of QUOTE expression is not a NonAtom: " + this.getRight().toString(), e);
-            }
+            ret = this.cadr();
         } else if (car.equals(SExpression.COND)) {
             ret = this.getRight().evaluateConditions(aList, dList);
         } else if (car.equals(SExpression.DEFUN)) {
@@ -101,6 +95,14 @@ public class NonAtom implements SExpression {
         return ret;
     }
 
+    /**
+     * Applies a function.
+     *
+     * @param aList a list of bindings
+     * @param dList a list of definitions
+     * @return the resulting SExpressions
+     * @throws LispEvaluationException if function application fails
+     */
     private SExpression apply(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
         SymbolicAtom func = NonAtom.convertToSymbolicAtom(this.getLeft());
