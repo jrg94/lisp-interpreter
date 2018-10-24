@@ -110,17 +110,17 @@ public class NonAtom implements SExpression {
         } else if (func.equals(SExpression.EQ)) {
             ret = NonAtom.isEqual(args.getLeft(), args.cadr());
         } else {
-            NonAtom decl = func.find(dList);
-            SExpression exp = decl.getRight();
-            SExpression pList = decl.cadr();
-            // aList.push(pList);
+            SExpression node = func.find(dList);
+            NonAtom decl = NonAtom.convertToNonAtom(node);
+            SExpression pList = decl.getLeft();
+            SExpression body = decl.getRight();
             // TODO: update aList
-            exp.evaluate(aList, dList);
-            // eval[ cdr[getval[f, dList]], addpairs[car[getval[f, dList]], x,
-            // aList], dList]
+            body.evaluate(aList, dList);
         }
         return ret;
     }
+
+    // private SExpression addPairs()
 
     /**
      * A static method which creates a new NonAtom from two SExpressions.
