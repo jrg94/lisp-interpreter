@@ -63,14 +63,36 @@ public abstract class SExpression {
         throw new LispEvaluationException("Unable to call CDAR on atom: " + this);
     }
 
+    /**
+     * Gets the left node of the right node of the left node of this node.
+     * 
+     * @return the left node of the right node of the left node of this
+     *         s-expression
+     * @throws LispEvaluationException if this s-expression is not 3 or more
+     *             levels deep
+     */
     public SExpression cadar() throws LispEvaluationException {
         throw new LispEvaluationException("Unable to call CADAR on atom: " + this);
     }
 
+    /**
+     * Finds this s-expression in the dList.
+     * 
+     * @param dList a list of definitions
+     * @return the function definition
+     * @throws LispEvaluationException
+     */
     public SExpression find(ArrayList<NonAtom> dList) throws LispEvaluationException {
         throw new LispEvaluationException("Cannot search dList for: " + this);
     }
 
+    /**
+     * Finds this s-expression in the aList.
+     * 
+     * @param aList a list of bindings
+     * @return the binding
+     * @throws LispEvaluationException
+     */
     public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException {
         throw new LispEvaluationException("Cannot search aList for: " + this);
     }
