@@ -75,10 +75,4 @@ public class IntegerAtom extends SExpression {
     public SymbolicAtom isAtom() {
         return SExpression.T;
     }
-
-    @Override
-    public SymbolicAtom isNull() {
-        return SExpression.NIL;
-    }
-
 }

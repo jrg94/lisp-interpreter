@@ -144,14 +144,6 @@ public class NonAtom extends SExpression {
     }
 
     /**
-     * Returns the NIL SExpression.
-     */
-    @Override
-    public SymbolicAtom isAtom() {
-        return SExpression.NIL;
-    }
-
-    /**
      * Evaluates a list of arguments and returns them as an evaluated list.
      */
     @Override
@@ -205,11 +197,6 @@ public class NonAtom extends SExpression {
     @Override
     public String toString() {
         return "(" + left.toString() + " . " + right.toString() + ")";
-    }
-
-    @Override
-    public SymbolicAtom isNull() {
-        return SExpression.NIL;
     }
 
     @Override
