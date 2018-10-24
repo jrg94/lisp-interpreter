@@ -79,28 +79,28 @@ public class LispEvaluationTest {
     @Test
     public void testFalseNULL() throws LispEvaluationException {
         String test = "(NULL 4)";
-        SymbolicAtom expectedResult = SExpression.NIL;
+        SymbolicAtom expectedResult = Primitive.NIL.getAtom();
         assertEquals(expectedResult, getEvaluation(test));
     }
 
     @Test
     public void testTrueNULL() throws LispEvaluationException {
         String test = "(NULL NIL)";
-        SymbolicAtom expectedResult = SExpression.T;
+        SymbolicAtom expectedResult = Primitive.T.getAtom();
         assertEquals(expectedResult, getEvaluation(test));
     }
 
     @Test
     public void testFalseEQ() throws LispEvaluationException {
         String test = "(EQ 2 4)";
-        SymbolicAtom expectedResult = SExpression.NIL;
+        SymbolicAtom expectedResult = Primitive.NIL.getAtom();
         assertEquals(expectedResult, getEvaluation(test));
     }
 
     @Test
     public void testCOND() throws LispEvaluationException {
         String test = "(COND (NIL T) (T NIL))";
-        SymbolicAtom expectedResult = SExpression.NIL;
+        SymbolicAtom expectedResult = Primitive.NIL.getAtom();
         assertEquals(expectedResult, getEvaluation(test));
     }
 
@@ -158,18 +158,18 @@ public class LispEvaluationTest {
     @Test
     public void testGREATER() throws LispEvaluationException {
         String test = "(GREATER 2 3)";
-        assertEquals(SExpression.NIL, getEvaluation(test));
+        assertEquals(Primitive.NIL.getAtom(), getEvaluation(test));
     }
 
     @Test
     public void testLESS() throws LispEvaluationException {
         String test = "(LESS 2 3)";
-        assertEquals(SExpression.T, getEvaluation(test));
+        assertEquals(Primitive.T.getAtom(), getEvaluation(test));
     }
 
     @Test
     public void testInt() throws LispEvaluationException {
         String test = "(INT 7)";
-        assertEquals(SExpression.T, getEvaluation(test));
+        assertEquals(Primitive.T.getAtom(), getEvaluation(test));
     }
 }

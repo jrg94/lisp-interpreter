@@ -32,10 +32,10 @@ public class SymbolicAtom extends SExpression {
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
-        if (this.equals(SExpression.T)) {
-            ret = SExpression.T;
-        } else if (this.equals(SExpression.NIL)) {
-            ret = SExpression.NIL;
+        if (this.equals(Primitive.T.getAtom())) {
+            ret = Primitive.T.getAtom();
+        } else if (this.equals(Primitive.NIL.getAtom())) {
+            ret = Primitive.NIL.getAtom();
         } else if ((ret = this.find(aList)) != null) {
             // Do nothing
         } else {
@@ -99,8 +99,8 @@ public class SymbolicAtom extends SExpression {
 
     @Override
     public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
-        if (this.equals(SExpression.NIL)) {
-            return SExpression.NIL;
+        if (this.equals(Primitive.NIL.getAtom())) {
+            return Primitive.NIL.getAtom();
         } else {
             throw new LispEvaluationException("Expected Empty List but found " + this.toString());
         }
@@ -108,15 +108,15 @@ public class SymbolicAtom extends SExpression {
 
     @Override
     public SymbolicAtom isAtom() {
-        return SExpression.T;
+        return Primitive.T.getAtom();
     }
 
     @Override
     public SymbolicAtom isNull() {
-        if (this.equals(SExpression.NIL)) {
-            return SExpression.T;
+        if (this.equals(Primitive.NIL.getAtom())) {
+            return Primitive.T.getAtom();
         } else {
-            return SExpression.NIL;
+            return Primitive.NIL.getAtom();
         }
     }
 }

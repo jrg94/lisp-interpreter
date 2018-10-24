@@ -43,11 +43,11 @@ public class NonAtom extends SExpression {
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
         SExpression car = this.car();
-        if (car.equals(SExpression.QUOTE)) {
+        if (car.equals(Primitive.QUOTE.getAtom())) {
             ret = this.cadr();
-        } else if (car.equals(SExpression.COND)) {
+        } else if (car.equals(Primitive.COND.getAtom())) {
             ret = this.cdr().evaluateConditions(aList, dList);
-        } else if (car.equals(SExpression.DEFUN)) {
+        } else if (car.equals(Primitive.DEFUN.getAtom())) {
             throw new LispEvaluationException("Illegal dList update");
         } else {
             ret = this.apply(aList, dList);
@@ -67,33 +67,33 @@ public class NonAtom extends SExpression {
         SExpression ret = null;
         SExpression func = this.car();
         SExpression args = this.cdr().evaluateList(aList, dList);
-        if (func.equals(SExpression.CAR)) {
+        if (func.equals(Primitive.CAR.getAtom())) {
             ret = args.caar();
-        } else if (func.equals(SExpression.CDR)) {
+        } else if (func.equals(Primitive.CDR.getAtom())) {
             ret = args.cdar();
-        } else if (func.equals(SExpression.CONS)) {
+        } else if (func.equals(Primitive.CONS.getAtom())) {
             ret = args.car().cons(args.cadr());
-        } else if (func.equals(SExpression.ATOM)) {
+        } else if (func.equals(Primitive.ATOM.getAtom())) {
             ret = args.car().isAtom();
-        } else if (func.equals(SExpression.INT)) {
+        } else if (func.equals(Primitive.INT.getAtom())) {
             ret = args.car().isInt();
-        } else if (func.equals(SExpression.NULL)) {
+        } else if (func.equals(Primitive.NULL.getAtom())) {
             ret = args.car().isNull();
-        } else if (func.equals(SExpression.EQ)) {
+        } else if (func.equals(Primitive.EQ.getAtom())) {
             ret = args.car().isEqual(args.cadr());
-        } else if (func.equals(SExpression.PLUS)) {
+        } else if (func.equals(Primitive.PLUS.getAtom())) {
             ret = args.car().arithmetic('+', args.cadr());
-        } else if (func.equals(SExpression.MINUS)) {
+        } else if (func.equals(Primitive.MINUS.getAtom())) {
             ret = args.car().arithmetic('-', args.cadr());
-        } else if (func.equals(SExpression.TIMES)) {
+        } else if (func.equals(Primitive.TIMES.getAtom())) {
             ret = args.car().arithmetic('*', args.cadr());
-        } else if (func.equals(SExpression.QUOTIENT)) {
+        } else if (func.equals(Primitive.QUOTIENT.getAtom())) {
             ret = args.car().arithmetic('/', args.cadr());
-        } else if (func.equals(SExpression.REMAINDER)) {
+        } else if (func.equals(Primitive.REMAINDER.getAtom())) {
             ret = args.car().arithmetic('%', args.cadr());
-        } else if (func.equals(SExpression.GREATER)) {
+        } else if (func.equals(Primitive.GREATER.getAtom())) {
             ret = args.car().logic('>', args.cadr());
-        } else if (func.equals(SExpression.LESS)) {
+        } else if (func.equals(Primitive.LESS.getAtom())) {
             ret = args.car().logic('<', args.cadr());
         } else {
             ret = this.evaluateFunction(aList, dList, func, args);
@@ -206,7 +206,7 @@ public class NonAtom extends SExpression {
             throws LispEvaluationException {
         SExpression ret = null;
         SExpression test = this.caar().evaluate(aList, dList);
-        if (test.equals(SExpression.T)) {
+        if (test.equals(Primitive.T.getAtom())) {
             ret = this.cadar().evaluate(aList, dList);
         } else {
             ret = this.cdr().evaluateConditions(aList, dList);

@@ -10,26 +10,6 @@ import java.util.Stack;
  */
 public abstract class SExpression {
 
-    public static final SymbolicAtom NIL = new SymbolicAtom("NIL");
-    public static final SymbolicAtom T = new SymbolicAtom("T");
-    public static final SymbolicAtom QUOTE = new SymbolicAtom("QUOTE");
-    public static final SymbolicAtom DEFUN = new SymbolicAtom("DEFUN");
-    public static final SymbolicAtom COND = new SymbolicAtom("COND");
-    public static final SymbolicAtom CAR = new SymbolicAtom("CAR");
-    public static final SymbolicAtom CDR = new SymbolicAtom("CDR");
-    public static final SymbolicAtom CONS = new SymbolicAtom("CONS");
-    public static final SymbolicAtom ATOM = new SymbolicAtom("ATOM");
-    public static final SymbolicAtom INT = new SymbolicAtom("INT");
-    public static final SymbolicAtom NULL = new SymbolicAtom("NULL");
-    public static final SymbolicAtom EQ = new SymbolicAtom("EQ");
-    public static final SymbolicAtom PLUS = new SymbolicAtom("PLUS");
-    public static final SymbolicAtom MINUS = new SymbolicAtom("MINUS");
-    public static final SymbolicAtom TIMES = new SymbolicAtom("TIMES");
-    public static final SymbolicAtom QUOTIENT = new SymbolicAtom("QUOTIENT");
-    public static final SymbolicAtom REMAINDER = new SymbolicAtom("REMAINDER");
-    public static final SymbolicAtom GREATER = new SymbolicAtom("GREATER");
-    public static final SymbolicAtom LESS = new SymbolicAtom("LESS");
-
     public SExpression car() throws LispEvaluationException {
         throw new LispEvaluationException("Unable to call CDR on atom: " + this);
     }
@@ -85,9 +65,9 @@ public abstract class SExpression {
 
     public SymbolicAtom isEqual(SExpression other) {
         if (this == other) {
-            return SExpression.T;
+            return Primitive.T.getAtom();
         } else {
-            return SExpression.NIL;
+            return Primitive.NIL.getAtom();
         }
     }
 
@@ -106,15 +86,15 @@ public abstract class SExpression {
     }
 
     public SymbolicAtom isAtom() {
-        return SExpression.NIL;
+        return Primitive.NIL.getAtom();
     }
 
     public SymbolicAtom isNull() {
-        return SExpression.NIL;
+        return Primitive.NIL.getAtom();
     }
 
     public SymbolicAtom isInt() {
-        return SExpression.NIL;
+        return Primitive.NIL.getAtom();
     }
 
     /**
@@ -130,8 +110,8 @@ public abstract class SExpression {
             throws LispEvaluationException {
         NonAtom binding = pList.car().cons(args.car());
         aList.push(binding);
-        boolean isEndOfPList = pList.cdr().equals(SExpression.NIL);
-        boolean isEndOfArgList = args.cdr().equals(SExpression.NIL);
+        boolean isEndOfPList = pList.cdr().equals(Primitive.NIL.getAtom());
+        boolean isEndOfArgList = args.cdr().equals(Primitive.NIL.getAtom());
         if (isEndOfPList && !isEndOfArgList) {
             throw new LispEvaluationException("Function has too many arguments: " + args.cdr());
         } else if (!isEndOfPList && isEndOfArgList) {
