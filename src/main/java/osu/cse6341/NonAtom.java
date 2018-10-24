@@ -98,7 +98,7 @@ public class NonAtom implements SExpression {
     private SExpression evaluateFunction(Stack<NonAtom> aList, ArrayList<NonAtom> dList, SymbolicAtom func, NonAtom args) throws LispEvaluationException {
         SExpression node = func.find(dList);
         NonAtom decl = SExpression.convertToNonAtom(node);
-        NonAtom pList = SExpression.convertToNonAtom(decl.car());
+        SExpression pList = decl.car();
         SExpression body = decl.cdr();
         SExpression.addPairs(pList, args, aList);
         return body.evaluate(aList, dList);
