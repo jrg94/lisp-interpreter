@@ -118,7 +118,7 @@ public class NonAtom implements SExpression {
         } else if (func.equals(SExpression.NULL)) {
             ret = args.getLeft().isNull();
         } else if (func.equals(SExpression.EQ)) {
-            ret = NonAtom.isEqual(args.getLeft(), args.cadr());
+            ret = SExpression.isEqual(args.getLeft(), args.cadr());
         } else {
             ret = evaluateFunction(aList, dList, func, args);
         }
