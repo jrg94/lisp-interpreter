@@ -10,10 +10,22 @@ import java.util.Stack;
  */
 public abstract class SExpression {
 
+    /**
+     * Gets the left node of this node.
+     * 
+     * @return the left node of this s-expression
+     * @throws LispEvaluationException if this s-expression is an atom
+     */
     public SExpression car() throws LispEvaluationException {
         throw new LispEvaluationException("Unable to call CDR on atom: " + this);
     }
 
+    /**
+     * Gets the right node of this node.
+     * 
+     * @return the right node of this s-expression
+     * @throws LispEvaluationException if this s-expression is an atom
+     */
     public SExpression cdr() throws LispEvaluationException {
         throw new LispEvaluationException("Unable to call CDR on atom: " + this);
     }
