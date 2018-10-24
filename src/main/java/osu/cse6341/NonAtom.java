@@ -209,6 +209,7 @@ public class NonAtom implements SExpression {
      *
      * @return the binary tree as a string
      */
+    @Override
     public String toString() {
         return "(" + left.toString() + " . " + right.toString() + ")";
     }

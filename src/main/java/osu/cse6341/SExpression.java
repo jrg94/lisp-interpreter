@@ -98,19 +98,17 @@ public interface SExpression {
      * @param aList the association list
      * @throws LispEvaluationException
      */
-    public static void addPairs(NonAtom pList, NonAtom args, Stack<NonAtom> aList) throws LispEvaluationException {
-        NonAtom binding = SExpression.cons(pList.getLeft(), args.getLeft());
+    public static void addPairs(SExpression pList, SExpression args, Stack<NonAtom> aList) throws LispEvaluationException {
+        NonAtom binding = SExpression.cons(pList.car(), args.car());
         aList.push(binding);
-        boolean isEndOfPList = pList.getRight().equals(SExpression.NIL);
-        boolean isEndOfArgList = args.getRight().equals(SExpression.NIL);
+        boolean isEndOfPList = pList.cdr().equals(SExpression.NIL);
+        boolean isEndOfArgList = args.cdr().equals(SExpression.NIL);
         if (isEndOfPList && !isEndOfArgList) {
-            throw new LispEvaluationException("Function has too many arguments: " + args.getRight());
+            throw new LispEvaluationException("Function has too many arguments: " + args.cdr());
         } else if (!isEndOfPList && isEndOfArgList) {
-            throw new LispEvaluationException("Function needs more arguments: " + pList.getRight());
+            throw new LispEvaluationException("Function needs more arguments: " + pList.cdr());
         } else if (!isEndOfPList && !isEndOfArgList) {
-            NonAtom nextP = SExpression.convertToNonAtom(pList.getRight());
-            NonAtom nextArg = SExpression.convertToNonAtom(args.getRight());
-            SExpression.addPairs(nextP, nextArg, aList);
+            SExpression.addPairs(pList.cdr(), args.cdr(), aList);
         }
     }
 }
