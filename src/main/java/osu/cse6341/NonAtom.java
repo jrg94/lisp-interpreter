@@ -50,28 +50,6 @@ public class NonAtom implements SExpression {
     }
 
     /**
-     * A helper method for converting SExpressions to NonAtoms.
-     */
-    private static NonAtom convertToNonAtom(SExpression exp) throws LispEvaluationException {
-        if (exp instanceof NonAtom) {
-            return (NonAtom) exp;
-        } else {
-            throw new LispEvaluationException("Expected NonAtom but found: " + exp.toString());
-        }
-    }
-
-    /**
-     * A helper method for converting SExpressions to SymbolicAtoms.
-     */
-    private static SymbolicAtom convertToSymbolicAtom(SExpression exp) throws LispEvaluationException {
-        if (exp instanceof SymbolicAtom) {
-            return (SymbolicAtom) exp;
-        } else {
-            throw new LispEvaluationException("Expected SymbolicAtom but found: " + exp.toString());
-        }
-    }
-
-    /**
      * Evaluates this NonAtom.
      *
      * @param aList a list of bindings
@@ -105,8 +83,8 @@ public class NonAtom implements SExpression {
      */
     private SExpression apply(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
-        SymbolicAtom func = NonAtom.convertToSymbolicAtom(this.getLeft());
-        NonAtom args = NonAtom.convertToNonAtom(this.getRight().evaluateList(aList, dList));
+        SymbolicAtom func = SExpression.convertToSymbolicAtom(this.getLeft());
+        NonAtom args = SExpression.convertToNonAtom(this.getRight().evaluateList(aList, dList));
         if (func.equals(SExpression.CAR)) {
             ret = args.caar();
         } else if (func.equals(SExpression.CDR)) {
@@ -137,36 +115,11 @@ public class NonAtom implements SExpression {
      */
     private SExpression evaluateFunction(Stack<NonAtom> aList, ArrayList<NonAtom> dList, SymbolicAtom func, NonAtom args) throws LispEvaluationException {
         SExpression node = func.find(dList);
-        NonAtom decl = NonAtom.convertToNonAtom(node);
-        NonAtom pList = NonAtom.convertToNonAtom(decl.getLeft());
+        NonAtom decl = SExpression.convertToNonAtom(node);
+        NonAtom pList = SExpression.convertToNonAtom(decl.getLeft());
         SExpression body = decl.getRight();
-        addPairs(pList, args, aList);
+        SExpression.addPairs(pList, args, aList);
         return body.evaluate(aList, dList);
-    }
-
-    /**
-     * Given a parameter list and a list of arguments, this method adds the new
-     * bindings to the association list.
-     *
-     * @param pList a list of parameters
-     * @param args a list of arguments
-     * @param aList the association list
-     * @throws LispEvaluationException
-     */
-    public static void addPairs(NonAtom pList, NonAtom args, Stack<NonAtom> aList) throws LispEvaluationException {
-        NonAtom binding = SExpression.cons(pList.getLeft(), args.getLeft());
-        aList.push(binding);
-        boolean isEndOfPList = pList.getRight().equals(SExpression.NIL);
-        boolean isEndOfArgList = args.getRight().equals(SExpression.NIL);
-        if (isEndOfPList && !isEndOfArgList) {
-            throw new LispEvaluationException("Function has too many arguments: " + args.getRight());
-        } else if (!isEndOfPList && isEndOfArgList) {
-            throw new LispEvaluationException("Function needs more arguments: " + pList.getRight());
-        } else if (!isEndOfPList && !isEndOfArgList) {
-            NonAtom nextP = NonAtom.convertToNonAtom(pList.getRight());
-            NonAtom nextArg = NonAtom.convertToNonAtom(args.getRight());
-            NonAtom.addPairs(nextP, nextArg, aList);
-        }
     }
 
     @Override

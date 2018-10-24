@@ -10,7 +10,7 @@ public class NonAtomTest {
 
     /**
      * A helper method for building a lisp list of Symbolic Atoms.
-     * 
+     *
      * @param symbols a list of string symbols
      * @return the root of the list
      */
@@ -31,7 +31,7 @@ public class NonAtomTest {
 
     /**
      * A helper method for building a list of Integer Atoms.
-     * 
+     *
      * @param symbols a list of integers
      * @return the root of the list
      */
@@ -52,7 +52,7 @@ public class NonAtomTest {
 
     /**
      * A helper method for building bindings.
-     * 
+     *
      * @param symbol a SymbolicAtom as a string
      * @param value an IntegerAtom as an integer
      * @return the NonAtom binding
@@ -66,7 +66,7 @@ public class NonAtomTest {
 
     /**
      * From a set of bindings, we construct a stack.
-     * 
+     *
      * @param atoms a list of NonAtom
      * @return the stack of bindings
      */
@@ -83,7 +83,7 @@ public class NonAtomTest {
         NonAtom pList = buildList("A");
         NonAtom argList = buildList(5);
         Stack<NonAtom> aList = new Stack<NonAtom>();
-        NonAtom.addPairs(pList, argList, aList);
+        SExpression.addPairs(pList, argList, aList);
 
         NonAtom aToFiveBinding = bind("A", 5);
         Stack<NonAtom> expectedResult = getStack(aToFiveBinding);
@@ -96,7 +96,7 @@ public class NonAtomTest {
         NonAtom pList = buildList("X", "Y", "Z");
         NonAtom argList = buildList(5, 6, 7);
         Stack<NonAtom> aList = new Stack<NonAtom>();
-        NonAtom.addPairs(pList, argList, aList);
+        SExpression.addPairs(pList, argList, aList);
 
         Stack<NonAtom> expectedResult = getStack(bind("X", 5), bind("Y", 6), bind("Z", 7));
 

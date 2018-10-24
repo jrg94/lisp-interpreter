@@ -60,4 +60,57 @@ public interface SExpression {
             return SExpression.NIL;
         }
     }
+
+    /**
+     * A helper method for converting SExpressions to NonAtoms.
+     *
+     * @param exp an SExpression
+     * @return that same s-expression as a NonAtom
+     */
+    public static NonAtom convertToNonAtom(SExpression exp) throws LispEvaluationException {
+        if (exp instanceof NonAtom) {
+            return (NonAtom) exp;
+        } else {
+            throw new LispEvaluationException("Expected NonAtom but found: " + exp.toString());
+        }
+    }
+
+    /**
+     * A helper method for converting SExpressions to SymbolicAtoms.
+     *
+     * @param exp an SExpression
+     * @return that same s-expression as a SymbolicAtom
+     */
+    public static SymbolicAtom convertToSymbolicAtom(SExpression exp) throws LispEvaluationException {
+        if (exp instanceof SymbolicAtom) {
+            return (SymbolicAtom) exp;
+        } else {
+            throw new LispEvaluationException("Expected SymbolicAtom but found: " + exp.toString());
+        }
+    }
+
+    /**
+     * Given a parameter list and a list of arguments, this method adds the new
+     * bindings to the association list.
+     *
+     * @param pList a list of parameters
+     * @param args a list of arguments
+     * @param aList the association list
+     * @throws LispEvaluationException
+     */
+    public static void addPairs(NonAtom pList, NonAtom args, Stack<NonAtom> aList) throws LispEvaluationException {
+        NonAtom binding = SExpression.cons(pList.getLeft(), args.getLeft());
+        aList.push(binding);
+        boolean isEndOfPList = pList.getRight().equals(SExpression.NIL);
+        boolean isEndOfArgList = args.getRight().equals(SExpression.NIL);
+        if (isEndOfPList && !isEndOfArgList) {
+            throw new LispEvaluationException("Function has too many arguments: " + args.getRight());
+        } else if (!isEndOfPList && isEndOfArgList) {
+            throw new LispEvaluationException("Function needs more arguments: " + pList.getRight());
+        } else if (!isEndOfPList && !isEndOfArgList) {
+            NonAtom nextP = SExpression.convertToNonAtom(pList.getRight());
+            NonAtom nextArg = SExpression.convertToNonAtom(args.getRight());
+            SExpression.addPairs(nextP, nextArg, aList);
+        }
+    }
 }
