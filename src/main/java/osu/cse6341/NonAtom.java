@@ -111,6 +111,7 @@ public class NonAtom extends SExpression {
      * Gets the left node of this NonAtom.
      * 
      * @return the left node of this node
+     * @throws LispEvaluationException if fails to grab one of the nodes
      */
     @Override
     public SExpression car() throws LispEvaluationException {
@@ -121,6 +122,7 @@ public class NonAtom extends SExpression {
      * Gets the right node of this NonAtom.
      * 
      * @return the right node of this node
+     * @throws LispEvaluationException if fails to grab one of the nodes
      */
     @Override
     public SExpression cdr() throws LispEvaluationException {
@@ -128,7 +130,7 @@ public class NonAtom extends SExpression {
     }
 
     /**
-     * A helper method which gets the left node of the left node.
+     * Gets the left node of the left node.
      *
      * @return the left node of the left node of this node
      * @throws LispEvaluationException if fails to grab one of the nodes
@@ -138,16 +140,33 @@ public class NonAtom extends SExpression {
         return this.car().car();
     }
 
+    /**
+     * Gets the right node of the left node.
+     * 
+     * @return the right node of the left node
+     */
     @Override
     public SExpression cdar() throws LispEvaluationException {
         return this.car().cdr();
     }
 
+    /**
+     * Gets the left node of the right node.
+     * 
+     * @return the left node of the right node.
+     * @throws LispEvaluationException if fails to grab one of the nodes
+     */
     @Override
     public SExpression cadr() throws LispEvaluationException {
         return this.cdr().car();
     }
 
+    /**
+     * Gets the left node of the right node of the left node.
+     * 
+     * @return the left node of the right node of the left node.
+     * @throws LispEvaluationException if fails to grab one of the nodes
+     */
     @Override
     public SExpression cadar() throws LispEvaluationException {
         return this.car().cdr().car();
@@ -163,6 +182,12 @@ public class NonAtom extends SExpression {
         return SExpression.cons(left, right);
     }
 
+    /**
+     * Evaluates the conditions given by this node.
+     * 
+     * @return the result of the evaluation.
+     * @throws LispEvaluationException if evaluation fails
+     */
     @Override
     public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList)
             throws LispEvaluationException {
