@@ -8,7 +8,7 @@ import java.util.Stack;
  *
  * @author Jeremy Grifski
  */
-public interface SExpression {
+public abstract class SExpression {
 
     public static final SymbolicAtom NIL = new SymbolicAtom("NIL");
     public static final SymbolicAtom T = new SymbolicAtom("T");
@@ -23,19 +23,58 @@ public interface SExpression {
     public static final SymbolicAtom EQ = new SymbolicAtom("EQ");
     public static final SymbolicAtom PLUS = new SymbolicAtom("PLUS");
 
-    public SExpression car() throws LispEvaluationException;
-    public SExpression cdr() throws LispEvaluationException;
-    public SExpression caar() throws LispEvaluationException;
-    public SExpression cadr() throws LispEvaluationException;
-    public SExpression cdar() throws LispEvaluationException;
-    public SExpression cadar() throws LispEvaluationException;
-    public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException;
-    public SExpression find(ArrayList<NonAtom> dList) throws LispEvaluationException;
-    public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException;
-    public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException;
-    public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException;
-    public SymbolicAtom isAtom();
-    public SymbolicAtom isNull();
+    public SExpression car() throws LispEvaluationException {
+        throw new LispEvaluationException("Unable to call CDR on atom: " + this);
+    }
+
+    public SExpression cdr() throws LispEvaluationException {
+        throw new LispEvaluationException("Unable to call CDR on atom: " + this);
+    }
+
+    public SExpression caar() throws LispEvaluationException {
+        throw new LispEvaluationException("Unable to call CAAR on atom: " + this);
+    }
+
+    public SExpression cadr() throws LispEvaluationException {
+        throw new LispEvaluationException("Unable to call CADR on atom: " + this);
+    }
+
+    public SExpression cdar() throws LispEvaluationException {
+        throw new LispEvaluationException("Unable to call CDAR on atom: " + this);
+    }
+
+    public SExpression cadar() throws LispEvaluationException {
+        throw new LispEvaluationException("Unable to call CADAR on atom: " + this);
+    }
+
+    public SExpression find(ArrayList<NonAtom> dList) throws LispEvaluationException {
+        throw new LispEvaluationException("Cannot search dList for: " + this);
+    }
+
+    public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException {
+        throw new LispEvaluationException("Cannot search aList for: " + this);
+    }
+
+    public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList)
+            throws LispEvaluationException {
+        throw new LispEvaluationException("Invalid condition: " + this.toString());
+    }
+
+    public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
+        throw new LispEvaluationException("Unable to evaluate: " + this);
+    }
+
+    public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
+        throw new LispEvaluationException(this + " is not a list");
+    }
+
+    public SymbolicAtom isAtom() {
+        return SExpression.NIL;
+    }
+
+    public SymbolicAtom isNull() {
+        return SExpression.NIL;
+    }
 
     /**
      * A static method which creates a new NonAtom from two SExpressions.
@@ -53,8 +92,8 @@ public interface SExpression {
     }
 
     /**
-     * A static method which compares two s-expressions for equivalence
-     * based on memory address.
+     * A static method which compares two s-expressions for equivalence based on
+     * memory address.
      *
      * @param a the first s-expression
      * @param b the second s-expression
@@ -77,7 +116,8 @@ public interface SExpression {
      * @param aList the association list
      * @throws LispEvaluationException
      */
-    public static void addPairs(SExpression pList, SExpression args, Stack<NonAtom> aList) throws LispEvaluationException {
+    public static void addPairs(SExpression pList, SExpression args, Stack<NonAtom> aList)
+            throws LispEvaluationException {
         NonAtom binding = SExpression.cons(pList.car(), args.car());
         aList.push(binding);
         boolean isEndOfPList = pList.cdr().equals(SExpression.NIL);

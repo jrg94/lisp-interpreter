@@ -8,7 +8,7 @@ import java.util.Stack;
  *
  * @author Jeremy Grifski
  */
-public class NonAtom implements SExpression {
+public class NonAtom extends SExpression {
 
     private SExpression left;
     private SExpression right;
@@ -83,7 +83,7 @@ public class NonAtom implements SExpression {
             // TODO: implement plus, minus, etc.
             throw new LispEvaluationException("Not implemented");
         } else {
-            ret = evaluateFunction(aList, dList, func, args);
+            ret = this.evaluateFunction(aList, dList, func, args);
         }
         return ret;
     }
@@ -98,7 +98,8 @@ public class NonAtom implements SExpression {
      * @return the result of the function application
      * @throws LispEvaluationException if the evaluation fails
      */
-    private SExpression evaluateFunction(Stack<NonAtom> aList, ArrayList<NonAtom> dList, SExpression func, SExpression args) throws LispEvaluationException {
+    private SExpression evaluateFunction(Stack<NonAtom> aList, ArrayList<NonAtom> dList, SExpression func,
+            SExpression args) throws LispEvaluationException {
         SExpression decl = func.find(dList);
         SExpression pList = decl.car();
         SExpression body = decl.cdr();

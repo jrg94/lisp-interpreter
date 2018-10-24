@@ -8,7 +8,7 @@ import java.util.Stack;
  *
  * @author Jeremy Grifski
  */
-public class SymbolicAtom implements SExpression {
+public class SymbolicAtom extends SExpression {
     private String name;
 
     /**
@@ -54,6 +54,7 @@ public class SymbolicAtom implements SExpression {
         return name;
     }
 
+    @Override
     public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException {
         for (NonAtom binding : aList) {
             if (binding.car().equals(this)) {
@@ -63,6 +64,7 @@ public class SymbolicAtom implements SExpression {
         return null;
     }
 
+    @Override
     public SExpression find(ArrayList<NonAtom> dList) throws LispEvaluationException {
         for (NonAtom decl : dList) {
             if (decl.car().equals(this)) {
@@ -116,41 +118,5 @@ public class SymbolicAtom implements SExpression {
         } else {
             return SExpression.NIL;
         }
-    }
-
-    @Override
-    public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList)
-            throws LispEvaluationException {
-        throw new LispEvaluationException("Invalid condition: " + this.toString());
-    }
-
-    @Override
-    public SExpression car() throws LispEvaluationException {
-      throw new LispEvaluationException("Unable to call CAR on atom: " + this);
-    }
-
-    @Override
-    public SExpression cdr() throws LispEvaluationException {
-      throw new LispEvaluationException("Unable to call CDR on atom: " + this);
-    }
-
-    @Override
-    public SExpression caar() throws LispEvaluationException {
-      throw new LispEvaluationException("Unable to call CAAR on atom: " + this);
-    }
-
-    @Override
-    public SExpression cadr() throws LispEvaluationException {
-      throw new LispEvaluationException("Unable to call CADR on atom: " + this);
-    }
-
-    @Override
-    public SExpression cdar() throws LispEvaluationException {
-      throw new LispEvaluationException("Unable to call CDAR on atom: " + this);
-    }
-
-    @Override
-    public SExpression cadar() throws LispEvaluationException {
-      throw new LispEvaluationException("Unable to call CADAR on atom: " + this);
     }
 }

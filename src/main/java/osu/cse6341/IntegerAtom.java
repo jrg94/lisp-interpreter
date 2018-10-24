@@ -8,7 +8,7 @@ import java.util.Stack;
  *
  * @author Jeremy Grifski
  */
-public class IntegerAtom implements SExpression {
+public class IntegerAtom extends SExpression {
 
     private int value;
 
@@ -30,13 +30,16 @@ public class IntegerAtom implements SExpression {
         return value;
     }
 
+    /**
+     * Evaluates an integer atom by returning itself.
+     * 
+     * @param aList a list of bindings
+     * @param dList a list of definitions
+     * @return this
+     */
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) {
         return this;
-    }
-
-    public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
-        throw new LispEvaluationException(this.toString() + " is not a list");
     }
 
     /**
@@ -63,6 +66,7 @@ public class IntegerAtom implements SExpression {
      *
      * @return the integer as a string
      */
+    @Override
     public String toString() {
         return Integer.toString(value);
     }
@@ -77,48 +81,4 @@ public class IntegerAtom implements SExpression {
         return SExpression.NIL;
     }
 
-    @Override
-    public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
-      throw new LispEvaluationException("Invalid condition: " + this.toString());
-    }
-
-    @Override
-    public SExpression car() throws LispEvaluationException {
-      throw new LispEvaluationException("Unable to call CAR on atom: " + this);
-    }
-
-    @Override
-    public SExpression cdr() throws LispEvaluationException {
-      throw new LispEvaluationException("Unable to call CDR on atom: " + this);
-    }
-
-    @Override
-    public SExpression caar() throws LispEvaluationException {
-      throw new LispEvaluationException("Unable to call CAAR on atom: " + this);
-    }
-
-    @Override
-    public SExpression cadr() throws LispEvaluationException {
-      throw new LispEvaluationException("Unable to call CADR on atom: " + this);
-    }
-
-    @Override
-    public SExpression cdar() throws LispEvaluationException {
-      throw new LispEvaluationException("Unable to call CDAR on atom: " + this);
-    }
-
-    @Override
-    public SExpression cadar() throws LispEvaluationException {
-      throw new LispEvaluationException("Unable to call CADAR on atom: " + this);
-    }
-
-    @Override
-    public SExpression find(ArrayList<NonAtom> dList) throws LispEvaluationException {
-        throw new LispEvaluationException("Cannot search dList for IntegerAtom: " + this);
-    }
-
-    @Override
-    public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException {
-        throw new LispEvaluationException("Cannot search aList for IntegerAtom: " + this);
-    }
 }
