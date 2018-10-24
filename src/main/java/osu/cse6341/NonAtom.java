@@ -60,6 +60,17 @@ public class NonAtom implements SExpression {
         }
     }
 
+    /**
+     * A helper method for converting SExpressions to SymbolicAtoms.
+     */
+    private static SymbolicAtom convertToSymbolicAtom(SExpression exp) throws LispEvaluationException {
+        if (exp instanceof SymbolicAtom) {
+            return (SymbolicAtom) exp;
+        } else {
+            throw new LispEvaluationException("Expected SymbolicAtom but found: " + exp.toString());
+        }
+    }
+
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
@@ -84,7 +95,7 @@ public class NonAtom implements SExpression {
 
     private SExpression apply(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
-        SExpression func = this.getLeft();
+        SymbolicAtom func = NonAtom.convertToSymbolicAtom(this.getLeft());
         NonAtom args = NonAtom.convertToNonAtom(this.getRight().evaluateList(aList, dList));
         if (func.equals(SExpression.CAR)) {
             ret = args.caar();
@@ -99,7 +110,12 @@ public class NonAtom implements SExpression {
         } else if (func.equals(SExpression.EQ)) {
             ret = NonAtom.isEqual(args.getLeft(), args.cadr());
         } else {
-            throw new LispEvaluationException("Not implemented");
+            NonAtom decl = func.find(dList);
+            SExpression exp = decl.getRight();
+            SExpression pList = decl.cadr();
+            // aList.push(pList);
+            // TODO: update aList
+            exp.evaluate(aList, dList);
             // eval[ cdr[getval[f, dList]], addpairs[car[getval[f, dList]], x,
             // aList], dList]
         }
