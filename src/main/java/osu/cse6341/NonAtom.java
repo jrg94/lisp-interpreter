@@ -264,12 +264,4 @@ public class NonAtom implements SExpression {
     public SymbolicAtom isNull() {
         return SExpression.NIL;
     }
-
-    public static SymbolicAtom isEqual(SExpression a, SExpression b) {
-        if (a == b) {
-            return SExpression.T;
-        } else {
-            return SExpression.NIL;
-        }
-    }
 }

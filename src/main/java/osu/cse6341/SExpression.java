@@ -45,4 +45,19 @@ public interface SExpression {
         return root;
     }
 
+    /**
+     * A static method which compares two s-expressions for equivalence
+     * based on memory address.
+     *
+     * @param a the first s-expression
+     * @param b the second s-expression
+     * @return T if true, NIL Otherwise
+     */
+    public static SymbolicAtom isEqual(SExpression a, SExpression b) {
+        if (a == b) {
+            return SExpression.T;
+        } else {
+            return SExpression.NIL;
+        }
+    }
 }
