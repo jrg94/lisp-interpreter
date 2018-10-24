@@ -107,11 +107,21 @@ public class NonAtom extends SExpression {
         return body.evaluate(aList, dList);
     }
 
+    /**
+     * Gets the left node of this NonAtom.
+     * 
+     * @return the left node of this node
+     */
     @Override
     public SExpression car() throws LispEvaluationException {
         return this.left;
     }
 
+    /**
+     * Gets the right node of this NonAtom.
+     * 
+     * @return the right node of this node
+     */
     @Override
     public SExpression cdr() throws LispEvaluationException {
         return this.right;
@@ -197,15 +207,5 @@ public class NonAtom extends SExpression {
     @Override
     public String toString() {
         return "(" + left.toString() + " . " + right.toString() + ")";
-    }
-
-    @Override
-    public SExpression find(ArrayList<NonAtom> dList) throws LispEvaluationException {
-        throw new LispEvaluationException("Cannot search dList for NonAtom: " + this);
-    }
-
-    @Override
-    public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException {
-        throw new LispEvaluationException("Cannot search aList for NonAtom: " + this);
     }
 }
