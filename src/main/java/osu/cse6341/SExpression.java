@@ -24,6 +24,12 @@ public interface SExpression {
 
     public SExpression car() throws LispEvaluationException;
     public SExpression cdr() throws LispEvaluationException;
+    public SExpression caar() throws LispEvaluationException;
+    public SExpression cadr() throws LispEvaluationException;
+    public SExpression cdar() throws LispEvaluationException;
+    public SExpression cadar() throws LispEvaluationException;
+    public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException;
+    public SExpression find(ArrayList<NonAtom> dList) throws LispEvaluationException;
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException;
     public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException;
     public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException;
@@ -58,34 +64,6 @@ public interface SExpression {
             return SExpression.T;
         } else {
             return SExpression.NIL;
-        }
-    }
-
-    /**
-     * A helper method for converting SExpressions to NonAtoms.
-     *
-     * @param exp an SExpression
-     * @return that same s-expression as a NonAtom
-     */
-    public static NonAtom convertToNonAtom(SExpression exp) throws LispEvaluationException {
-        if (exp instanceof NonAtom) {
-            return (NonAtom) exp;
-        } else {
-            throw new LispEvaluationException("Expected NonAtom but found: " + exp.toString());
-        }
-    }
-
-    /**
-     * A helper method for converting SExpressions to SymbolicAtoms.
-     *
-     * @param exp an SExpression
-     * @return that same s-expression as a SymbolicAtom
-     */
-    public static SymbolicAtom convertToSymbolicAtom(SExpression exp) throws LispEvaluationException {
-        if (exp instanceof SymbolicAtom) {
-            return (SymbolicAtom) exp;
-        } else {
-            throw new LispEvaluationException("Expected SymbolicAtom but found: " + exp.toString());
         }
     }
 

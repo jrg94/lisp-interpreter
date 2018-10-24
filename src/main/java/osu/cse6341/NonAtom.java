@@ -65,8 +65,8 @@ public class NonAtom implements SExpression {
      */
     private SExpression apply(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
-        SymbolicAtom func = SExpression.convertToSymbolicAtom(this.car());
-        NonAtom args = SExpression.convertToNonAtom(this.cdr().evaluateList(aList, dList));
+        SExpression func = this.car();
+        SExpression args = this.cdr().evaluateList(aList, dList);
         if (func.equals(SExpression.CAR)) {
             ret = args.caar();
         } else if (func.equals(SExpression.CDR)) {
@@ -95,9 +95,8 @@ public class NonAtom implements SExpression {
      * @return the result of the function application
      * @throws LispEvaluationException if the evaluation fails
      */
-    private SExpression evaluateFunction(Stack<NonAtom> aList, ArrayList<NonAtom> dList, SymbolicAtom func, NonAtom args) throws LispEvaluationException {
-        SExpression node = func.find(dList);
-        NonAtom decl = SExpression.convertToNonAtom(node);
+    private SExpression evaluateFunction(Stack<NonAtom> aList, ArrayList<NonAtom> dList, SExpression func, SExpression args) throws LispEvaluationException {
+        SExpression decl = func.find(dList);
         SExpression pList = decl.car();
         SExpression body = decl.cdr();
         SExpression.addPairs(pList, args, aList);
@@ -120,19 +119,23 @@ public class NonAtom implements SExpression {
      * @return the left node of the left node of this node
      * @throws LispEvaluationException if fails to grab one of the nodes
      */
-    private SExpression caar() throws LispEvaluationException {
+    @Override
+    public SExpression caar() throws LispEvaluationException {
         return this.car().car();
     }
 
-    private SExpression cdar() throws LispEvaluationException {
+    @Override
+    public SExpression cdar() throws LispEvaluationException {
         return this.car().cdr();
     }
 
-    private SExpression cadr() throws LispEvaluationException {
+    @Override
+    public SExpression cadr() throws LispEvaluationException {
         return this.cdr().car();
     }
 
-    private SExpression cadar() throws LispEvaluationException {
+    @Override
+    public SExpression cadar() throws LispEvaluationException {
         return this.car().cdr().car();
     }
 
@@ -203,5 +206,15 @@ public class NonAtom implements SExpression {
     @Override
     public SymbolicAtom isNull() {
         return SExpression.NIL;
+    }
+
+    @Override
+    public SExpression find(ArrayList<NonAtom> dList) throws LispEvaluationException {
+        throw new LispEvaluationException("Cannot search dList for NonAtom: " + this);
+    }
+
+    @Override
+    public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException {
+        throw new LispEvaluationException("Cannot search aList for NonAtom: " + this);
     }
 }

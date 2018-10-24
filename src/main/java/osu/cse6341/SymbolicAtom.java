@@ -133,4 +133,24 @@ public class SymbolicAtom implements SExpression {
     public SExpression cdr() throws LispEvaluationException {
       throw new LispEvaluationException("Unable to call CDR on atom: " + this);
     }
+
+    @Override
+    public SExpression caar() throws LispEvaluationException {
+      throw new LispEvaluationException("Unable to call CAAR on atom: " + this);
+    }
+
+    @Override
+    public SExpression cadr() throws LispEvaluationException {
+      throw new LispEvaluationException("Unable to call CADR on atom: " + this);
+    }
+
+    @Override
+    public SExpression cdar() throws LispEvaluationException {
+      throw new LispEvaluationException("Unable to call CDAR on atom: " + this);
+    }
+
+    @Override
+    public SExpression cadar() throws LispEvaluationException {
+      throw new LispEvaluationException("Unable to call CADAR on atom: " + this);
+    }
 }
