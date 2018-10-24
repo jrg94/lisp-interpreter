@@ -19,6 +19,7 @@ public abstract class SExpression {
     public static final SymbolicAtom CDR = new SymbolicAtom("CDR");
     public static final SymbolicAtom CONS = new SymbolicAtom("CONS");
     public static final SymbolicAtom ATOM = new SymbolicAtom("ATOM");
+    public static final SymbolicAtom INT = new SymbolicAtom("INT");
     public static final SymbolicAtom NULL = new SymbolicAtom("NULL");
     public static final SymbolicAtom EQ = new SymbolicAtom("EQ");
     public static final SymbolicAtom PLUS = new SymbolicAtom("PLUS");
@@ -109,6 +110,10 @@ public abstract class SExpression {
     }
 
     public SymbolicAtom isNull() {
+        return SExpression.NIL;
+    }
+
+    public SymbolicAtom isInt() {
         return SExpression.NIL;
     }
 

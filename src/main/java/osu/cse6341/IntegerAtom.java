@@ -77,6 +77,11 @@ public class IntegerAtom extends SExpression {
     }
 
     @Override
+    public SymbolicAtom isInt() {
+        return SExpression.T;
+    }
+
+    @Override
     public SymbolicAtom logic(char operator, SExpression other) throws LispEvaluationException {
         SymbolicAtom result = null;
         IntegerAtom rightOperand = (IntegerAtom) other;

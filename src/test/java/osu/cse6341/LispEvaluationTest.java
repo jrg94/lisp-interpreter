@@ -166,4 +166,10 @@ public class LispEvaluationTest {
         String test = "(LESS 2 3)";
         assertEquals(SExpression.T, getEvaluation(test));
     }
+
+    @Test
+    public void testInt() throws LispEvaluationException {
+        String test = "(INT 7)";
+        assertEquals(SExpression.T, getEvaluation(test));
+    }
 }

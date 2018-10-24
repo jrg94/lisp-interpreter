@@ -75,6 +75,8 @@ public class NonAtom extends SExpression {
             ret = args.car().cons(args.cadr());
         } else if (func.equals(SExpression.ATOM)) {
             ret = args.car().isAtom();
+        } else if (func.equals(SExpression.INT)) {
+            ret = args.car().isInt();
         } else if (func.equals(SExpression.NULL)) {
             ret = args.car().isNull();
         } else if (func.equals(SExpression.EQ)) {
