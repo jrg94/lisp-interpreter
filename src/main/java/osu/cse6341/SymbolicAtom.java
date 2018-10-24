@@ -57,7 +57,7 @@ public class SymbolicAtom implements SExpression {
     public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException {
         for (NonAtom binding : aList) {
             if (binding.getLeft().equals(this)) {
-                return binding.getLeft();
+                return binding.getRight();
             }
         }
         return null;
