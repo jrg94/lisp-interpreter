@@ -71,6 +71,14 @@ public class NonAtom implements SExpression {
         }
     }
 
+    /**
+     * Evaluates this NonAtom.
+     *
+     * @param aList a list of bindings
+     * @param dList a list of definitions
+     * @return the resulting SExpressions
+     * @throws LispEvaluationException if evaluation fails
+     */
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
@@ -123,7 +131,7 @@ public class NonAtom implements SExpression {
     /**
      * Given a parameter list and a list of arguments, this method adds the new
      * bindings to the association list.
-     * 
+     *
      * @param pList a list of parameters
      * @param args a list of arguments
      * @param aList the association list
@@ -159,6 +167,7 @@ public class NonAtom implements SExpression {
         root.setRight(right);
         return root;
     }
+
 
     private SExpression caar() throws LispEvaluationException {
         SExpression ret = null;

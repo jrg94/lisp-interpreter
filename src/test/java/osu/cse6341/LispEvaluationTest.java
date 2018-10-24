@@ -26,7 +26,7 @@ public class LispEvaluationTest {
 
     /**
      * A helper method for adding a function to the dList.
-     * 
+     *
      * @param code a function definition as a string
      * @throws LispEvaluationException if there is a syntax error
      */
