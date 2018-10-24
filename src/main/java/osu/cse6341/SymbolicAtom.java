@@ -51,6 +51,15 @@ public class SymbolicAtom implements SExpression {
         return name;
     }
 
+    public NonAtom find(ArrayList<NonAtom> dList) throws LispEvaluationException {
+        for (NonAtom decl : dList) {
+            if (decl.getLeft().equals(this)) {
+                return decl;
+            }
+        }
+        throw new LispEvaluationException("Unable to find " + this + " in dList");
+    }
+
     /**
      * The standard override of the equals method.
      *
@@ -98,7 +107,8 @@ public class SymbolicAtom implements SExpression {
     }
 
     @Override
-    public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
-      throw new LispEvaluationException("Invalid condition: " + this.toString());
+    public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList)
+            throws LispEvaluationException {
+        throw new LispEvaluationException("Invalid condition: " + this.toString());
     }
 }

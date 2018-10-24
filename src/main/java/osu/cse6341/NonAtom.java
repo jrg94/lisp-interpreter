@@ -60,28 +60,6 @@ public class NonAtom implements SExpression {
         }
     }
 
-    /**
-     * A helper method for converting SExpressions to SymbolicAtoms.
-     */
-    private static SymbolicAtom convertToSymbolicAtom(SExpression exp) throws LispEvaluationException {
-        if (exp instanceof SymbolicAtom) {
-            return (SymbolicAtom) exp;
-        } else {
-            throw new LispEvaluationException("Expected SymbolicAtom but found: " + exp.toString());
-        }
-    }
-
-    /**
-     * A helper method for converting SExpressions to IntegerAtoms.
-     */
-    private static IntegerAtom convertToIntegerAtom(SExpression exp) throws LispEvaluationException {
-        if (exp instanceof IntegerAtom) {
-            return (IntegerAtom) exp;
-        } else {
-            throw new LispEvaluationException("Expected IntegerAtom but found: " + exp.toString());
-        }
-    }
-
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
@@ -95,7 +73,7 @@ public class NonAtom implements SExpression {
                         "CDR of QUOTE expression is not a NonAtom: " + this.getRight().toString(), e);
             }
         } else if (car.equals(SExpression.COND)) {
-            // TODO: call evcon
+            ret = this.getRight().evaluateConditions(aList, dList);
         } else if (car.equals(SExpression.DEFUN)) {
             throw new LispEvaluationException("Illegal dList update");
         } else {
@@ -119,7 +97,7 @@ public class NonAtom implements SExpression {
         } else if (func.equals(SExpression.NULL)) {
             ret = args.getLeft().isNull();
         } else if (func.equals(SExpression.EQ)) {
-            return NonAtom.isEqual(args.getLeft(), args.cadr());
+            ret = NonAtom.isEqual(args.getLeft(), args.cadr());
         } else {
             throw new LispEvaluationException("Not implemented");
             // eval[ cdr[getval[f, dList]], addpairs[car[getval[f, dList]], x,
@@ -165,10 +143,10 @@ public class NonAtom implements SExpression {
     }
 
     private SExpression cadar() throws LispEvaluationException {
-      SExpression ret = null;
-      NonAtom right = NonAtom.convertToNonAtom(this.cdar());
-      ret = right.getLeft();
-      return ret;
+        SExpression ret = null;
+        NonAtom right = NonAtom.convertToNonAtom(this.cdar());
+        ret = right.getLeft();
+        return ret;
     }
 
     /**
@@ -190,7 +168,8 @@ public class NonAtom implements SExpression {
     }
 
     @Override
-    public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
+    public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList)
+            throws LispEvaluationException {
         SExpression ret = null;
         SExpression test = this.caar().evaluate(aList, dList);
         if (test.equals(SExpression.T)) {
