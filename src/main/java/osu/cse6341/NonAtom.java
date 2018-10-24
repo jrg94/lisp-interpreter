@@ -120,12 +120,29 @@ public class NonAtom implements SExpression {
         return ret;
     }
 
-    private static void addPairs(NonAtom pList, NonAtom args, Stack<NonAtom> aList) throws LispEvaluationException {
+    /**
+     * Given a parameter list and a list of arguments, this method adds the new
+     * bindings to the association list.
+     * 
+     * @param pList a list of parameters
+     * @param args a list of arguments
+     * @param aList the association list
+     * @throws LispEvaluationException
+     */
+    public static void addPairs(NonAtom pList, NonAtom args, Stack<NonAtom> aList) throws LispEvaluationException {
         NonAtom binding = NonAtom.cons(pList.getLeft(), args.getLeft());
         aList.push(binding);
-        NonAtom nextP = NonAtom.convertToNonAtom(pList.getRight());
-        NonAtom nextArg = NonAtom.convertToNonAtom(args.getRight());
-        NonAtom.addPairs(nextP, nextArg, aList);
+        boolean isEndOfPList = pList.getRight().equals(SExpression.NIL);
+        boolean isEndOfArgList = args.getRight().equals(SExpression.NIL);
+        if (isEndOfPList && !isEndOfArgList) {
+            throw new LispEvaluationException("Function has too many arguments: " + args.getRight());
+        } else if (!isEndOfPList && isEndOfArgList) {
+            throw new LispEvaluationException("Function needs more arguments: " + pList.getRight());
+        } else if (!isEndOfPList && !isEndOfArgList) {
+            NonAtom nextP = NonAtom.convertToNonAtom(pList.getRight());
+            NonAtom nextArg = NonAtom.convertToNonAtom(args.getRight());
+            NonAtom.addPairs(nextP, nextArg, aList);
+        }
     }
 
     /**

@@ -51,10 +51,10 @@ public class SymbolicAtom implements SExpression {
         return name;
     }
 
-    public NonAtom find(ArrayList<NonAtom> dList) throws LispEvaluationException {
+    public SExpression find(ArrayList<NonAtom> dList) throws LispEvaluationException {
         for (NonAtom decl : dList) {
             if (decl.getLeft().equals(this)) {
-                return decl;
+                return decl.getRight();
             }
         }
         throw new LispEvaluationException("Unable to find " + this + " in dList");
