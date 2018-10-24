@@ -112,7 +112,7 @@ public class NonAtom implements SExpression {
         } else if (func.equals(SExpression.CDR)) {
             ret = args.cdar();
         } else if (func.equals(SExpression.CONS)) {
-            ret = NonAtom.cons(args.getLeft(), args.cadr());
+            ret = SExpression.cons(args.getLeft(), args.cadr());
         } else if (func.equals(SExpression.ATOM)) {
             ret = args.getLeft().isAtom();
         } else if (func.equals(SExpression.NULL)) {
@@ -154,7 +154,7 @@ public class NonAtom implements SExpression {
      * @throws LispEvaluationException
      */
     public static void addPairs(NonAtom pList, NonAtom args, Stack<NonAtom> aList) throws LispEvaluationException {
-        NonAtom binding = NonAtom.cons(pList.getLeft(), args.getLeft());
+        NonAtom binding = SExpression.cons(pList.getLeft(), args.getLeft());
         aList.push(binding);
         boolean isEndOfPList = pList.getRight().equals(SExpression.NIL);
         boolean isEndOfArgList = args.getRight().equals(SExpression.NIL);
@@ -167,21 +167,6 @@ public class NonAtom implements SExpression {
             NonAtom nextArg = NonAtom.convertToNonAtom(args.getRight());
             NonAtom.addPairs(nextP, nextArg, aList);
         }
-    }
-
-    /**
-     * A static method which creates a new NonAtom from two SExpressions.
-     *
-     * @param left the s-expression to be used on the left
-     * @param right the s-expression to be used on the right
-     * @return the root of the new binary tree
-     * @throws LispEvaluationException
-     */
-    private static NonAtom cons(SExpression left, SExpression right) throws LispEvaluationException {
-        NonAtom root = new NonAtom();
-        root.setLeft(left);
-        root.setRight(right);
-        return root;
     }
 
     @Override
@@ -231,7 +216,7 @@ public class NonAtom implements SExpression {
     public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression left = this.getLeft().evaluate(aList, dList);
         SExpression right = this.getRight().evaluateList(aList, dList);
-        return NonAtom.cons(left, right);
+        return SExpression.cons(left, right);
     }
 
     @Override

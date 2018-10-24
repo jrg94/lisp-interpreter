@@ -30,4 +30,19 @@ public interface SExpression {
     public SymbolicAtom isAtom();
     public SymbolicAtom isNull();
 
+    /**
+     * A static method which creates a new NonAtom from two SExpressions.
+     *
+     * @param left the s-expression to be used on the left
+     * @param right the s-expression to be used on the right
+     * @return the root of the new binary tree
+     * @throws LispEvaluationException
+     */
+    public static NonAtom cons(SExpression left, SExpression right) throws LispEvaluationException {
+        NonAtom root = new NonAtom();
+        root.setLeft(left);
+        root.setRight(right);
+        return root;
+    }
+
 }
