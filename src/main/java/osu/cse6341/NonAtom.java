@@ -79,6 +79,7 @@ public class NonAtom implements SExpression {
             ret = args.car().isNull();
         } else if (func.equals(SExpression.EQ)) {
             ret = SExpression.isEqual(args.car(), args.cadr());
+            // TODO: implement plus, minus, etc.
         } else {
             ret = evaluateFunction(aList, dList, func, args);
         }
