@@ -120,14 +120,28 @@ public class NonAtom implements SExpression {
         } else if (func.equals(SExpression.EQ)) {
             ret = NonAtom.isEqual(args.getLeft(), args.cadr());
         } else {
-            SExpression node = func.find(dList);
-            NonAtom decl = NonAtom.convertToNonAtom(node);
-            NonAtom pList = NonAtom.convertToNonAtom(decl.getLeft());
-            SExpression body = decl.getRight();
-            addPairs(pList, args, aList);
-            ret = body.evaluate(aList, dList);
+            ret = evaluateFunction(aList, dList, func, args);
         }
         return ret;
+    }
+
+    /**
+     * A helper method which evaluates a function.
+     *
+     * @param aList a list of bindings
+     * @param dList a list of definitions
+     * @param func a function name
+     * @param args a list of arguments
+     * @return the result of the function application
+     * @throws LispEvaluationException if the evaluation fails
+     */
+    private SExpression evaluateFunction(Stack<NonAtom> aList, ArrayList<NonAtom> dList, SymbolicAtom func, NonAtom args) throws LispEvaluationException {
+        SExpression node = func.find(dList);
+        NonAtom decl = NonAtom.convertToNonAtom(node);
+        NonAtom pList = NonAtom.convertToNonAtom(decl.getLeft());
+        SExpression body = decl.getRight();
+        addPairs(pList, args, aList);
+        return body.evaluate(aList, dList);
     }
 
     /**
