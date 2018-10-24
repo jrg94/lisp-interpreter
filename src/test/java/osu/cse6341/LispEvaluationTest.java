@@ -155,4 +155,15 @@ public class LispEvaluationTest {
         assertEquals(expectedResult, getEvaluation(test));
     }
 
+    @Test
+    public void testGREATER() throws LispEvaluationException {
+        String test = "(GREATER 2 3)";
+        assertEquals(SExpression.NIL, getEvaluation(test));
+    }
+
+    @Test
+    public void testLESS() throws LispEvaluationException {
+        String test = "(LESS 2 3)";
+        assertEquals(SExpression.T, getEvaluation(test));
+    }
 }

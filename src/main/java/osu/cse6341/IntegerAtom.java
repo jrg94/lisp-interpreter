@@ -77,6 +77,24 @@ public class IntegerAtom extends SExpression {
     }
 
     @Override
+    public SymbolicAtom logic(char operator, SExpression other) throws LispEvaluationException {
+        SymbolicAtom result = null;
+        IntegerAtom rightOperand = (IntegerAtom) other;
+
+        switch (operator) {
+        case '<':
+            result = this.getValue() < rightOperand.getValue() ? SExpression.T : SExpression.NIL;
+            break;
+        case '>':
+            result = this.getValue() > rightOperand.getValue() ? SExpression.T : SExpression.NIL;
+            break;
+        default:
+            throw new LispEvaluationException("No such boolean operator defined: " + operator);
+        }
+        return result;
+    }
+
+    @Override
     public IntegerAtom arithmetic(char operator, SExpression other) throws LispEvaluationException {
         int result = 0;
         IntegerAtom rightOperand = (IntegerAtom) other;
@@ -98,7 +116,7 @@ public class IntegerAtom extends SExpression {
             result = this.getValue() % rightOperand.getValue();
             break;
         default:
-            throw new LispEvaluationException("No such operator defined: " + operator);
+            throw new LispEvaluationException("No such arithmetic operator defined: " + operator);
         }
         return new IntegerAtom(result);
     }

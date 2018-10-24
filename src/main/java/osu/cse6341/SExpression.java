@@ -26,6 +26,8 @@ public abstract class SExpression {
     public static final SymbolicAtom TIMES = new SymbolicAtom("TIMES");
     public static final SymbolicAtom QUOTIENT = new SymbolicAtom("QUOTIENT");
     public static final SymbolicAtom REMAINDER = new SymbolicAtom("REMAINDER");
+    public static final SymbolicAtom GREATER = new SymbolicAtom("GREATER");
+    public static final SymbolicAtom LESS = new SymbolicAtom("LESS");
 
     public SExpression car() throws LispEvaluationException {
         throw new LispEvaluationException("Unable to call CDR on atom: " + this);
@@ -73,6 +75,10 @@ public abstract class SExpression {
     }
 
     public IntegerAtom arithmetic(char operator, SExpression other) throws LispEvaluationException {
+        throw new LispEvaluationException("Unable to perform " + operator + " on " + this + " and " + other);
+    }
+
+    public SymbolicAtom logic(char operator, SExpression other) throws LispEvaluationException {
         throw new LispEvaluationException("Unable to perform " + operator + " on " + this + " and " + other);
     }
 
