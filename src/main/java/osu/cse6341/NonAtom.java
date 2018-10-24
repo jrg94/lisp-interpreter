@@ -201,17 +201,11 @@ public class NonAtom implements SExpression {
      * @throws LispEvaluationException if fails to grab one of the nodes
      */
     private SExpression caar() throws LispEvaluationException {
-        SExpression ret = null;
-        NonAtom left = NonAtom.convertToNonAtom(this.getLeft());
-        ret = left.getLeft();
-        return ret;
+        return this.car().car();
     }
 
     private SExpression cdar() throws LispEvaluationException {
-        SExpression ret = null;
-        NonAtom left = NonAtom.convertToNonAtom(this.getLeft());
-        ret = left.getRight();
-        return ret;
+        return this.car().cdr();
     }
 
     private SExpression cadr() throws LispEvaluationException {
