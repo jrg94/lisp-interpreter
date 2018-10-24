@@ -112,15 +112,21 @@ public class NonAtom implements SExpression {
         } else {
             SExpression node = func.find(dList);
             NonAtom decl = NonAtom.convertToNonAtom(node);
-            SExpression pList = decl.getLeft();
+            NonAtom pList = NonAtom.convertToNonAtom(decl.getLeft());
             SExpression body = decl.getRight();
-            // TODO: update aList
+            addPairs(pList, args, aList);
             body.evaluate(aList, dList);
         }
         return ret;
     }
 
-    // private SExpression addPairs()
+    private static void addPairs(NonAtom pList, NonAtom args, Stack<NonAtom> aList) throws LispEvaluationException {
+        NonAtom binding = NonAtom.cons(pList.getLeft(), args.getLeft());
+        aList.push(binding);
+        NonAtom nextP = NonAtom.convertToNonAtom(pList.getRight());
+        NonAtom nextArg = NonAtom.convertToNonAtom(args.getRight());
+        NonAtom.addPairs(nextP, nextArg, aList);
+    }
 
     /**
      * A static method which creates a new NonAtom from two SExpressions.
