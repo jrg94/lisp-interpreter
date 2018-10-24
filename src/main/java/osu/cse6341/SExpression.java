@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 /**
- * The S-Expresion Interface.
+ * The S-Expression Interface.
  *
  * @author Jeremy Grifski
  */
@@ -30,14 +30,35 @@ public abstract class SExpression {
         throw new LispEvaluationException("Unable to call CDR on atom: " + this);
     }
 
+    /**
+     * Gets the left node of the left node of this node.
+     * 
+     * @return the left node of the left node of this s-expression
+     * @throws LispEvaluationException if this s-expression is not 2 or more
+     *             levels deep
+     */
     public SExpression caar() throws LispEvaluationException {
         throw new LispEvaluationException("Unable to call CAAR on atom: " + this);
     }
 
+    /**
+     * Gets the left node of the right node of this node.
+     * 
+     * @return the left node of the right node of this s-expression
+     * @throws LispEvaluationException if this s-expression is not 2 or more
+     *             levels deep
+     */
     public SExpression cadr() throws LispEvaluationException {
         throw new LispEvaluationException("Unable to call CADR on atom: " + this);
     }
 
+    /**
+     * Gets the right node of the left node of this node.
+     * 
+     * @return the right node of the left node of this s-expression
+     * @throws LispEvaluationException if this s-expression is not 2 or more
+     *             levels deep
+     */
     public SExpression cdar() throws LispEvaluationException {
         throw new LispEvaluationException("Unable to call CDAR on atom: " + this);
     }
