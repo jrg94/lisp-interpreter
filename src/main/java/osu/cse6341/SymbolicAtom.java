@@ -123,4 +123,14 @@ public class SymbolicAtom implements SExpression {
             throws LispEvaluationException {
         throw new LispEvaluationException("Invalid condition: " + this.toString());
     }
+
+    @Override
+    public SExpression car() throws LispEvaluationException {
+      throw new LispEvaluationException("Unable to call CAR on atom: " + this);
+    }
+
+    @Override
+    public SExpression cdr() throws LispEvaluationException {
+      throw new LispEvaluationException("Unable to call CDR on atom: " + this);
+    }
 }

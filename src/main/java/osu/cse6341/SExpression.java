@@ -22,14 +22,12 @@ public interface SExpression {
     public static final SymbolicAtom NULL = new SymbolicAtom("NULL");
     public static final SymbolicAtom EQ = new SymbolicAtom("EQ");
 
+    public SExpression car() throws LispEvaluationException;
+    public SExpression cdr() throws LispEvaluationException;
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException;
-
     public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException;
-
     public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException;
-
     public SymbolicAtom isAtom();
-
     public SymbolicAtom isNull();
 
 }

@@ -184,7 +184,22 @@ public class NonAtom implements SExpression {
         return root;
     }
 
+    @Override
+    public SExpression car() throws LispEvaluationException {
+        return this.left;
+    }
 
+    @Override
+    public SExpression cdr() throws LispEvaluationException {
+        return this.right;
+    }
+
+    /**
+     * A helper method which gets the left node of the left node.
+     *
+     * @return the left node of the left node of this node
+     * @throws LispEvaluationException if fails to grab one of the nodes
+     */
     private SExpression caar() throws LispEvaluationException {
         SExpression ret = null;
         NonAtom left = NonAtom.convertToNonAtom(this.getLeft());
