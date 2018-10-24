@@ -85,6 +85,10 @@ public class NonAtom extends SExpression {
             ret = args.car().arithmetic('-', args.cadr());
         } else if (func.equals(SExpression.TIMES)) {
             ret = args.car().arithmetic('*', args.cadr());
+        } else if (func.equals(SExpression.QUOTIENT)) {
+            ret = args.car().arithmetic('/', args.cadr());
+        } else if (func.equals(SExpression.REMAINDER)) {
+            ret = args.car().arithmetic('%', args.cadr());
         } else {
             ret = this.evaluateFunction(aList, dList, func, args);
         }

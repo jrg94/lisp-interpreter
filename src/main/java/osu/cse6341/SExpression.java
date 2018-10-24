@@ -24,6 +24,8 @@ public abstract class SExpression {
     public static final SymbolicAtom PLUS = new SymbolicAtom("PLUS");
     public static final SymbolicAtom MINUS = new SymbolicAtom("MINUS");
     public static final SymbolicAtom TIMES = new SymbolicAtom("TIMES");
+    public static final SymbolicAtom QUOTIENT = new SymbolicAtom("QUOTIENT");
+    public static final SymbolicAtom REMAINDER = new SymbolicAtom("REMAINDER");
 
     public SExpression car() throws LispEvaluationException {
         throw new LispEvaluationException("Unable to call CDR on atom: " + this);

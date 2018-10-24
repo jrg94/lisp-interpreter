@@ -141,4 +141,18 @@ public class LispEvaluationTest {
         assertEquals(expectedResult, getEvaluation(test));
     }
 
+    @Test
+    public void testQUOTIENT() throws LispEvaluationException {
+        String test = "(QUOTIENT 2 3)";
+        IntegerAtom expectedResult = new IntegerAtom(0);
+        assertEquals(expectedResult, getEvaluation(test));
+    }
+
+    @Test
+    public void testREMAINDER() throws LispEvaluationException {
+        String test = "(REMAINDER 2 3)";
+        IntegerAtom expectedResult = new IntegerAtom(2);
+        assertEquals(expectedResult, getEvaluation(test));
+    }
+
 }
