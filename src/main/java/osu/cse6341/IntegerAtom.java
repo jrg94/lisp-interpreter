@@ -73,12 +73,12 @@ public class IntegerAtom extends SExpression {
 
     @Override
     public SymbolicAtom isAtom() {
-        return Primitive.T.getAtom();
+        return Primitives.T.getAtom();
     }
 
     @Override
     public SymbolicAtom isInt() {
-        return Primitive.T.getAtom();
+        return Primitives.T.getAtom();
     }
 
     @Override
@@ -88,10 +88,10 @@ public class IntegerAtom extends SExpression {
 
         switch (operator) {
         case '<':
-            result = this.getValue() < rightOperand.getValue() ? Primitive.T.getAtom() : Primitive.NIL.getAtom();
+            result = this.getValue() < rightOperand.getValue() ? Primitives.T.getAtom() : Primitives.NIL.getAtom();
             break;
         case '>':
-            result = this.getValue() > rightOperand.getValue() ? Primitive.T.getAtom() : Primitive.NIL.getAtom();
+            result = this.getValue() > rightOperand.getValue() ? Primitives.T.getAtom() : Primitives.NIL.getAtom();
             break;
         default:
             throw new LispEvaluationException("No such boolean operator defined: " + operator);

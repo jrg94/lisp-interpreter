@@ -65,9 +65,9 @@ public abstract class SExpression {
 
     public SymbolicAtom isEqual(SExpression other) {
         if (this == other) {
-            return Primitive.T.getAtom();
+            return Primitives.T.getAtom();
         } else {
-            return Primitive.NIL.getAtom();
+            return Primitives.NIL.getAtom();
         }
     }
 
@@ -86,15 +86,15 @@ public abstract class SExpression {
     }
 
     public SymbolicAtom isAtom() {
-        return Primitive.NIL.getAtom();
+        return Primitives.NIL.getAtom();
     }
 
     public SymbolicAtom isNull() {
-        return Primitive.NIL.getAtom();
+        return Primitives.NIL.getAtom();
     }
 
     public SymbolicAtom isInt() {
-        return Primitive.NIL.getAtom();
+        return Primitives.NIL.getAtom();
     }
 
     /**
@@ -110,8 +110,8 @@ public abstract class SExpression {
             throws LispEvaluationException {
         NonAtom binding = pList.car().cons(args.car());
         aList.push(binding);
-        boolean isEndOfPList = pList.cdr().equals(Primitive.NIL.getAtom());
-        boolean isEndOfArgList = args.cdr().equals(Primitive.NIL.getAtom());
+        boolean isEndOfPList = pList.cdr().equals(Primitives.NIL.getAtom());
+        boolean isEndOfArgList = args.cdr().equals(Primitives.NIL.getAtom());
         if (isEndOfPList && !isEndOfArgList) {
             throw new LispEvaluationException("Function has too many arguments: " + args.cdr());
         } else if (!isEndOfPList && isEndOfArgList) {

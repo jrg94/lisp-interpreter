@@ -115,7 +115,7 @@ public class LispInterpreter {
     private SExpression parseListNotation(ArrayList<SExpression> exps) {
         SExpression curr;
         if (exps.isEmpty()) {
-            curr = Primitive.NIL.getAtom();
+            curr = Primitives.NIL.getAtom();
         } else {
             curr = new NonAtom();
             NonAtom temp = (NonAtom) curr;
@@ -126,7 +126,7 @@ public class LispInterpreter {
                     temp.setRight(next);
                     temp = next;
                 } else {
-                    temp.setRight(Primitive.NIL.getAtom());
+                    temp.setRight(Primitives.NIL.getAtom());
                 }
             }
         }
@@ -218,9 +218,9 @@ public class LispInterpreter {
      * composed of a DEFUN.
      */
     public void updateDList(SExpression ast) throws LispEvaluationException {
-        if (ast.isAtom().equals(Primitive.NIL.getAtom())) {
+        if (ast.isAtom().equals(Primitives.NIL.getAtom())) {
             NonAtom root = (NonAtom) ast;
-            if (root.car().equals(Primitive.DEFUN.getAtom())) {
+            if (root.car().equals(Primitives.DEFUN.getAtom())) {
                 this.dList.add((NonAtom) root.cdr());
             }
         }
