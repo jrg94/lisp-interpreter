@@ -213,6 +213,19 @@ public class LispInterpreter {
     }
 
     /**
+     * A method which updates the dList if the given expressions
+     * is a NonAtom composed of a DEFUN.
+     */
+    public void updateDList(SExpression ast) {
+        if (ast.isAtom().equals(SExpression.NIL)) {
+            NonAtom root = (NonAtom) ast;
+            if (root.getLeft().equals(SExpression.DEFUN)) {
+                this.dList.add((NonAtom) root.getRight());
+            }
+        }
+    }
+
+    /**
      * Evaluates the abstract syntax tree.
      */
     public SExpression evaluate(SExpression ast) throws LispEvaluationException {
@@ -237,6 +250,7 @@ public class LispInterpreter {
         try {
             SExpression root = this.read(currExpression);
             this.print(root);
+            this.updateDList(root);
             SExpression result = this.evaluate(root);
             this.print(result);
         } catch (LispSyntaxException e) {
