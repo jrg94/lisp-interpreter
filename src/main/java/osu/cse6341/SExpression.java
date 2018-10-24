@@ -21,6 +21,7 @@ public interface SExpression {
     public static final SymbolicAtom ATOM = new SymbolicAtom("ATOM");
     public static final SymbolicAtom NULL = new SymbolicAtom("NULL");
     public static final SymbolicAtom EQ = new SymbolicAtom("EQ");
+    public static final SymbolicAtom PLUS = new SymbolicAtom("PLUS");
 
     public SExpression car() throws LispEvaluationException;
     public SExpression cdr() throws LispEvaluationException;
