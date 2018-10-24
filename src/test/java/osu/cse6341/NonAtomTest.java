@@ -22,8 +22,9 @@ public class NonAtomTest {
             if (i + 1 == symbols.length) {
                 curr.setRight(SExpression.NIL);
             } else {
-                curr.setRight(new NonAtom());
-                curr = (NonAtom) curr.getRight();
+                NonAtom next = new NonAtom();
+                curr.setRight(next);
+                curr = next;
             }
         }
         return root;
@@ -43,8 +44,9 @@ public class NonAtomTest {
             if (i + 1 == symbols.length) {
                 curr.setRight(SExpression.NIL);
             } else {
-                curr.setRight(new NonAtom());
-                curr = (NonAtom) curr.getRight();
+                NonAtom next = new NonAtom();
+                curr.setRight(next);
+                curr = next;
             }
         }
         return root;

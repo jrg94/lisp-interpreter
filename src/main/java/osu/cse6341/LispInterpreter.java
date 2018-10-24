@@ -122,8 +122,9 @@ public class LispInterpreter {
             for (int i = 0; i < exps.size(); i++) {
                 temp.setLeft(exps.get(i));
                 if (i < exps.size() - 1) {
-                    temp.setRight(new NonAtom());
-                    temp = (NonAtom) temp.getRight();
+                    NonAtom next = new NonAtom();
+                    temp.setRight(next);
+                    temp = next;
                 } else {
                     temp.setRight(SExpression.NIL);
                 }
@@ -216,11 +217,11 @@ public class LispInterpreter {
      * A method which updates the dList if the given expressions
      * is a NonAtom composed of a DEFUN.
      */
-    public void updateDList(SExpression ast) {
+    public void updateDList(SExpression ast) throws LispEvaluationException {
         if (ast.isAtom().equals(SExpression.NIL)) {
             NonAtom root = (NonAtom) ast;
-            if (root.getLeft().equals(SExpression.DEFUN)) {
-                this.dList.add((NonAtom) root.getRight());
+            if (root.car().equals(SExpression.DEFUN)) {
+                this.dList.add((NonAtom) root.cdr());
             }
         }
     }

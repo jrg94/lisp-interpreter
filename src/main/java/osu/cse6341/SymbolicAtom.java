@@ -56,8 +56,8 @@ public class SymbolicAtom implements SExpression {
 
     public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException {
         for (NonAtom binding : aList) {
-            if (binding.getLeft().equals(this)) {
-                return binding.getRight();
+            if (binding.car().equals(this)) {
+                return binding.cdr();
             }
         }
         return null;
@@ -65,8 +65,8 @@ public class SymbolicAtom implements SExpression {
 
     public SExpression find(ArrayList<NonAtom> dList) throws LispEvaluationException {
         for (NonAtom decl : dList) {
-            if (decl.getLeft().equals(this)) {
-                return decl.getRight();
+            if (decl.car().equals(this)) {
+                return decl.cdr();
             }
         }
         throw new LispEvaluationException("Unable to find " + this + " in dList");

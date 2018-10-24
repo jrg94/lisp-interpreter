@@ -32,24 +32,6 @@ public class NonAtom implements SExpression {
     }
 
     /**
-     * Gets the left node of this binary tree.
-     *
-     * @return the left s-expression
-     */
-    public SExpression getLeft() {
-        return left;
-    }
-
-    /**
-     * Gets the right node of this binary tree.
-     *
-     * @return the right s-expression
-     */
-    public SExpression getRight() {
-        return right;
-    }
-
-    /**
      * Evaluates this NonAtom.
      *
      * @param aList a list of bindings
@@ -60,11 +42,11 @@ public class NonAtom implements SExpression {
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
-        SExpression car = this.getLeft();
+        SExpression car = this.car();
         if (car.equals(SExpression.QUOTE)) {
             ret = this.cadr();
         } else if (car.equals(SExpression.COND)) {
-            ret = this.getRight().evaluateConditions(aList, dList);
+            ret = this.cdr().evaluateConditions(aList, dList);
         } else if (car.equals(SExpression.DEFUN)) {
             throw new LispEvaluationException("Illegal dList update");
         } else {
@@ -83,20 +65,20 @@ public class NonAtom implements SExpression {
      */
     private SExpression apply(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
-        SymbolicAtom func = SExpression.convertToSymbolicAtom(this.getLeft());
-        NonAtom args = SExpression.convertToNonAtom(this.getRight().evaluateList(aList, dList));
+        SymbolicAtom func = SExpression.convertToSymbolicAtom(this.car());
+        NonAtom args = SExpression.convertToNonAtom(this.cdr().evaluateList(aList, dList));
         if (func.equals(SExpression.CAR)) {
             ret = args.caar();
         } else if (func.equals(SExpression.CDR)) {
             ret = args.cdar();
         } else if (func.equals(SExpression.CONS)) {
-            ret = SExpression.cons(args.getLeft(), args.cadr());
+            ret = SExpression.cons(args.car(), args.cadr());
         } else if (func.equals(SExpression.ATOM)) {
-            ret = args.getLeft().isAtom();
+            ret = args.car().isAtom();
         } else if (func.equals(SExpression.NULL)) {
-            ret = args.getLeft().isNull();
+            ret = args.car().isNull();
         } else if (func.equals(SExpression.EQ)) {
-            ret = SExpression.isEqual(args.getLeft(), args.cadr());
+            ret = SExpression.isEqual(args.car(), args.cadr());
         } else {
             ret = evaluateFunction(aList, dList, func, args);
         }
@@ -116,8 +98,8 @@ public class NonAtom implements SExpression {
     private SExpression evaluateFunction(Stack<NonAtom> aList, ArrayList<NonAtom> dList, SymbolicAtom func, NonAtom args) throws LispEvaluationException {
         SExpression node = func.find(dList);
         NonAtom decl = SExpression.convertToNonAtom(node);
-        NonAtom pList = SExpression.convertToNonAtom(decl.getLeft());
-        SExpression body = decl.getRight();
+        NonAtom pList = SExpression.convertToNonAtom(decl.car());
+        SExpression body = decl.cdr();
         SExpression.addPairs(pList, args, aList);
         return body.evaluate(aList, dList);
     }
@@ -167,8 +149,8 @@ public class NonAtom implements SExpression {
      */
     @Override
     public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
-        SExpression left = this.getLeft().evaluate(aList, dList);
-        SExpression right = this.getRight().evaluateList(aList, dList);
+        SExpression left = this.car().evaluate(aList, dList);
+        SExpression right = this.cdr().evaluateList(aList, dList);
         return SExpression.cons(left, right);
     }
 
@@ -180,7 +162,7 @@ public class NonAtom implements SExpression {
         if (test.equals(SExpression.T)) {
             ret = this.cadar().evaluate(aList, dList);
         } else {
-            ret = this.getRight().evaluateConditions(aList, dList);
+            ret = this.cdr().evaluateConditions(aList, dList);
         }
         return ret;
     }
@@ -197,7 +179,11 @@ public class NonAtom implements SExpression {
             isEqual = false;
         } else if (o instanceof NonAtom) {
             NonAtom atom = (NonAtom) o;
-            isEqual = this.left.equals(atom.getLeft()) && this.right.equals(atom.getRight());
+            try {
+                isEqual = this.car().equals(atom.car()) && this.cdr().equals(atom.cdr());
+            } catch (LispEvaluationException e) {
+                isEqual = false;
+            }
         } else {
             isEqual = false;
         }
