@@ -209,17 +209,11 @@ public class NonAtom implements SExpression {
     }
 
     private SExpression cadr() throws LispEvaluationException {
-        SExpression ret = null;
-        NonAtom right = NonAtom.convertToNonAtom(this.getRight());
-        ret = right.getLeft();
-        return ret;
+        return this.cdr().car();
     }
 
     private SExpression cadar() throws LispEvaluationException {
-        SExpression ret = null;
-        NonAtom right = NonAtom.convertToNonAtom(this.cdar());
-        ret = right.getLeft();
-        return ret;
+        return this.car().cdr().car();
     }
 
     /**
