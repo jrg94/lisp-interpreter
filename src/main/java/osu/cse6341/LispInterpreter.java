@@ -214,8 +214,8 @@ public class LispInterpreter {
     }
 
     /**
-     * A method which updates the dList if the given expressions
-     * is a NonAtom composed of a DEFUN.
+     * A method which updates the dList if the given expressions is a NonAtom
+     * composed of a DEFUN.
      */
     public void updateDList(SExpression ast) throws LispEvaluationException {
         if (ast.isAtom().equals(SExpression.NIL)) {

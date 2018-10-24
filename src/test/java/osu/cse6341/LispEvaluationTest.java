@@ -114,16 +114,30 @@ public class LispEvaluationTest {
     }
 
     @Test
-    public void testAdd() throws LispEvaluationException {
+    public void testPLUS() throws LispEvaluationException {
         String test = "(PLUS 2 3)";
         IntegerAtom expectedResult = new IntegerAtom(5);
         assertEquals(expectedResult, getEvaluation(test));
     }
 
     @Test
-    public void testAddNested() throws LispEvaluationException {
+    public void testPLUSNested() throws LispEvaluationException {
         String test = "(PLUS 2 (PLUS 3 4))";
         IntegerAtom expectedResult = new IntegerAtom(9);
+        assertEquals(expectedResult, getEvaluation(test));
+    }
+
+    @Test
+    public void testMINUS() throws LispEvaluationException {
+        String test = "(MINUS 2 3)";
+        IntegerAtom expectedResult = new IntegerAtom(-1);
+        assertEquals(expectedResult, getEvaluation(test));
+    }
+
+    @Test
+    public void testTIMES() throws LispEvaluationException {
+        String test = "(TIMES 2 3)";
+        IntegerAtom expectedResult = new IntegerAtom(6);
         assertEquals(expectedResult, getEvaluation(test));
     }
 

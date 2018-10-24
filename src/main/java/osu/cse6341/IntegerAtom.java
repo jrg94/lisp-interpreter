@@ -77,13 +77,29 @@ public class IntegerAtom extends SExpression {
     }
 
     @Override
-    public IntegerAtom add(SExpression other) throws LispEvaluationException {
-        if (other instanceof IntegerAtom) {
-            IntegerAtom rightOperand = (IntegerAtom) other;
-            int sum = this.getValue() + rightOperand.getValue();
-            return new IntegerAtom(sum);
-        } else {
-            throw new LispEvaluationException("Unable to add - argument was not an integer: " + other);
+    public IntegerAtom arithmetic(char operator, SExpression other) throws LispEvaluationException {
+        int result = 0;
+        IntegerAtom rightOperand = (IntegerAtom) other;
+
+        switch (operator) {
+        case '+':
+            result = this.getValue() + rightOperand.getValue();
+            break;
+        case '-':
+            result = this.getValue() - rightOperand.getValue();
+            break;
+        case '*':
+            result = this.getValue() * rightOperand.getValue();
+            break;
+        case '/':
+            result = this.getValue() / rightOperand.getValue();
+            break;
+        case '%':
+            result = this.getValue() % rightOperand.getValue();
+            break;
+        default:
+            throw new LispEvaluationException("No such operator defined: " + operator);
         }
+        return new IntegerAtom(result);
     }
 }

@@ -80,7 +80,11 @@ public class NonAtom extends SExpression {
         } else if (func.equals(SExpression.EQ)) {
             ret = args.car().isEqual(args.cadr());
         } else if (func.equals(SExpression.PLUS)) {
-            ret = args.car().add(args.cadr());
+            ret = args.car().arithmetic('+', args.cadr());
+        } else if (func.equals(SExpression.MINUS)) {
+            ret = args.car().arithmetic('-', args.cadr());
+        } else if (func.equals(SExpression.TIMES)) {
+            ret = args.car().arithmetic('*', args.cadr());
         } else {
             ret = this.evaluateFunction(aList, dList, func, args);
         }

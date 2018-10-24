@@ -22,6 +22,8 @@ public abstract class SExpression {
     public static final SymbolicAtom NULL = new SymbolicAtom("NULL");
     public static final SymbolicAtom EQ = new SymbolicAtom("EQ");
     public static final SymbolicAtom PLUS = new SymbolicAtom("PLUS");
+    public static final SymbolicAtom MINUS = new SymbolicAtom("MINUS");
+    public static final SymbolicAtom TIMES = new SymbolicAtom("TIMES");
 
     public SExpression car() throws LispEvaluationException {
         throw new LispEvaluationException("Unable to call CDR on atom: " + this);
@@ -68,8 +70,8 @@ public abstract class SExpression {
         throw new LispEvaluationException(this + " is not a list");
     }
 
-    public IntegerAtom add(SExpression other) throws LispEvaluationException {
-        throw new LispEvaluationException("Unable to add " + this + " to " + other);
+    public IntegerAtom arithmetic(char operator, SExpression other) throws LispEvaluationException {
+        throw new LispEvaluationException("Unable to perform " + operator + " on " + this + " and " + other);
     }
 
     public SymbolicAtom isEqual(SExpression other) {
