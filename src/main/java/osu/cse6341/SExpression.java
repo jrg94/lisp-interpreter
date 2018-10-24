@@ -68,43 +68,38 @@ public abstract class SExpression {
         throw new LispEvaluationException(this + " is not a list");
     }
 
+    public IntegerAtom add(SExpression other) throws LispEvaluationException {
+        throw new LispEvaluationException("Unable to add " + this + " to " + other);
+    }
+
+    public SymbolicAtom isEqual(SExpression other) {
+        if (this == other) {
+            return SExpression.T;
+        } else {
+            return SExpression.NIL;
+        }
+    }
+
+    /**
+     * A static method which creates a new NonAtom from two SExpressions.
+     *
+     * @param other the s-expression to be used on the right
+     * @return the root of the new binary tree
+     * @throws LispEvaluationException
+     */
+    public NonAtom cons(SExpression other) {
+        NonAtom root = new NonAtom();
+        root.setLeft(this);
+        root.setRight(other);
+        return root;
+    }
+
     public SymbolicAtom isAtom() {
         return SExpression.NIL;
     }
 
     public SymbolicAtom isNull() {
         return SExpression.NIL;
-    }
-
-    /**
-     * A static method which creates a new NonAtom from two SExpressions.
-     *
-     * @param left the s-expression to be used on the left
-     * @param right the s-expression to be used on the right
-     * @return the root of the new binary tree
-     * @throws LispEvaluationException
-     */
-    public static NonAtom cons(SExpression left, SExpression right) throws LispEvaluationException {
-        NonAtom root = new NonAtom();
-        root.setLeft(left);
-        root.setRight(right);
-        return root;
-    }
-
-    /**
-     * A static method which compares two s-expressions for equivalence based on
-     * memory address.
-     *
-     * @param a the first s-expression
-     * @param b the second s-expression
-     * @return T if true, NIL Otherwise
-     */
-    public static SymbolicAtom isEqual(SExpression a, SExpression b) {
-        if (a == b) {
-            return SExpression.T;
-        } else {
-            return SExpression.NIL;
-        }
     }
 
     /**
@@ -118,7 +113,7 @@ public abstract class SExpression {
      */
     public static void addPairs(SExpression pList, SExpression args, Stack<NonAtom> aList)
             throws LispEvaluationException {
-        NonAtom binding = SExpression.cons(pList.car(), args.car());
+        NonAtom binding = pList.car().cons(args.car());
         aList.push(binding);
         boolean isEndOfPList = pList.cdr().equals(SExpression.NIL);
         boolean isEndOfArgList = args.cdr().equals(SExpression.NIL);

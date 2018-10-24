@@ -112,4 +112,11 @@ public class LispEvaluationTest {
         IntegerAtom expectedResult = new IntegerAtom(5);
         assertEquals(expectedResult, getEvaluation(test));
     }
+
+    @Test
+    public void testAdd() throws LispEvaluationException {
+        String test = "(PLUS 2 3)";
+        IntegerAtom expectedResult = new IntegerAtom(5);
+        assertEquals(expectedResult, getEvaluation(test));
+    }
 }

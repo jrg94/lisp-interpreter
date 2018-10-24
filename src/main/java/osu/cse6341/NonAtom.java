@@ -72,16 +72,15 @@ public class NonAtom extends SExpression {
         } else if (func.equals(SExpression.CDR)) {
             ret = args.cdar();
         } else if (func.equals(SExpression.CONS)) {
-            ret = SExpression.cons(args.car(), args.cadr());
+            ret = args.car().cons(args.cadr());
         } else if (func.equals(SExpression.ATOM)) {
             ret = args.car().isAtom();
         } else if (func.equals(SExpression.NULL)) {
             ret = args.car().isNull();
         } else if (func.equals(SExpression.EQ)) {
-            ret = SExpression.isEqual(args.car(), args.cadr());
+            ret = args.car().isEqual(args.cadr());
         } else if (func.equals(SExpression.PLUS)) {
-            // TODO: implement plus, minus, etc.
-            throw new LispEvaluationException("Not implemented");
+            ret = args.car().add(args.cadr());
         } else {
             ret = this.evaluateFunction(aList, dList, func, args);
         }
@@ -179,7 +178,7 @@ public class NonAtom extends SExpression {
     public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression left = this.car().evaluate(aList, dList);
         SExpression right = this.cdr().evaluateList(aList, dList);
-        return SExpression.cons(left, right);
+        return left.cons(right);
     }
 
     /**

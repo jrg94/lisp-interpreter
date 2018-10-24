@@ -75,4 +75,15 @@ public class IntegerAtom extends SExpression {
     public SymbolicAtom isAtom() {
         return SExpression.T;
     }
+
+    @Override
+    public IntegerAtom add(SExpression other) throws LispEvaluationException {
+        if (other instanceof IntegerAtom) {
+            IntegerAtom rightOperand = (IntegerAtom) other;
+            int sum = this.getValue() + rightOperand.getValue();
+            return new IntegerAtom(sum);
+        } else {
+            throw new LispEvaluationException("Unable to add - argument was not an integer: " + other);
+        }
+    }
 }
