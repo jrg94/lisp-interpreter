@@ -46,6 +46,7 @@ public class NonAtom extends SExpression {
         if (car.equals(Primitives.QUOTE.getAtom())) {
             ret = this.cadr();
         } else if (car.equals(Primitives.COND.getAtom())) {
+            System.out.println(this);
             ret = this.cdr().evaluateConditions(aList, dList);
         } else if (car.equals(Primitives.DEFUN.getAtom())) {
             throw new LispEvaluationException("Illegal dList update");
@@ -116,8 +117,14 @@ public class NonAtom extends SExpression {
         SExpression decl = func.find(dList);
         SExpression pList = decl.car();
         SExpression body = decl.cdr();
+        int size = aList.size();
         SExpression.addPairs(pList, args, aList);
-        return body.evaluate(aList, dList);
+        SExpression eval = body.evaluate(aList, dList);
+        int totalPairs = aList.size() - size;
+        for (int i = totalPairs; i > 0; i--) {
+            aList.pop();
+        }
+        return eval;
     }
 
     /**

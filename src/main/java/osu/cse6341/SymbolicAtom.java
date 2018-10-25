@@ -156,4 +156,13 @@ public class SymbolicAtom extends SExpression {
             return Primitives.NIL.getAtom();
         }
     }
+
+    @Override
+    public SymbolicAtom isEqual(SExpression other) {
+        if (this.equals(other)) {
+            return Primitives.T.getAtom();
+        } else {
+            return Primitives.NIL.getAtom();
+        }
+    }
 }
