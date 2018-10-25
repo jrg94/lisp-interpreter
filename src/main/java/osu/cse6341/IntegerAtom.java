@@ -149,4 +149,20 @@ public class IntegerAtom extends SExpression {
         }
         return new IntegerAtom(result);
     }
+
+    /**
+     * Overrides the isEqual method because integers shouldn't be compared by
+     * address.
+     * 
+     * @param other the other SExpression
+     * @return T if the integers are equal; NIL otherwise
+     */
+    @Override
+    public SymbolicAtom isEqual(SExpression other) {
+        if (this.equals(other)) {
+            return Primitives.T.getAtom();
+        } else {
+            return Primitives.NIL.getAtom();
+        }
+    }
 }
