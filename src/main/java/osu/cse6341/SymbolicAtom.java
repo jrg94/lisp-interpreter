@@ -116,6 +116,14 @@ public class SymbolicAtom extends SExpression {
         return isEqual;
     }
 
+    /**
+     * Evaluates this s-expression as the tail end of the list.
+     * 
+     * @param aList a list of bindings
+     * @param dList a list of definitions
+     * @return this if NIL; error otherwise
+     * @throws LispEvaluationException if this symbol is not the end of the list
+     */
     @Override
     public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         if (this.equals(Primitives.NIL.getAtom())) {
