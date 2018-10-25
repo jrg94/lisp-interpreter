@@ -71,16 +71,33 @@ public class IntegerAtom extends SExpression {
         return Integer.toString(value);
     }
 
+    /**
+     * Tests if this s-expression is an atom.
+     * 
+     * @return T
+     */
     @Override
     public SymbolicAtom isAtom() {
         return Primitives.T.getAtom();
     }
 
+    /**
+     * Tests if this s-expression is an int.
+     * 
+     * @return T
+     */
     @Override
     public SymbolicAtom isInt() {
         return Primitives.T.getAtom();
     }
 
+    /**
+     * Applies logic to this s-expression.
+     * 
+     * @param operator an operator
+     * @param other another s-expression
+     * @return T for logical true; NIL otherwise
+     */
     @Override
     public SymbolicAtom logic(char operator, SExpression other) throws LispEvaluationException {
         SymbolicAtom result = null;
@@ -99,6 +116,13 @@ public class IntegerAtom extends SExpression {
         return result;
     }
 
+    /**
+     * Applies arithmetic to this s-expression.
+     * 
+     * @param operator an operator
+     * @param other another s-expression
+     * @return the result of the arithmetic
+     */
     @Override
     public IntegerAtom arithmetic(char operator, SExpression other) throws LispEvaluationException {
         int result = 0;

@@ -239,6 +239,7 @@ public class LispInterpreter {
     /**
      * Outputs the AST in dot notation.
      *
+     * @param msg a message to prepend the output
      * @param result the AST
      */
     public void print(String msg, SExpression result) {
