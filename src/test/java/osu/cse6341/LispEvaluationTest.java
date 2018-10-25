@@ -195,4 +195,12 @@ public class LispEvaluationTest {
         String test = "(SILLY 5 6)";
         assertEquals(new IntegerAtom(11), getEvaluation(test));
     }
+
+    @Test
+    public void testNestMonster() throws LispEvaluationException {
+        String defun = "(DEFUN SILLY (A B) (PLUS A B))";
+        runDefun(defun);
+        String test = "(SILLY (CAR (QUOTE (5 . 6))) (CDR (QUOTE (5 . 6))) )";
+        assertEquals(new IntegerAtom(11), getEvaluation(test));
+    }
 }
