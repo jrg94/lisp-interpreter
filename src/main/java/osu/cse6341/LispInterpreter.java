@@ -228,6 +228,9 @@ public class LispInterpreter {
 
     /**
      * Evaluates the abstract syntax tree.
+     * 
+     * @param ast an abstract syntax tree
+     * @return the result of the evaluation
      */
     public SExpression evaluate(SExpression ast) throws LispEvaluationException {
         return ast.evaluate(this.aList, this.dList);
@@ -238,8 +241,8 @@ public class LispInterpreter {
      *
      * @param result the AST
      */
-    public void print(SExpression result) {
-        System.out.println(result);
+    public void print(String msg, SExpression result) {
+        System.out.println(msg + ": " + result);
     }
 
     /**
@@ -250,10 +253,10 @@ public class LispInterpreter {
     private void rep(String currExpression) {
         try {
             SExpression root = this.read(currExpression);
-            this.print(root);
+            this.print("Dot Notation", root);
             this.updateDList(root);
             SExpression result = this.evaluate(root);
-            this.print(result);
+            this.print("Result", result);
         } catch (LispSyntaxException e) {
             System.err.println(e);
         } catch (LispEvaluationException e) {
