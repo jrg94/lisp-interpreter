@@ -173,7 +173,7 @@ public abstract class SExpression {
     }
 
     /**
-     * A static method which creates a new NonAtom from two SExpressions.
+     * Creates a new NonAtom from two SExpressions.
      *
      * @param other the s-expression to be used on the right
      * @return the root of the new binary tree
@@ -186,14 +186,29 @@ public abstract class SExpression {
         return root;
     }
 
+    /**
+     * Tests that this s-expression is an atom.
+     * 
+     * @return T if this is an atom; NIL otherwise
+     */
     public SymbolicAtom isAtom() {
         return Primitives.NIL.getAtom();
     }
 
+    /**
+     * Tests that this s-expression is NIL.
+     * 
+     * @return T if this atom is NIL; NIL otherwise
+     */
     public SymbolicAtom isNull() {
         return Primitives.NIL.getAtom();
     }
 
+    /**
+     * Tests that this s-expression is an int.
+     * 
+     * @return T if this atom is an int; NIL otherwise
+     */
     public SymbolicAtom isInt() {
         return Primitives.NIL.getAtom();
     }
