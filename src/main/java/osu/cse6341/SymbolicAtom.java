@@ -29,6 +29,13 @@ public class SymbolicAtom extends SExpression {
         return name;
     }
 
+    /**
+     * Evaluates this symbol.
+     * 
+     * @param aList a list of bindings
+     * @param dList a list of definitions
+     * @return the result of the evaluation
+     */
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
@@ -54,6 +61,12 @@ public class SymbolicAtom extends SExpression {
         return name;
     }
 
+    /**
+     * Finds this symbol in the aList.
+     * 
+     * @param aList a list of bindings
+     * @return the binding
+     */
     @Override
     public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException {
         for (NonAtom binding : aList) {
@@ -64,6 +77,12 @@ public class SymbolicAtom extends SExpression {
         return null;
     }
 
+    /**
+     * Finds this symbol in the dList.
+     * 
+     * @param dList a list of definitions
+     * @return the function definition
+     */
     @Override
     public SExpression find(ArrayList<NonAtom> dList) throws LispEvaluationException {
         for (NonAtom decl : dList) {
