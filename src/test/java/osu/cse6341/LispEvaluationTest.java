@@ -197,7 +197,7 @@ public class LispEvaluationTest {
     }
 
     @Test
-    public void testNestMonster() throws LispEvaluationException {
+    public void testNestedFunctionCallsWithQUOTE() throws LispEvaluationException {
         String defun = "(DEFUN SILLY (A B) (PLUS A B))";
         runDefun(defun);
         String test = "(SILLY (CAR (QUOTE (5 . 6))) (CDR (QUOTE (5 . 6))) )";

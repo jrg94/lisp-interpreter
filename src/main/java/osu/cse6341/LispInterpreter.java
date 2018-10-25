@@ -217,16 +217,17 @@ public class LispInterpreter {
      * A method which updates the dList if the given expressions is a NonAtom
      * composed of a DEFUN.
      */
-    public void updateDList(SExpression ast) throws LispEvaluationException {
+    public SExpression updateDList(SExpression ast) throws LispEvaluationException {
+        SExpression success = Primitives.NIL.getAtom();
         if (ast.isAtom().equals(Primitives.NIL.getAtom())) {
             NonAtom root = (NonAtom) ast;
             // Example:
             // (DEFUN . (SILLY . ((A . (B . NIL)) .
             // ((PLUS . (A . (B . NIL))) . NIL))))
             if (root.car().equals(Primitives.DEFUN.getAtom())) {
-                System.out.println(ast);
                 NonAtom decl = new NonAtom();
                 NonAtom body = new NonAtom();
+                success = root.cdr().car();
                 // (A . (B . NIL))
                 body.setLeft(root.cdr().cdr().car());
                 // (PLUS . (A . (B . NIL)))
@@ -237,9 +238,9 @@ public class LispInterpreter {
                 decl.setRight(body);
                 // (SILLY . ((A . (B . NIL)) . (PLUS . (A . (B . NIL)))))
                 this.dList.add(decl);
-                System.out.println(dList);
             }
         }
+        return success;
     }
 
     /**
@@ -271,9 +272,13 @@ public class LispInterpreter {
         try {
             SExpression root = this.read(currExpression);
             this.print("Dot Notation", root);
-            this.updateDList(root);
-            SExpression result = this.evaluate(root);
-            this.print("Result", result);
+            SExpression funcName = this.updateDList(root);
+            if (funcName.equals(Primitives.NIL.getAtom())) {
+                SExpression result = this.evaluate(root);
+                this.print("Result", result);
+            } else {
+                this.print("Result", funcName);
+            }
         } catch (LispSyntaxException e) {
             System.err.println(e);
         } catch (LispEvaluationException e) {
