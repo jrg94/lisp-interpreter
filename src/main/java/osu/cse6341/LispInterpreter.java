@@ -220,8 +220,24 @@ public class LispInterpreter {
     public void updateDList(SExpression ast) throws LispEvaluationException {
         if (ast.isAtom().equals(Primitives.NIL.getAtom())) {
             NonAtom root = (NonAtom) ast;
+            // Example:
+            // (DEFUN . (SILLY . ((A . (B . NIL)) .
+            // ((PLUS . (A . (B . NIL))) . NIL))))
             if (root.car().equals(Primitives.DEFUN.getAtom())) {
-                this.dList.add((NonAtom) root.cdr());
+                System.out.println(ast);
+                NonAtom decl = new NonAtom();
+                NonAtom body = new NonAtom();
+                // (A . (B . NIL))
+                body.setLeft(root.cdr().cdr().car());
+                // (PLUS . (A . (B . NIL)))
+                body.setRight(root.cdr().cdr().cdr().car());
+                // SILLY
+                decl.setLeft(root.cdr().car());
+                // ((A . (B . NIL)) . (PLUS . (A . (B . NIL))))
+                decl.setRight(body);
+                // (SILLY . ((A . (B . NIL)) . (PLUS . (A . (B . NIL)))))
+                this.dList.add(decl);
+                System.out.println(dList);
             }
         }
     }
