@@ -25,6 +25,21 @@ public class LispEvaluationTest {
     }
 
     /**
+     * A helper method for running defun commands.
+     * 
+     * @param code a defun command
+     * @throws LispEvaluationException
+     */
+    private void runDefun(String code) throws LispEvaluationException {
+        try {
+            SExpression defun = interpreter.read(code);
+            interpreter.updateDList(defun);
+        } catch (LispSyntaxException e) {
+            throw new LispEvaluationException("Syntax error - unable to test", e);
+        }
+    }
+
+    /**
      * A helper method for adding a function to the dList.
      *
      * @param code a function definition as a string
@@ -171,5 +186,13 @@ public class LispEvaluationTest {
     public void testInt() throws LispEvaluationException {
         String test = "(INT 7)";
         assertEquals(Primitives.T.getAtom(), getEvaluation(test));
+    }
+
+    @Test
+    public void testDEFUN() throws LispEvaluationException {
+        String defun = "(DEFUN SILLY (A B) (PLUS A B))";
+        runDefun(defun);
+        String test = "(SILLY 5 6)";
+        assertEquals(new IntegerAtom(11), getEvaluation(test));
     }
 }
