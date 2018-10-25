@@ -97,27 +97,73 @@ public abstract class SExpression {
         throw new LispEvaluationException("Cannot search aList for: " + this);
     }
 
+    /**
+     * Evaluates this s-expression as a list of conditions.
+     * 
+     * @param aList a list of bindings
+     * @param dList a list of definitions
+     * @return the result of the evaluation
+     * @throws LispEvaluationException
+     */
     public SExpression evaluateConditions(Stack<NonAtom> aList, ArrayList<NonAtom> dList)
             throws LispEvaluationException {
         throw new LispEvaluationException("Invalid condition: " + this.toString());
     }
 
+    /**
+     * Evaluates this s-expression.
+     * 
+     * @param aList a list of bindings
+     * @param dList a list of definitions
+     * @return the result of the evaluation
+     * @throws LispEvaluationException
+     */
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         throw new LispEvaluationException("Unable to evaluate: " + this);
     }
 
+    /**
+     * Evaluates this s-expression as a list.
+     * 
+     * @param aList a list of bindings
+     * @param dList a list of definitions
+     * @return the result of the evaluation
+     * @throws LispEvaluationException
+     */
     public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         throw new LispEvaluationException(this + " is not a list");
     }
 
+    /**
+     * Performs arithmetic based on the supplied operator.
+     * 
+     * @param operator an arithmetic operator
+     * @param other another s-expression
+     * @return the result of the arithmetic
+     * @throws LispEvaluationException
+     */
     public IntegerAtom arithmetic(char operator, SExpression other) throws LispEvaluationException {
         throw new LispEvaluationException("Unable to perform " + operator + " on " + this + " and " + other);
     }
 
+    /**
+     * Performs logic based on the supplied operator.
+     * 
+     * @param operator a boolean operator
+     * @param other another s-expression
+     * @return the result of the boolean expression
+     * @throws LispEvaluationException
+     */
     public SymbolicAtom logic(char operator, SExpression other) throws LispEvaluationException {
         throw new LispEvaluationException("Unable to perform " + operator + " on " + this + " and " + other);
     }
 
+    /**
+     * Tests that this s-expression is equivalent to another by address.
+     * 
+     * @param other another s-expression
+     * @return T if equal; NIL otherwise
+     */
     public SymbolicAtom isEqual(SExpression other) {
         if (this == other) {
             return Primitives.T.getAtom();
