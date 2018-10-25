@@ -133,11 +133,21 @@ public class SymbolicAtom extends SExpression {
         }
     }
 
+    /**
+     * Tests if this s-expression is an atom.
+     * 
+     * @return T
+     */
     @Override
     public SymbolicAtom isAtom() {
         return Primitives.T.getAtom();
     }
 
+    /**
+     * Tests if this s-expression is NIL.
+     * 
+     * @return T if it is NIL; NIL otherwise
+     */
     @Override
     public SymbolicAtom isNull() {
         if (this.equals(Primitives.NIL.getAtom())) {
