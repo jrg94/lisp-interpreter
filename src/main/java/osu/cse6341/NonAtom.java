@@ -47,7 +47,6 @@ public class NonAtom extends SExpression {
         if (car.equals(SpecialForms.QUOTE.getAtom())) {
             ret = this.cadr();
         } else if (car.equals(SpecialForms.COND.getAtom())) {
-            System.out.println(this);
             ret = this.cdr().evaluateConditions(aList, dList);
         } else if (car.equals(SpecialForms.DEFUN.getAtom())) {
             throw new LispEvaluationException("Illegal dList update");
