@@ -100,6 +100,14 @@ If the non-atom evaluate is executed, the interpreter checks if the current
 s-expression is a special form (QUOTE, COND, or DEFUN). In each case, there's
 a special behavior. 
 
+If the non-atom is not a special form, the interpreter assumes the Symbolic Atom
+is a function, and calls apply on its parent. At that point, the function is
+tested to see if it is a primitive. If it is, the primitive function is executed.
+Otherwise, the function definition is extracted from the dList and executed.
+
+As expected, this process is completed through recursion, so these evaluation
+stages occur in a cycle until the entire abstract syntax tree is processed. 
+
 ### Print
 
 Upon completion, we should have a complete s-expression in the form of a 
