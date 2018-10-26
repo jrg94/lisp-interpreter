@@ -2,6 +2,7 @@ package osu.cse6341;
 
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.Arrays;
 
 /**
  * The NonAtom class which is a type of s-expression.
@@ -68,6 +69,7 @@ public class NonAtom extends SExpression {
         SExpression ret = null;
         SExpression func = this.car();
         SExpression args = this.cdr().evaluateList(aList, dList);
+        Arrays.asList(Primitives.values()).forEach(day -> System.out.println(day));
         if (func.equals(Primitives.CAR.getAtom())) {
             ret = args.caar();
         } else if (func.equals(Primitives.CDR.getAtom())) {
@@ -129,7 +131,7 @@ public class NonAtom extends SExpression {
 
     /**
      * Gets the left node of this NonAtom.
-     * 
+     *
      * @return the left node of this node
      * @throws LispEvaluationException if fails to grab one of the nodes
      */
@@ -140,7 +142,7 @@ public class NonAtom extends SExpression {
 
     /**
      * Gets the right node of this NonAtom.
-     * 
+     *
      * @return the right node of this node
      * @throws LispEvaluationException if fails to grab one of the nodes
      */
@@ -162,7 +164,7 @@ public class NonAtom extends SExpression {
 
     /**
      * Gets the right node of the left node.
-     * 
+     *
      * @return the right node of the left node
      */
     @Override
@@ -172,7 +174,7 @@ public class NonAtom extends SExpression {
 
     /**
      * Gets the left node of the right node.
-     * 
+     *
      * @return the left node of the right node.
      * @throws LispEvaluationException if fails to grab one of the nodes
      */
@@ -183,7 +185,7 @@ public class NonAtom extends SExpression {
 
     /**
      * Gets the left node of the right node of the left node.
-     * 
+     *
      * @return the left node of the right node of the left node.
      * @throws LispEvaluationException if fails to grab one of the nodes
      */
@@ -204,7 +206,7 @@ public class NonAtom extends SExpression {
 
     /**
      * Evaluates the conditions given by this node.
-     * 
+     *
      * @return the result of the evaluation.
      * @throws LispEvaluationException if evaluation fails
      */
