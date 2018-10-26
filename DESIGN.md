@@ -110,14 +110,15 @@ stages occur in a cycle until the entire abstract syntax tree is processed.
 
 ### Print
 
-Upon completion, we should have a complete s-expression in the form of a 
-binary tree. At that point, we begin a very basic recursive print which
-is handled by are atom classes implicitly. In other words, we make a quick
-call to the `toString` method of our root node, and we'll get a complete
-printing of our tree in dot notation. The various `toString` implementations
-for each atom handle the actual logistics of the printing.
+After evaluation, the interpeter should have a complete s-expression in 
+the form of a binary tree. At that point, we begin a very basic recursive 
+print which is handled by the atom classes implicitly. In other words, the
+interpreter makes a quick call to the `toString` method of the root node, 
+and the interpreter gets a complete printing of the tree in dot notation. 
+The various `toString` implementations for each atom handle the actual 
+logistics of the printing.
 
-In addition, we print the resulting s-expression from evaluation directly.
+In addition, the interpeter prints the resulting s-expression from evaluation directly.
 
 ### Loop
 
@@ -128,6 +129,9 @@ dollar sign token.
 
 During this time, the lisp interpreter also catches errors which are printed
 plainly to the screen. 
+
+Because functions can only be declared at the top level, the interpreter handles
+function definitions here in the loop phase.
 
 ## Errors
 
