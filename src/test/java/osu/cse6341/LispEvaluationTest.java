@@ -26,7 +26,7 @@ public class LispEvaluationTest {
 
     /**
      * A helper method for running defun commands.
-     * 
+     *
      * @param code a defun command
      * @throws LispEvaluationException
      */
@@ -101,7 +101,7 @@ public class LispEvaluationTest {
     @Test
     public void testTrueNULL() throws LispEvaluationException {
         String test = "(NULL NIL)";
-        SymbolicAtom expectedResult = Primitives.T.getAtom();
+        SymbolicAtom expectedResult = Logic.T.getAtom();
         assertEquals(expectedResult, getEvaluation(test));
     }
 
@@ -179,13 +179,13 @@ public class LispEvaluationTest {
     @Test
     public void testLESS() throws LispEvaluationException {
         String test = "(LESS 2 3)";
-        assertEquals(Primitives.T.getAtom(), getEvaluation(test));
+        assertEquals(Logic.T.getAtom(), getEvaluation(test));
     }
 
     @Test
     public void testInt() throws LispEvaluationException {
         String test = "(INT 7)";
-        assertEquals(Primitives.T.getAtom(), getEvaluation(test));
+        assertEquals(Logic.T.getAtom(), getEvaluation(test));
     }
 
     @Test

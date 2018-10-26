@@ -12,7 +12,7 @@ public abstract class SExpression {
 
     /**
      * Gets the left node of this node.
-     * 
+     *
      * @return the left node of this s-expression
      * @throws LispEvaluationException if this s-expression is an atom
      */
@@ -22,7 +22,7 @@ public abstract class SExpression {
 
     /**
      * Gets the right node of this node.
-     * 
+     *
      * @return the right node of this s-expression
      * @throws LispEvaluationException if this s-expression is an atom
      */
@@ -32,7 +32,7 @@ public abstract class SExpression {
 
     /**
      * Gets the left node of the left node of this node.
-     * 
+     *
      * @return the left node of the left node of this s-expression
      * @throws LispEvaluationException if this s-expression is not 2 or more
      *             levels deep
@@ -43,7 +43,7 @@ public abstract class SExpression {
 
     /**
      * Gets the left node of the right node of this node.
-     * 
+     *
      * @return the left node of the right node of this s-expression
      * @throws LispEvaluationException if this s-expression is not 2 or more
      *             levels deep
@@ -54,7 +54,7 @@ public abstract class SExpression {
 
     /**
      * Gets the right node of the left node of this node.
-     * 
+     *
      * @return the right node of the left node of this s-expression
      * @throws LispEvaluationException if this s-expression is not 2 or more
      *             levels deep
@@ -65,7 +65,7 @@ public abstract class SExpression {
 
     /**
      * Gets the left node of the right node of the left node of this node.
-     * 
+     *
      * @return the left node of the right node of the left node of this
      *         s-expression
      * @throws LispEvaluationException if this s-expression is not 3 or more
@@ -77,7 +77,7 @@ public abstract class SExpression {
 
     /**
      * Finds this s-expression in the dList.
-     * 
+     *
      * @param dList a list of definitions
      * @return the function definition
      * @throws LispEvaluationException
@@ -88,7 +88,7 @@ public abstract class SExpression {
 
     /**
      * Finds this s-expression in the aList.
-     * 
+     *
      * @param aList a list of bindings
      * @return the binding
      * @throws LispEvaluationException
@@ -99,7 +99,7 @@ public abstract class SExpression {
 
     /**
      * Evaluates this s-expression as a list of conditions.
-     * 
+     *
      * @param aList a list of bindings
      * @param dList a list of definitions
      * @return the result of the evaluation
@@ -112,7 +112,7 @@ public abstract class SExpression {
 
     /**
      * Evaluates this s-expression.
-     * 
+     *
      * @param aList a list of bindings
      * @param dList a list of definitions
      * @return the result of the evaluation
@@ -124,7 +124,7 @@ public abstract class SExpression {
 
     /**
      * Evaluates this s-expression as a list.
-     * 
+     *
      * @param aList a list of bindings
      * @param dList a list of definitions
      * @return the result of the evaluation
@@ -136,7 +136,7 @@ public abstract class SExpression {
 
     /**
      * Performs arithmetic based on the supplied operator.
-     * 
+     *
      * @param operator an arithmetic operator
      * @param other another s-expression
      * @return the result of the arithmetic
@@ -148,7 +148,7 @@ public abstract class SExpression {
 
     /**
      * Performs logic based on the supplied operator.
-     * 
+     *
      * @param operator a boolean operator
      * @param other another s-expression
      * @return the result of the boolean expression
@@ -160,13 +160,13 @@ public abstract class SExpression {
 
     /**
      * Tests that this s-expression is equivalent to another by address.
-     * 
+     *
      * @param other another s-expression
      * @return T if equal; NIL otherwise
      */
     public SymbolicAtom isEqual(SExpression other) {
         if (this == other) {
-            return Primitives.T.getAtom();
+            return Logic.T.getAtom();
         } else {
             return Primitives.NIL.getAtom();
         }
@@ -188,7 +188,7 @@ public abstract class SExpression {
 
     /**
      * Tests that this s-expression is an atom.
-     * 
+     *
      * @return T if this is an atom; NIL otherwise
      */
     public SymbolicAtom isAtom() {
@@ -197,7 +197,7 @@ public abstract class SExpression {
 
     /**
      * Tests that this s-expression is NIL.
-     * 
+     *
      * @return T if this atom is NIL; NIL otherwise
      */
     public SymbolicAtom isNull() {
@@ -206,7 +206,7 @@ public abstract class SExpression {
 
     /**
      * Tests that this s-expression is an int.
-     * 
+     *
      * @return T if this atom is an int; NIL otherwise
      */
     public SymbolicAtom isInt() {

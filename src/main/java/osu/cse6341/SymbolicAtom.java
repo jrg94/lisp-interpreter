@@ -31,7 +31,7 @@ public class SymbolicAtom extends SExpression {
 
     /**
      * Evaluates this symbol.
-     * 
+     *
      * @param aList a list of bindings
      * @param dList a list of definitions
      * @return the result of the evaluation
@@ -39,8 +39,8 @@ public class SymbolicAtom extends SExpression {
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
-        if (this.equals(Primitives.T.getAtom())) {
-            ret = Primitives.T.getAtom();
+        if (this.equals(Logic.T.getAtom())) {
+            ret = Logic.T.getAtom();
         } else if (this.equals(Primitives.NIL.getAtom())) {
             ret = Primitives.NIL.getAtom();
         } else if ((ret = this.find(aList)) != null) {
@@ -63,7 +63,7 @@ public class SymbolicAtom extends SExpression {
 
     /**
      * Finds this symbol in the aList.
-     * 
+     *
      * @param aList a list of bindings
      * @return the binding
      */
@@ -79,7 +79,7 @@ public class SymbolicAtom extends SExpression {
 
     /**
      * Finds this symbol in the dList.
-     * 
+     *
      * @param dList a list of definitions
      * @return the function definition
      */
@@ -118,7 +118,7 @@ public class SymbolicAtom extends SExpression {
 
     /**
      * Evaluates this s-expression as the tail end of the list.
-     * 
+     *
      * @param aList a list of bindings
      * @param dList a list of definitions
      * @return this if NIL; error otherwise
@@ -135,23 +135,23 @@ public class SymbolicAtom extends SExpression {
 
     /**
      * Tests if this s-expression is an atom.
-     * 
+     *
      * @return T
      */
     @Override
     public SymbolicAtom isAtom() {
-        return Primitives.T.getAtom();
+        return Logic.T.getAtom();
     }
 
     /**
      * Tests if this s-expression is NIL.
-     * 
+     *
      * @return T if it is NIL; NIL otherwise
      */
     @Override
     public SymbolicAtom isNull() {
         if (this.equals(Primitives.NIL.getAtom())) {
-            return Primitives.T.getAtom();
+            return Logic.T.getAtom();
         } else {
             return Primitives.NIL.getAtom();
         }
@@ -160,7 +160,7 @@ public class SymbolicAtom extends SExpression {
     @Override
     public SymbolicAtom isEqual(SExpression other) {
         if (this.equals(other)) {
-            return Primitives.T.getAtom();
+            return Logic.T.getAtom();
         } else {
             return Primitives.NIL.getAtom();
         }

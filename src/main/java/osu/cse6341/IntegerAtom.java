@@ -32,7 +32,7 @@ public class IntegerAtom extends SExpression {
 
     /**
      * Evaluates an integer atom by returning itself.
-     * 
+     *
      * @param aList a list of bindings
      * @param dList a list of definitions
      * @return this
@@ -73,27 +73,27 @@ public class IntegerAtom extends SExpression {
 
     /**
      * Tests if this s-expression is an atom.
-     * 
+     *
      * @return T
      */
     @Override
     public SymbolicAtom isAtom() {
-        return Primitives.T.getAtom();
+        return Logic.T.getAtom();
     }
 
     /**
      * Tests if this s-expression is an int.
-     * 
+     *
      * @return T
      */
     @Override
     public SymbolicAtom isInt() {
-        return Primitives.T.getAtom();
+        return Logic.T.getAtom();
     }
 
     /**
      * Applies logic to this s-expression.
-     * 
+     *
      * @param operator an operator
      * @param other another s-expression
      * @return T for logical true; NIL otherwise
@@ -105,10 +105,10 @@ public class IntegerAtom extends SExpression {
 
         switch (operator) {
         case '<':
-            result = this.getValue() < rightOperand.getValue() ? Primitives.T.getAtom() : Primitives.NIL.getAtom();
+            result = this.getValue() < rightOperand.getValue() ? Logic.T.getAtom() : Primitives.NIL.getAtom();
             break;
         case '>':
-            result = this.getValue() > rightOperand.getValue() ? Primitives.T.getAtom() : Primitives.NIL.getAtom();
+            result = this.getValue() > rightOperand.getValue() ? Logic.T.getAtom() : Primitives.NIL.getAtom();
             break;
         default:
             throw new LispEvaluationException("No such boolean operator defined: " + operator);
@@ -118,7 +118,7 @@ public class IntegerAtom extends SExpression {
 
     /**
      * Applies arithmetic to this s-expression.
-     * 
+     *
      * @param operator an operator
      * @param other another s-expression
      * @return the result of the arithmetic
@@ -153,14 +153,14 @@ public class IntegerAtom extends SExpression {
     /**
      * Overrides the isEqual method because integers shouldn't be compared by
      * address.
-     * 
+     *
      * @param other the other SExpression
      * @return T if the integers are equal; NIL otherwise
      */
     @Override
     public SymbolicAtom isEqual(SExpression other) {
         if (this.equals(other)) {
-            return Primitives.T.getAtom();
+            return Logic.T.getAtom();
         } else {
             return Primitives.NIL.getAtom();
         }

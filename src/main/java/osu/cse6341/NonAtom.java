@@ -88,7 +88,7 @@ public class NonAtom extends SExpression {
             ret = args.car().arithmetic('+', args.cadr());
         } else if (func.equals(Primitives.MINUS.getAtom())) {
             ret = args.car().arithmetic('-', args.cadr());
-        } else if (func.equals(Primitives.TIMES.getAtom())) {
+        } else if (func.equals(Logic.TIMES.getAtom())) {
             ret = args.car().arithmetic('*', args.cadr());
         } else if (func.equals(Primitives.QUOTIENT.getAtom())) {
             ret = args.car().arithmetic('/', args.cadr());
@@ -215,7 +215,7 @@ public class NonAtom extends SExpression {
             throws LispEvaluationException {
         SExpression ret = null;
         SExpression test = this.caar().evaluate(aList, dList);
-        if (test.equals(Primitives.T.getAtom())) {
+        if (test.equals(Logic.T.getAtom())) {
             ret = this.cadar().evaluate(aList, dList);
         } else {
             ret = this.cdr().evaluateConditions(aList, dList);
