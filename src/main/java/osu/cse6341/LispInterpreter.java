@@ -279,10 +279,11 @@ public class LispInterpreter {
             } else {
                 this.print("Result", funcName);
             }
-        } catch (LispSyntaxException e) {
-            System.err.println(e);
-        } catch (LispEvaluationException e) {
-            System.err.println(e);
+        } catch (LispSyntaxException | LispEvaluationException | StackOverflowError e) {
+            System.out.println(e);
+            for (Throwable t = e.getCause(); t != null; t = t.getCause()) {
+                System.out.println(e);
+            }
         }
     }
 
