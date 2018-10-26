@@ -69,6 +69,31 @@ all children.
 Of course, evaluation is more complicated than that. As a result, the Lisp
 Interpreter follows the Lisp design notation from the course notes.
 
+### Data Structures
+
+The design notation relies on two key data structures: the aList and the dList.
+
+The aList is short for association list, and it stores all of the bindings for
+the interpreter. Bindings are in the form `(parameter . argument)` where
+parameter is the symbol used by the function and argument is the argument 
+passed to the function.
+
+Meanwhile, the dList--short for definitions list--is a collection of function
+definitions in the form `(function . ((parameters) . function_body))`.
+
+The two lists are used in tandem to track function definitions and their usage.
+
+### Recursion
+
+With the two lists in hand, the rest is up to proper recursion. When we evaluate
+a node, we begin by checking if it is an atom. With the way this Lisp Interpreter
+is designed, this happens implicitly through classes. In other words, the
+interpreter dispatches the proper evaluate method based on the type of the s-expression.
+
+If the atom evaluate is executed, the lisp interpreter returns the evaluation of that
+atom. Otherwise, the interpreter checks if the current s-expression is a special
+form (QUOTE, COND, or DEFUN).
+
 ### Print
 
 Upon completion, we should have a complete s-expression in the form of a 
