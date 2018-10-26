@@ -58,6 +58,8 @@ public enum Primitives implements AtomMapping {
                 return args.car().isAtom();
             case INT:
                 return args.car().isInt();
+            case NULL:
+                return args.car().isNull();
             case EQ:
                 return args.car().isEqual(args.cadr());
             default:
