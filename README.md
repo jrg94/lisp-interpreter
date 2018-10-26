@@ -33,7 +33,12 @@ text here.
 When you're finished writing your s-expression, enter a dollar sign ($) 
 on a single line. This will cause the REPL to "evaluate"
 the s-expression you've entered. If successful, you'll see
-your s-expression printed in dot notation.
+something like the following:
+
+```console
+Dot Notation: (EQ . (1 . (2 . NIL)))
+Result: NIL
+```
 
 When you're done, enter a pair of dollar signs ($$) on a single line. This
 terminates the program. If successful, you should see `Goodbye!`.
