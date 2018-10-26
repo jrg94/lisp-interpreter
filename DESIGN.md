@@ -61,6 +61,14 @@ atoms. If we have more, we have a problem.
 
 ### Eval
 
+The evaluation portion of the Lisp Interpreter works by navigating the
+newly constructed abstract syntax tree. The interpreter begins by calling
+evaluate on the root node which starts a chain of recursion which evaluates
+all children.
+
+Of course, evaluation is more complicated than that. As a result, the Lisp
+Interpreter follows the Lisp design notation from the course notes.
+
 ### Print
 
 Upon completion, we should have a complete s-expression in the form of a 
@@ -79,7 +87,7 @@ the dollar signs.During each iteration, we wait for a line of just one
 dollar sign before we break into the outer loop which checks for the double 
 dollar sign token. 
 
-During this time, the lisp interpreter also catch errors which are printed
+During this time, the lisp interpreter also catches errors which are printed
 plainly to the screen. 
 
 ## Errors
