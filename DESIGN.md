@@ -91,8 +91,14 @@ is designed, this happens implicitly through classes. In other words, the
 interpreter dispatches the proper evaluate method based on the type of the s-expression.
 
 If the atom evaluate is executed, the lisp interpreter returns the evaluation of that
-atom. Otherwise, the interpreter checks if the current s-expression is a special
-form (QUOTE, COND, or DEFUN).
+atom. Evaluating atoms is usually pretty easy. If they're an integer, the interpreter 
+returns that integer. If it's a symbol, the interpreter checks the aList
+for that symbol. If it doesn't exist, the interpreter throws an error.
+Otherwise, the symbol is valid, and it's integer value is returned.
+
+If the non-atom evaluate is executed, the interpreter checks if the current 
+s-expression is a special form (QUOTE, COND, or DEFUN). In each case, there's
+a special behavior. 
 
 ### Print
 
