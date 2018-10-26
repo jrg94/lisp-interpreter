@@ -52,6 +52,8 @@ public enum Primitives implements AtomMapping {
                 return args.caar();
             case CDR:
                 return args.cdar();
+            case CONS:
+                return args.car().cons(args.cadr());
             case EQ:
                 return args.car().isEqual(args.cadr());
             default:

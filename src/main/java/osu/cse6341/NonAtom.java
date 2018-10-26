@@ -75,9 +75,7 @@ public class NonAtom extends SExpression {
             .findFirst()
             .orElse(null);
         if (function != null) {
-            if (func.equals(Primitives.CONS.getAtom())) {
-                ret = args.car().cons(args.cadr());
-            } else if (func.equals(Primitives.ATOM.getAtom())) {
+            if (func.equals(Primitives.ATOM.getAtom())) {
                 ret = args.car().isAtom();
             } else if (func.equals(Primitives.INT.getAtom())) {
                 ret = args.car().isInt();
