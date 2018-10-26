@@ -234,6 +234,12 @@ public class LispEvaluationTest {
         getEvaluation(eq);
     }
 
+    @Test(expected = LispEvaluationException.class)
+    public void testUnboundAtom() throws LispEvaluationException {
+        String eq = "(EQ C X)";
+        getEvaluation(eq);
+    }
+
     /**
      * @Test public void testNestedDEFUN2() throws LispEvaluationException {
      *       String defun1 = "(DEFUN MINUS2 (A B) (MINUS A B))";
