@@ -56,10 +56,12 @@ public enum Primitives implements AtomMapping {
                 return args.car().cons(args.cadr());
             case ATOM:
                 return args.car().isAtom();
+            case INT:
+                return args.car().isInt();
             case EQ:
                 return args.car().isEqual(args.cadr());
             default:
-                String err = String.format("%s is not a valid primitive function", this);
+                String err = String.format("%s is not implemented", this);
                 throw new LispEvaluationException(err);
         }
     }
