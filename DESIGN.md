@@ -161,6 +161,25 @@ In total, we can handle about 7 error cases during parsing alone.
 On top of the parsing errors, the Lisp interpreter can handle the
 following evaluation errors:
 
+1. "No such boolean operator defined: " + operator
+2. "Illegal dList update"
+3. "Unbound atom " + this
+4. "Unable to find " + this + " in dList"
+5. "Expected Empty List but found " + this.toString()
+6. "No such arithmetic operator defined: " + operator
+7. "Invalid list of arguments for %s: %s", this.name(), args
+8. "%s is not implemented", this
+9. "Unable to call CDR on atom: " + this
+10. "Unable to call CDR on atom: " + this
+11. "Invalid condition: " + this.toString()
+12. "Unable to find " + this + " in dList"
+13. "Unable to find " + this + " in aList"
+14. "Unable to perform " + operator + " on " + this + " and " + other
+
+Due to the complex nature of this interpreter, it's unclear if all of these
+exceptions will occur. That said, the provide nice coverage in the 
+scenarios that they cover.
+
 ## Testing
 
 To ensure everything works, the Lisp Interpreter is thoroughly

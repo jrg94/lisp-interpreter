@@ -77,7 +77,7 @@ public class SymbolicAtom extends SExpression {
                 return binding.cdr();
             }
         }
-        return null;
+        throw new LispEvaluationException("Unable to find " + this + " in aList");
     }
 
     /**
