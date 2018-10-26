@@ -44,12 +44,12 @@ public class NonAtom extends SExpression {
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
         SExpression car = this.car();
-        if (car.equals(Primitives.QUOTE.getAtom())) {
+        if (car.equals(SpecialForms.QUOTE.getAtom())) {
             ret = this.cadr();
-        } else if (car.equals(Primitives.COND.getAtom())) {
+        } else if (car.equals(SpecialForms.COND.getAtom())) {
             System.out.println(this);
             ret = this.cdr().evaluateConditions(aList, dList);
-        } else if (car.equals(Primitives.DEFUN.getAtom())) {
+        } else if (car.equals(SpecialForms.DEFUN.getAtom())) {
             throw new LispEvaluationException("Illegal dList update");
         } else {
             ret = this.apply(aList, dList);
@@ -69,35 +69,41 @@ public class NonAtom extends SExpression {
         SExpression ret = null;
         SExpression func = this.car();
         SExpression args = this.cdr().evaluateList(aList, dList);
-        Primitives function = Arrays.asList(Primitives.values()).filter(value -> value.getAtom().equals(func));
-        if (func.equals(Primitives.CAR.getAtom())) {
-            ret = args.caar();
-        } else if (func.equals(Primitives.CDR.getAtom())) {
-            ret = args.cdar();
-        } else if (func.equals(Primitives.CONS.getAtom())) {
-            ret = args.car().cons(args.cadr());
-        } else if (func.equals(Primitives.ATOM.getAtom())) {
-            ret = args.car().isAtom();
-        } else if (func.equals(Primitives.INT.getAtom())) {
-            ret = args.car().isInt();
-        } else if (func.equals(Primitives.NULL.getAtom())) {
-            ret = args.car().isNull();
-        } else if (func.equals(Primitives.EQ.getAtom())) {
-            ret = args.car().isEqual(args.cadr());
-        } else if (func.equals(Primitives.PLUS.getAtom())) {
-            ret = args.car().arithmetic('+', args.cadr());
-        } else if (func.equals(Primitives.MINUS.getAtom())) {
-            ret = args.car().arithmetic('-', args.cadr());
-        } else if (func.equals(Logic.TIMES.getAtom())) {
-            ret = args.car().arithmetic('*', args.cadr());
-        } else if (func.equals(Primitives.QUOTIENT.getAtom())) {
-            ret = args.car().arithmetic('/', args.cadr());
-        } else if (func.equals(Primitives.REMAINDER.getAtom())) {
-            ret = args.car().arithmetic('%', args.cadr());
-        } else if (func.equals(Primitives.GREATER.getAtom())) {
-            ret = args.car().logic('>', args.cadr());
-        } else if (func.equals(Primitives.LESS.getAtom())) {
-            ret = args.car().logic('<', args.cadr());
+        Primitives function = Arrays.asList(Primitives.values())
+            .stream()
+            .filter(value -> value.getAtom().equals(func))
+            .findFirst()
+            .orElse(null);
+        if (function != null) {
+            if (func.equals(Primitives.CAR.getAtom())) {
+                ret = args.caar();
+            } else if (func.equals(Primitives.CDR.getAtom())) {
+                ret = args.cdar();
+            } else if (func.equals(Primitives.CONS.getAtom())) {
+                ret = args.car().cons(args.cadr());
+            } else if (func.equals(Primitives.ATOM.getAtom())) {
+                ret = args.car().isAtom();
+            } else if (func.equals(Primitives.INT.getAtom())) {
+                ret = args.car().isInt();
+            } else if (func.equals(Primitives.NULL.getAtom())) {
+                ret = args.car().isNull();
+            } else if (func.equals(Primitives.EQ.getAtom())) {
+                ret = function.applyPrimitiveFunction(args);
+            } else if (func.equals(Primitives.PLUS.getAtom())) {
+                ret = args.car().arithmetic('+', args.cadr());
+            } else if (func.equals(Primitives.MINUS.getAtom())) {
+                ret = args.car().arithmetic('-', args.cadr());
+            } else if (func.equals(Primitives.TIMES.getAtom())) {
+                ret = args.car().arithmetic('*', args.cadr());
+            } else if (func.equals(Primitives.QUOTIENT.getAtom())) {
+                ret = args.car().arithmetic('/', args.cadr());
+            } else if (func.equals(Primitives.REMAINDER.getAtom())) {
+                ret = args.car().arithmetic('%', args.cadr());
+            } else if (func.equals(Primitives.GREATER.getAtom())) {
+                ret = args.car().logic('>', args.cadr());
+            } else if (func.equals(Primitives.LESS.getAtom())) {
+                ret = args.car().logic('<', args.cadr());
+            }
         } else {
             ret = this.evaluateFunction(aList, dList, func, args);
         }

@@ -18,6 +18,44 @@ public enum Primitives implements AtomMapping {
         this.argLength = argLength;
     }
 
+    public SExpression applyPrimitiveFunction(SExpression args) throws LispEvaluationException {
+        SExpression ret = null;
+        boolean isValidArgLength = verifyArgLength(args);
+        if (isValidArgLength) {
+            ret = getResult(args);
+        } else {
+            String err = String.format("Invalid list of arguments for %s: %s", this.name(), args);
+            throw new LispEvaluationException(err);
+        }
+        return ret;
+    }
+
+    private boolean verifyArgLength(SExpression list) throws LispEvaluationException {
+        SExpression curr = list;
+        int length = 0;
+
+        while (!curr.equals(Logic.NIL.getAtom())) {
+            length++;
+            curr = curr.cdr();
+        }
+
+        if (length != this.argLength) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private SExpression getResult(SExpression args) throws LispEvaluationException {
+        switch(this) {
+            case EQ:
+                return args.car().isEqual(args.cadr());
+            default:
+                String err = String.format("%s is not a valid primitive function", this);
+                throw new LispEvaluationException(err);
+        }
+    }
+
     /**
      * Gets the atom version of this enum.
      *

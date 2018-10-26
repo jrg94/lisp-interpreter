@@ -224,7 +224,7 @@ public class LispInterpreter {
             // Example:
             // (DEFUN . (SILLY . ((A . (B . NIL)) .
             // ((PLUS . (A . (B . NIL))) . NIL))))
-            if (root.car().equals(Primitives.DEFUN.getAtom())) {
+            if (root.car().equals(SpecialForms.DEFUN.getAtom())) {
                 NonAtom decl = new NonAtom();
                 NonAtom body = new NonAtom();
                 success = root.cdr().car();
