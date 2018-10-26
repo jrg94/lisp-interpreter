@@ -67,7 +67,16 @@ for each atom handle the actual logistics of the printing.
 
 ## Errors
 
-The following errors are reported by the Lisp Interpreter:
+Errors are broken up into two classes:
+
+1. Lisp Syntax Errors
+2. Lisp Evaluation Errors
+
+In the following sections, we'll break these down further:
+
+### Syntax Errors
+
+The following errors are reported by the Lisp Interpreter during parsing:
 
 1. "Unexpected EOF"
 2. "Too many dots"
@@ -78,6 +87,10 @@ The following errors are reported by the Lisp Interpreter:
 7. "Unexpected token: " + lispTokens.peek()
 
 In total, we can handle about 7 error cases during parsing alone. 
-We'll see what happens during evaluation.
+
+### Evaluation Errors
+
+On top of the parsing errors, the Lisp interpreter can handle the
+following evaluation errors:
 
 [1]: http://norvig.com/lispy.html
