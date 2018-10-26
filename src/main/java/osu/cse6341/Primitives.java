@@ -48,6 +48,10 @@ public enum Primitives implements AtomMapping {
 
     private SExpression getResult(SExpression args) throws LispEvaluationException {
         switch(this) {
+            case CAR:
+                return args.caar();
+            case CDR:
+                return args.cdar();
             case EQ:
                 return args.car().isEqual(args.cadr());
             default:
