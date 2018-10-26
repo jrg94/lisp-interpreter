@@ -5,17 +5,30 @@ However, it is implemented in Java.
 
 ## Classes
 
-The core of the design is broken up into 5 classes.
+The core of the design is broken up into 6 classes.
 
 1. The interpreter
 2. Integer Atoms
 3. Non-Atoms
 4. Symbolic Atoms
 5. The Lisp Syntax Exception
+6. The Lisp Evaluation Exception
 
-In addition, there is an S-Expression interface which each of
-the atom classes inherits. However, the interface provides no
-functionality beyond classification.
+In addition, there is an S-Expression abstract class which each 
+s-expression class extends. 
+
+All built-in structures are implemented via enums:
+
+1. Logic (T, NIL)
+2. Special Forms (QUOTE, COND, DEFUN)
+3. Primitives (EQ, NULL, PLUS, etc.)
+
+Each enum inherits an atom mapping interface which
+forces them to provide themselves as a Symbolic atom for 
+comparisons. 
+
+In total, there are 10 Java files which make up the entirety
+of the Lisp Interpreter.
 
 ## Structure
 
