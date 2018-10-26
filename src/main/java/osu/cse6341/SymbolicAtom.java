@@ -1,6 +1,7 @@
 package osu.cse6341;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Stack;
 
 /**
@@ -31,7 +32,7 @@ public class SymbolicAtom extends SExpression {
 
     /**
      * Evaluates this symbol.
-     * 
+     *
      * @param aList a list of bindings
      * @param dList a list of definitions
      * @return the result of the evaluation
@@ -39,10 +40,10 @@ public class SymbolicAtom extends SExpression {
     @Override
     public SExpression evaluate(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
         SExpression ret = null;
-        if (this.equals(Primitives.T.getAtom())) {
-            ret = Primitives.T.getAtom();
-        } else if (this.equals(Primitives.NIL.getAtom())) {
-            ret = Primitives.NIL.getAtom();
+        if (this.equals(Logic.T.getAtom())) {
+            ret = Logic.T.getAtom();
+        } else if (this.equals(Logic.NIL.getAtom())) {
+            ret = Logic.NIL.getAtom();
         } else if ((ret = this.find(aList)) != null) {
             // Do nothing
         } else {
@@ -63,23 +64,25 @@ public class SymbolicAtom extends SExpression {
 
     /**
      * Finds this symbol in the aList.
-     * 
+     *
      * @param aList a list of bindings
      * @return the binding
      */
     @Override
     public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException {
-        for (NonAtom binding : aList) {
+        ListIterator<NonAtom> iterator = aList.listIterator(aList.size());
+        while (iterator.hasPrevious()) {
+            NonAtom binding = iterator.previous();
             if (binding.car().equals(this)) {
                 return binding.cdr();
             }
         }
-        return null;
+        throw new LispEvaluationException("Unable to find " + this + " in aList");
     }
 
     /**
      * Finds this symbol in the dList.
-     * 
+     *
      * @param dList a list of definitions
      * @return the function definition
      */
@@ -118,7 +121,7 @@ public class SymbolicAtom extends SExpression {
 
     /**
      * Evaluates this s-expression as the tail end of the list.
-     * 
+     *
      * @param aList a list of bindings
      * @param dList a list of definitions
      * @return this if NIL; error otherwise
@@ -126,8 +129,8 @@ public class SymbolicAtom extends SExpression {
      */
     @Override
     public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
-        if (this.equals(Primitives.NIL.getAtom())) {
-            return Primitives.NIL.getAtom();
+        if (this.equals(Logic.NIL.getAtom())) {
+            return Logic.NIL.getAtom();
         } else {
             throw new LispEvaluationException("Expected Empty List but found " + this.toString());
         }
@@ -135,34 +138,34 @@ public class SymbolicAtom extends SExpression {
 
     /**
      * Tests if this s-expression is an atom.
-     * 
+     *
      * @return T
      */
     @Override
     public SymbolicAtom isAtom() {
-        return Primitives.T.getAtom();
+        return Logic.T.getAtom();
     }
 
     /**
      * Tests if this s-expression is NIL.
-     * 
+     *
      * @return T if it is NIL; NIL otherwise
      */
     @Override
     public SymbolicAtom isNull() {
-        if (this.equals(Primitives.NIL.getAtom())) {
-            return Primitives.T.getAtom();
+        if (this.equals(Logic.NIL.getAtom())) {
+            return Logic.T.getAtom();
         } else {
-            return Primitives.NIL.getAtom();
+            return Logic.NIL.getAtom();
         }
     }
 
     @Override
     public SymbolicAtom isEqual(SExpression other) {
         if (this.equals(other)) {
-            return Primitives.T.getAtom();
+            return Logic.T.getAtom();
         } else {
-            return Primitives.NIL.getAtom();
+            return Logic.NIL.getAtom();
         }
     }
 }

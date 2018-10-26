@@ -115,7 +115,7 @@ public class LispInterpreter {
     private SExpression parseListNotation(ArrayList<SExpression> exps) {
         SExpression curr;
         if (exps.isEmpty()) {
-            curr = Primitives.NIL.getAtom();
+            curr = Logic.NIL.getAtom();
         } else {
             curr = new NonAtom();
             NonAtom temp = (NonAtom) curr;
@@ -126,7 +126,7 @@ public class LispInterpreter {
                     temp.setRight(next);
                     temp = next;
                 } else {
-                    temp.setRight(Primitives.NIL.getAtom());
+                    temp.setRight(Logic.NIL.getAtom());
                 }
             }
         }
@@ -218,13 +218,13 @@ public class LispInterpreter {
      * composed of a DEFUN.
      */
     public SExpression updateDList(SExpression ast) throws LispEvaluationException {
-        SExpression success = Primitives.NIL.getAtom();
-        if (ast.isAtom().equals(Primitives.NIL.getAtom())) {
+        SExpression success = Logic.NIL.getAtom();
+        if (ast.isAtom().equals(Logic.NIL.getAtom())) {
             NonAtom root = (NonAtom) ast;
             // Example:
             // (DEFUN . (SILLY . ((A . (B . NIL)) .
             // ((PLUS . (A . (B . NIL))) . NIL))))
-            if (root.car().equals(Primitives.DEFUN.getAtom())) {
+            if (root.car().equals(SpecialForms.DEFUN.getAtom())) {
                 NonAtom decl = new NonAtom();
                 NonAtom body = new NonAtom();
                 success = root.cdr().car();
@@ -245,7 +245,7 @@ public class LispInterpreter {
 
     /**
      * Evaluates the abstract syntax tree.
-     * 
+     *
      * @param ast an abstract syntax tree
      * @return the result of the evaluation
      */
@@ -273,16 +273,17 @@ public class LispInterpreter {
             SExpression root = this.read(currExpression);
             this.print("Dot Notation", root);
             SExpression funcName = this.updateDList(root);
-            if (funcName.equals(Primitives.NIL.getAtom())) {
+            if (funcName.equals(Logic.NIL.getAtom())) {
                 SExpression result = this.evaluate(root);
                 this.print("Result", result);
             } else {
                 this.print("Result", funcName);
             }
-        } catch (LispSyntaxException e) {
-            System.err.println(e);
-        } catch (LispEvaluationException e) {
-            System.err.println(e);
+        } catch (LispSyntaxException | LispEvaluationException | StackOverflowError e) {
+            System.out.println(e);
+            for (Throwable t = e.getCause(); t != null; t = t.getCause()) {
+                System.out.println(e);
+            }
         }
     }
 
