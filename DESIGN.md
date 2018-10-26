@@ -70,6 +70,18 @@ call to the `toString` method of our root node, and we'll get a complete
 printing of our tree in dot notation. The various `toString` implementations
 for each atom handle the actual logistics of the printing.
 
+In addition, we print the resulting s-expression from evaluation directly.
+
+### Loop
+
+As mentioned already, the looping mechanism is how the lisp interpreter handle 
+the dollar signs.During each iteration, we wait for a line of just one 
+dollar sign before we break into the outer loop which checks for the double 
+dollar sign token. 
+
+During this time, the lisp interpreter also catch errors which are printed
+plainly to the screen. 
+
 ## Errors
 
 Errors are broken up into two classes:
