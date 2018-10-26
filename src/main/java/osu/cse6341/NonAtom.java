@@ -74,19 +74,7 @@ public class NonAtom extends SExpression {
             .findFirst()
             .orElse(null);
         if (function != null) {
-            if (func.equals(Primitives.TIMES.getAtom())) {
-                ret = args.car().arithmetic('*', args.cadr());
-            } else if (func.equals(Primitives.QUOTIENT.getAtom())) {
-                ret = args.car().arithmetic('/', args.cadr());
-            } else if (func.equals(Primitives.REMAINDER.getAtom())) {
-                ret = args.car().arithmetic('%', args.cadr());
-            } else if (func.equals(Primitives.GREATER.getAtom())) {
-                ret = args.car().logic('>', args.cadr());
-            } else if (func.equals(Primitives.LESS.getAtom())) {
-                ret = args.car().logic('<', args.cadr());
-            } else {
-                ret = function.applyPrimitiveFunction(args);
-            }
+            ret = function.applyPrimitiveFunction(args);
         } else {
             ret = this.evaluateFunction(aList, dList, func, args);
         }

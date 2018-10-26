@@ -66,6 +66,16 @@ public enum Primitives implements AtomMapping {
                 return args.car().arithmetic('+', args.cadr());
             case MINUS:
                 return args.car().arithmetic('-', args.cadr());
+            case TIMES:
+                return args.car().arithmetic('*', args.cadr());
+            case QUOTIENT:
+                return args.car().arithmetic('/', args.cadr());
+            case REMAINDER:
+                return args.car().arithmetic('%', args.cadr());
+            case GREATER:
+                return args.car().logic('>', args.cadr());
+            case LESS:
+                return args.car().logic('<', args.cadr());
             default:
                 String err = String.format("%s is not implemented", this);
                 throw new LispEvaluationException(err);
