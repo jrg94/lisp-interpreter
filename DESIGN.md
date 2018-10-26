@@ -3,9 +3,14 @@
 My Lisp interpreter implementation is based largely on [Lis.py][1]. 
 However, it is implemented in Java.
 
-## Classes
+## Files
 
-The core of the design is broken up into 6 classes.
+The core of the design is broken up into two parts: classes and enums.
+
+### Classes
+
+The following list contains all the classes used by the Lisp
+Interpreter:
 
 1. The interpreter
 2. Integer Atoms
@@ -16,6 +21,8 @@ The core of the design is broken up into 6 classes.
 
 In addition, there is an S-Expression abstract class which each 
 s-expression class extends. 
+
+### Enums
 
 All built-in structures are implemented via enums:
 
