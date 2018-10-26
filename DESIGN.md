@@ -39,9 +39,10 @@ of the Lisp Interpreter.
 
 ## Structure
 
-As expected, the interpreter is built in REPL form. In other words,
-for this part of the project, I've implemented the read and print
-portions of the REPL. 
+As expected, the interpreter is built in REPL form. As a result,
+the following sections describe each stage of the REPL.
+
+### Read
 
 As currently implemented, the read stage *only* handles s-expression
 parsing. The special case dollar sign ($) parsing is actually handled
@@ -57,6 +58,10 @@ As s-expressions are encountered, they are categorized as either dot notation
 or list notation. Depending on the case, we parse them into s-expressions
 differently. For instance, if we see a dot, we know we can only have two
 atoms. If we have more, we have a problem. 
+
+### Eval
+
+### Print
 
 Upon completion, we should have a complete s-expression in the form of a 
 binary tree. At that point, we begin a very basic recursive print which
