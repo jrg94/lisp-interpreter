@@ -93,4 +93,15 @@ In total, we can handle about 7 error cases during parsing alone.
 On top of the parsing errors, the Lisp interpreter can handle the
 following evaluation errors:
 
+## Testing
+
+To ensure everything works, the Lisp Interpreter is thoroughly
+tested using JUnit files. In total, there were 47 tests conducted
+to ensure accuracy of the interpreter from parsing to evaluation.
+
+In fact, there are even unit tests used to cover individual methods.
+In general, however, most testing occurs at the parsing and
+evaluation levels. Feel free to explore all the files in the
+`src/test/java` directory.
+
 [1]: http://norvig.com/lispy.html
