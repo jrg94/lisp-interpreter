@@ -8,15 +8,13 @@ import java.util.Stack;
 
 /**
  * The lisp interpreter class which handles the REPL.
- * 
+ *
  * @author Jeremy Grifski
  */
 public class LispInterpreter {
 
-    public static final SymbolicAtom NIL = new SymbolicAtom("NIL");
-    public static final SymbolicAtom T = new SymbolicAtom("T");
-
-    public ArrayList<SymbolicAtom> dList;
+    public Stack<NonAtom> aList;
+    public ArrayList<NonAtom> dList;
     public ArrayList<SymbolicAtom> symbols;
 
     /**
@@ -24,16 +22,14 @@ public class LispInterpreter {
      * dList.
      */
     public LispInterpreter() {
-        dList = new ArrayList<SymbolicAtom>();
-        dList.add(new SymbolicAtom("cons"));
-        dList.add(new SymbolicAtom("car"));
-        dList.add(new SymbolicAtom("cdr"));
+        aList = new Stack<NonAtom>();
+        dList = new ArrayList<NonAtom>();
         symbols = new ArrayList<SymbolicAtom>();
     }
 
     /**
      * Converts a lisp program to a stack of tokens.
-     * 
+     *
      * @param lispProgram a lisp program
      * @return a stack of lisp program tokens
      */
@@ -50,7 +46,7 @@ public class LispInterpreter {
 
     /**
      * Parses the set of tokens and produces the AST.
-     * 
+     *
      * @param lispTokens a stack of lisp tokens
      * @return an AST
      * @throws LispSyntaxException when parsing fails
@@ -93,7 +89,7 @@ public class LispInterpreter {
 
     /**
      * A dot notation parsing function.
-     * 
+     *
      * @param exps a list of expressions for a given SExpression
      * @return an SExpression from the list of SExpressions
      * @throws LispSyntaxException when the list of expressions is not 2
@@ -112,24 +108,25 @@ public class LispInterpreter {
 
     /**
      * A list notation parsing function.
-     * 
+     *
      * @param exps a list of expressions for a given SExpression
      * @return an SExpression from the list of SExpressions
      */
     private SExpression parseListNotation(ArrayList<SExpression> exps) {
         SExpression curr;
         if (exps.isEmpty()) {
-            curr = NIL;
+            curr = Primitives.NIL.getAtom();
         } else {
             curr = new NonAtom();
             NonAtom temp = (NonAtom) curr;
             for (int i = 0; i < exps.size(); i++) {
                 temp.setLeft(exps.get(i));
                 if (i < exps.size() - 1) {
-                    temp.setRight(new NonAtom());
-                    temp = (NonAtom) temp.getRight();
+                    NonAtom next = new NonAtom();
+                    temp.setRight(next);
+                    temp = next;
                 } else {
-                    temp.setRight(NIL);
+                    temp.setRight(Primitives.NIL.getAtom());
                 }
             }
         }
@@ -138,7 +135,7 @@ public class LispInterpreter {
 
     /**
      * Generates an S expression from a token known to be an atom.
-     * 
+     *
      * @param token a token
      * @return the token as an s expression
      * @throws LispSyntaxException
@@ -156,7 +153,7 @@ public class LispInterpreter {
 
     /**
      * Tests that a string is alphanumeric.
-     * 
+     *
      * @param underTest the string under test
      * @return true if the string only contains alphanumeric digits
      */
@@ -173,7 +170,7 @@ public class LispInterpreter {
      * A helper method for searching the symbol table. If a symbol is found,
      * that symbol is returned. Otherwise, a new symbol is created, added to the
      * symbol table, and returned.
-     * 
+     *
      * @param token a token
      * @return an existing symbolic atom from the symbol table; a new symbolic
      *         atom otherwise
@@ -202,7 +199,7 @@ public class LispInterpreter {
 
     /**
      * The read stage of the REPL.
-     * 
+     *
      * @param lispProgram a lisp program as a string
      * @return a lisp program as an AST
      * @throws LispSyntaxException when there are syntax errors
@@ -217,25 +214,75 @@ public class LispInterpreter {
     }
 
     /**
-     * Outputs the AST in dot notation.
+     * A method which updates the dList if the given expressions is a NonAtom
+     * composed of a DEFUN.
+     */
+    public SExpression updateDList(SExpression ast) throws LispEvaluationException {
+        SExpression success = Primitives.NIL.getAtom();
+        if (ast.isAtom().equals(Primitives.NIL.getAtom())) {
+            NonAtom root = (NonAtom) ast;
+            // Example:
+            // (DEFUN . (SILLY . ((A . (B . NIL)) .
+            // ((PLUS . (A . (B . NIL))) . NIL))))
+            if (root.car().equals(Primitives.DEFUN.getAtom())) {
+                NonAtom decl = new NonAtom();
+                NonAtom body = new NonAtom();
+                success = root.cdr().car();
+                // (A . (B . NIL))
+                body.setLeft(root.cdr().cdr().car());
+                // (PLUS . (A . (B . NIL)))
+                body.setRight(root.cdr().cdr().cdr().car());
+                // SILLY
+                decl.setLeft(root.cdr().car());
+                // ((A . (B . NIL)) . (PLUS . (A . (B . NIL))))
+                decl.setRight(body);
+                // (SILLY . ((A . (B . NIL)) . (PLUS . (A . (B . NIL)))))
+                this.dList.add(decl);
+            }
+        }
+        return success;
+    }
+
+    /**
+     * Evaluates the abstract syntax tree.
      * 
+     * @param ast an abstract syntax tree
+     * @return the result of the evaluation
+     */
+    public SExpression evaluate(SExpression ast) throws LispEvaluationException {
+        return ast.evaluate(this.aList, this.dList);
+    }
+
+    /**
+     * Outputs the AST in dot notation.
+     *
+     * @param msg a message to prepend the output
      * @param result the AST
      */
-    public void print(SExpression result) {
-        System.out.println(result);
+    public void print(String msg, SExpression result) {
+        System.out.println(msg + ": " + result);
     }
 
     /**
      * The read, evaluate, print function.
-     * 
+     *
      * @param currExpression
      */
     private void rep(String currExpression) {
         try {
             SExpression root = this.read(currExpression);
-            this.print(root);
+            this.print("Dot Notation", root);
+            SExpression funcName = this.updateDList(root);
+            if (funcName.equals(Primitives.NIL.getAtom())) {
+                SExpression result = this.evaluate(root);
+                this.print("Result", result);
+            } else {
+                this.print("Result", funcName);
+            }
         } catch (LispSyntaxException e) {
-            System.out.println(e);
+            System.err.println(e);
+        } catch (LispEvaluationException e) {
+            System.err.println(e);
         }
     }
 
@@ -261,7 +308,7 @@ public class LispInterpreter {
     /**
      * A helper function used to issue the input string and grab the next line
      * of text.
-     * 
+     *
      * @param in a scanner for reading standard input
      * @return the text received from the user
      */
@@ -273,7 +320,7 @@ public class LispInterpreter {
 
     /**
      * Runs the Lisp REPL.
-     * 
+     *
      * @param args command line arguments
      */
     public static void main(String[] args) {

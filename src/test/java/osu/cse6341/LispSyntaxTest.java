@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LispInterpreterTest {
+public class LispSyntaxTest {
 
     private LispInterpreter interpreter;
 
