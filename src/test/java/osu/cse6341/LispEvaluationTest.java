@@ -240,14 +240,15 @@ public class LispEvaluationTest {
         getEvaluation(eq);
     }
 
-    /**
-     * @Test public void testNestedDEFUN2() throws LispEvaluationException {
-     *       String defun1 = "(DEFUN MINUS2 (A B) (MINUS A B))";
-     *       runDefun(defun1); String defun2 = "(DEFUN NOTSOSILLY (A B) \r\n" +
-     *       "(COND\r\n" + "((EQ A 0) (PLUS B 1))\r\n" + "((EQ B 0) (NOTSOSILLY
-     *       (MINUS2 A 1) 1))\r\n" + "(T (NOTSOSILLY (MINUS2 A 1) (NOTSOSILLY A
-     *       (MINUS2 B 1))))\r\n" + "))"; runDefun(defun2); String test =
-     *       "(NOTSOSILLY 1 1)"; assertEquals(new IntegerAtom(3),
-     *       getEvaluation(test)); }
-     **/
+    @Test
+    public void testNestedDEFUN2() throws LispEvaluationException {
+        String defun1 = "(DEFUN MINUS2 (A B) (MINUS A B))";
+        runDefun(defun1);
+        String defun2 = "(DEFUN NOTSOSILLY (A B) \r\n" + "(COND\r\n" + "((EQ A 0) (PLUS B 1))\r\n"
+                + "((EQ B 0) (NOTSOSILLY (MINUS2 A 1) 1))\r\n"
+                + "(T (NOTSOSILLY (MINUS2 A 1) (NOTSOSILLY A (MINUS2 B 1))))\r\n" + "))";
+        runDefun(defun2);
+        String test = "(NOTSOSILLY 1 1)";
+        assertEquals(new IntegerAtom(3), getEvaluation(test));
+    }
 }

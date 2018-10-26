@@ -1,6 +1,7 @@
 package osu.cse6341;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Stack;
 
 /**
@@ -69,7 +70,9 @@ public class SymbolicAtom extends SExpression {
      */
     @Override
     public SExpression find(Stack<NonAtom> aList) throws LispEvaluationException {
-        for (NonAtom binding : aList) {
+        ListIterator<NonAtom> iterator = aList.listIterator(aList.size());
+        while (iterator.hasPrevious()) {
+            NonAtom binding = iterator.previous();
             if (binding.car().equals(this)) {
                 return binding.cdr();
             }
