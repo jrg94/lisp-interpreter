@@ -105,10 +105,10 @@ public class IntegerAtom extends SExpression {
 
         switch (operator) {
         case '<':
-            result = this.getValue() < rightOperand.getValue() ? Logic.T.getAtom() : Primitives.NIL.getAtom();
+            result = this.getValue() < rightOperand.getValue() ? Logic.T.getAtom() : Logic.NIL.getAtom();
             break;
         case '>':
-            result = this.getValue() > rightOperand.getValue() ? Logic.T.getAtom() : Primitives.NIL.getAtom();
+            result = this.getValue() > rightOperand.getValue() ? Logic.T.getAtom() : Logic.NIL.getAtom();
             break;
         default:
             throw new LispEvaluationException("No such boolean operator defined: " + operator);
@@ -162,7 +162,7 @@ public class IntegerAtom extends SExpression {
         if (this.equals(other)) {
             return Logic.T.getAtom();
         } else {
-            return Primitives.NIL.getAtom();
+            return Logic.NIL.getAtom();
         }
     }
 }

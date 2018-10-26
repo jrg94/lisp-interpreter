@@ -41,8 +41,8 @@ public class SymbolicAtom extends SExpression {
         SExpression ret = null;
         if (this.equals(Logic.T.getAtom())) {
             ret = Logic.T.getAtom();
-        } else if (this.equals(Primitives.NIL.getAtom())) {
-            ret = Primitives.NIL.getAtom();
+        } else if (this.equals(Logic.NIL.getAtom())) {
+            ret = Logic.NIL.getAtom();
         } else if ((ret = this.find(aList)) != null) {
             // Do nothing
         } else {
@@ -126,8 +126,8 @@ public class SymbolicAtom extends SExpression {
      */
     @Override
     public SExpression evaluateList(Stack<NonAtom> aList, ArrayList<NonAtom> dList) throws LispEvaluationException {
-        if (this.equals(Primitives.NIL.getAtom())) {
-            return Primitives.NIL.getAtom();
+        if (this.equals(Logic.NIL.getAtom())) {
+            return Logic.NIL.getAtom();
         } else {
             throw new LispEvaluationException("Expected Empty List but found " + this.toString());
         }
@@ -150,10 +150,10 @@ public class SymbolicAtom extends SExpression {
      */
     @Override
     public SymbolicAtom isNull() {
-        if (this.equals(Primitives.NIL.getAtom())) {
+        if (this.equals(Logic.NIL.getAtom())) {
             return Logic.T.getAtom();
         } else {
-            return Primitives.NIL.getAtom();
+            return Logic.NIL.getAtom();
         }
     }
 
@@ -162,7 +162,7 @@ public class SymbolicAtom extends SExpression {
         if (this.equals(other)) {
             return Logic.T.getAtom();
         } else {
-            return Primitives.NIL.getAtom();
+            return Logic.NIL.getAtom();
         }
     }
 }

@@ -1,3 +1,5 @@
+package osu.cse6341;
+
 public enum Logic implements AtomMapping {
     T, NIL;
 
