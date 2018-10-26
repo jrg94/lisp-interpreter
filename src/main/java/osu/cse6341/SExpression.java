@@ -168,7 +168,7 @@ public abstract class SExpression {
         if (this == other) {
             return Logic.T.getAtom();
         } else {
-            return Primitives.NIL.getAtom();
+            return Logic.NIL.getAtom();
         }
     }
 
@@ -192,7 +192,7 @@ public abstract class SExpression {
      * @return T if this is an atom; NIL otherwise
      */
     public SymbolicAtom isAtom() {
-        return Primitives.NIL.getAtom();
+        return Logic.NIL.getAtom();
     }
 
     /**
@@ -201,7 +201,7 @@ public abstract class SExpression {
      * @return T if this atom is NIL; NIL otherwise
      */
     public SymbolicAtom isNull() {
-        return Primitives.NIL.getAtom();
+        return Logic.NIL.getAtom();
     }
 
     /**
@@ -210,7 +210,7 @@ public abstract class SExpression {
      * @return T if this atom is an int; NIL otherwise
      */
     public SymbolicAtom isInt() {
-        return Primitives.NIL.getAtom();
+        return Logic.NIL.getAtom();
     }
 
     /**
@@ -226,8 +226,8 @@ public abstract class SExpression {
             throws LispEvaluationException {
         NonAtom binding = pList.car().cons(args.car());
         aList.push(binding);
-        boolean isEndOfPList = pList.cdr().equals(Primitives.NIL.getAtom());
-        boolean isEndOfArgList = args.cdr().equals(Primitives.NIL.getAtom());
+        boolean isEndOfPList = pList.cdr().equals(Logic.NIL.getAtom());
+        boolean isEndOfArgList = args.cdr().equals(Logic.NIL.getAtom());
         if (isEndOfPList && !isEndOfArgList) {
             throw new LispEvaluationException("Function has too many arguments: " + args.cdr());
         } else if (!isEndOfPList && isEndOfArgList) {

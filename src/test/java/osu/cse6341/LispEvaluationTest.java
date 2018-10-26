@@ -94,7 +94,7 @@ public class LispEvaluationTest {
     @Test
     public void testFalseNULL() throws LispEvaluationException {
         String test = "(NULL 4)";
-        SymbolicAtom expectedResult = Primitives.NIL.getAtom();
+        SymbolicAtom expectedResult = Logic.NIL.getAtom();
         assertEquals(expectedResult, getEvaluation(test));
     }
 
@@ -108,14 +108,14 @@ public class LispEvaluationTest {
     @Test
     public void testFalseEQ() throws LispEvaluationException {
         String test = "(EQ 2 4)";
-        SymbolicAtom expectedResult = Primitives.NIL.getAtom();
+        SymbolicAtom expectedResult = Logic.NIL.getAtom();
         assertEquals(expectedResult, getEvaluation(test));
     }
 
     @Test
     public void testCOND() throws LispEvaluationException {
         String test = "(COND (NIL T) (T NIL))";
-        SymbolicAtom expectedResult = Primitives.NIL.getAtom();
+        SymbolicAtom expectedResult = Logic.NIL.getAtom();
         assertEquals(expectedResult, getEvaluation(test));
     }
 
@@ -173,7 +173,7 @@ public class LispEvaluationTest {
     @Test
     public void testGREATER() throws LispEvaluationException {
         String test = "(GREATER 2 3)";
-        assertEquals(Primitives.NIL.getAtom(), getEvaluation(test));
+        assertEquals(Logic.NIL.getAtom(), getEvaluation(test));
     }
 
     @Test

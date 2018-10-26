@@ -20,7 +20,7 @@ public class NonAtomTest {
         for (int i = 0; i < symbols.length; i++) {
             curr.setLeft(new SymbolicAtom(symbols[i]));
             if (i + 1 == symbols.length) {
-                curr.setRight(Primitives.NIL.getAtom());
+                curr.setRight(Logic.NIL.getAtom());
             } else {
                 NonAtom next = new NonAtom();
                 curr.setRight(next);
@@ -42,7 +42,7 @@ public class NonAtomTest {
         for (int i = 0; i < symbols.length; i++) {
             curr.setLeft(new IntegerAtom(symbols[i]));
             if (i + 1 == symbols.length) {
-                curr.setRight(Primitives.NIL.getAtom());
+                curr.setRight(Logic.NIL.getAtom());
             } else {
                 NonAtom next = new NonAtom();
                 curr.setRight(next);

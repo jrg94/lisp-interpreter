@@ -69,7 +69,7 @@ public class NonAtom extends SExpression {
         SExpression ret = null;
         SExpression func = this.car();
         SExpression args = this.cdr().evaluateList(aList, dList);
-        Arrays.asList(Primitives.values()).forEach(day -> System.out.println(day));
+        Primitives function = Arrays.asList(Primitives.values()).filter(value -> value.getAtom().equals(func));
         if (func.equals(Primitives.CAR.getAtom())) {
             ret = args.caar();
         } else if (func.equals(Primitives.CDR.getAtom())) {
