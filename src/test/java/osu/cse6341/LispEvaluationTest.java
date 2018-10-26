@@ -222,6 +222,18 @@ public class LispEvaluationTest {
         getEvaluation(eq);
     }
 
+    @Test(expected = LispEvaluationException.class)
+    public void testEQTooManyArguments() throws LispEvaluationException {
+        String eq = "(EQ 1 2 3)";
+        getEvaluation(eq);
+    }
+
+    @Test(expected = LispEvaluationException.class)
+    public void testUnquotedArguments() throws LispEvaluationException {
+        String eq = "(EQ (1 . 2) (2 . 3))";
+        getEvaluation(eq);
+    }
+
     /**
      * @Test public void testNestedDEFUN2() throws LispEvaluationException {
      *       String defun1 = "(DEFUN MINUS2 (A B) (MINUS A B))";
