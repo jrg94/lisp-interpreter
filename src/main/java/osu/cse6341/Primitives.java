@@ -38,6 +38,14 @@ public enum Primitives implements AtomMapping {
         return ret;
     }
 
+    /**
+     * Verifies that the argument list matches the expected number of arguments
+     * based on argLength.
+     * 
+     * @param list a list of arguments
+     * @return true if the expected number of arguments matches reality
+     * @throws LispEvaluationException if we run cdr on an atom
+     */
     private boolean verifyArgLength(SExpression list) throws LispEvaluationException {
         SExpression curr = list;
         int length = 0;
@@ -54,6 +62,14 @@ public enum Primitives implements AtomMapping {
         }
     }
 
+    /**
+     * Gets the result of the this primitive function when applied to a set of
+     * arguments.
+     * 
+     * @param args a list of arguments
+     * @return the result of this function
+     * @throws LispEvaluationException if any of the poking around fails
+     */
     private SExpression getResult(SExpression args) throws LispEvaluationException {
         switch (this) {
         case CAR:
