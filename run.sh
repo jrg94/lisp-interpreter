@@ -1,5 +1,5 @@
 #!/bin/sh
 
-javac src/osu/cse6341/*.java
-java -cp src/ osu.cse6341.LispInterpreter
+javac src/main/java/osu/cse6341/*.java
+java -cp src/main/java osu.cse6341.LispInterpreter
 git clean -fdx
