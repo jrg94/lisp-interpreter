@@ -190,7 +190,7 @@ public class LispEvaluationTest {
 
     @Test
     public void testDEFUN() throws LispEvaluationException {
-        String defun = "(DEFUN SILLY (A B) (PLUS A B))";
+        String defun = "(DEFUN (SILLY (A B)) (PLUS A B))";
         runDefun(defun);
         String test = "(SILLY 5 6)";
         assertEquals(new IntegerAtom(11), getEvaluation(test));
@@ -198,7 +198,7 @@ public class LispEvaluationTest {
 
     @Test
     public void testNestedFunctionCallsWithQUOTE() throws LispEvaluationException {
-        String defun = "(DEFUN SILLY (A B) (PLUS A B))";
+        String defun = "(DEFUN (SILLY (A B)) (PLUS A B))";
         runDefun(defun);
         String test = "(SILLY (CAR (QUOTE (5 . 6))) (CDR (QUOTE (5 . 6))) )";
         assertEquals(new IntegerAtom(11), getEvaluation(test));
@@ -206,9 +206,9 @@ public class LispEvaluationTest {
 
     @Test
     public void testNestedDEFUN() throws LispEvaluationException {
-        String defun1 = "  (DEFUN MINUS2 (A B) (MINUS A B))";
+        String defun1 = "  (DEFUN (MINUS2 (A B)) (MINUS A B))";
         runDefun(defun1);
-        String defun2 = "(DEFUN NOTSOSILLY (A B) \r\n" + "(COND\r\n" + "((EQ A 0) (PLUS B 1))\r\n"
+        String defun2 = "(DEFUN (NOTSOSILLY (A B)) \r\n" + "(COND\r\n" + "((EQ A 0) (PLUS B 1))\r\n"
                 + "((EQ B 0) (NOTSOSILLY (MINUS2 A 1) 1))\r\n"
                 + "(T (NOTSOSILLY (MINUS2 A 1) (NOTSOSILLY A (MINUS2 B 1))))\r\n" + "))";
         runDefun(defun2);
@@ -242,9 +242,9 @@ public class LispEvaluationTest {
 
     @Test
     public void testNestedDEFUN2() throws LispEvaluationException {
-        String defun1 = "(DEFUN MINUS2 (A B) (MINUS A B))";
+        String defun1 = "(DEFUN (MINUS2 (A B)) (MINUS A B))";
         runDefun(defun1);
-        String defun2 = "(DEFUN NOTSOSILLY (A B) \r\n" + "(COND\r\n" + "((EQ A 0) (PLUS B 1))\r\n"
+        String defun2 = "(DEFUN (NOTSOSILLY (A B)) \r\n" + "(COND\r\n" + "((EQ A 0) (PLUS B 1))\r\n"
                 + "((EQ B 0) (NOTSOSILLY (MINUS2 A 1) 1))\r\n"
                 + "(T (NOTSOSILLY (MINUS2 A 1) (NOTSOSILLY A (MINUS2 B 1))))\r\n" + "))";
         runDefun(defun2);

@@ -221,22 +221,18 @@ public class LispInterpreter {
         SExpression success = Logic.NIL.getAtom();
         if (ast.isAtom().equals(Logic.NIL.getAtom())) {
             NonAtom root = (NonAtom) ast;
-            // Example:
-            // (DEFUN . (SILLY . ((A . (B . NIL)) .
-            // ((PLUS . (A . (B . NIL))) . NIL))))
             if (root.car().equals(SpecialForms.DEFUN.getAtom())) {
                 NonAtom decl = new NonAtom();
                 NonAtom body = new NonAtom();
-                success = root.cdr().car();
-                // (A . (B . NIL))
-                body.setLeft(root.cdr().cdr().car());
-                // (PLUS . (A . (B . NIL)))
-                body.setRight(root.cdr().cdr().cdr().car());
-                // SILLY
-                decl.setLeft(root.cdr().car());
-                // ((A . (B . NIL)) . (PLUS . (A . (B . NIL))))
+                success = root.cdr().car().car();
+                SExpression parameters = root.cdr().car().cdr().car();
+                System.out.println(parameters);
+                SExpression functionBody = root.cdr().cdr().car();
+                System.out.println(functionBody);
+                body.setLeft(parameters);
+                body.setRight(functionBody);
+                decl.setLeft(success);
                 decl.setRight(body);
-                // (SILLY . ((A . (B . NIL)) . (PLUS . (A . (B . NIL)))))
                 this.dList.add(decl);
             }
         }

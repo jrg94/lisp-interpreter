@@ -76,3 +76,20 @@ the repo of all files not currently tracked. As a result, new files
 will be deleted. 
 
 If you run into an problems, let me know!
+
+## Notes on Syntax
+
+This solution was originally written using the following DEFUN syntax:
+
+```
+(DEFUN SILLY (A B) (PLUS A B))
+```
+
+However, the directions were later updated to support the new DEFUN syntax:
+
+```
+(DEFUN (SILLY (A B)) (PLUS A B))
+```
+
+I have since updated my solution to cover this new DEFUN syntax. All tests
+pass for the new syntax. The old syntax is no longer supported.
